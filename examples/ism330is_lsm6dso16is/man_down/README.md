@@ -4,7 +4,7 @@ This ISPU example implements the man-down solution based on the fusion of the ac
 
 The accelerometer is configured in low-power mode at 104 Hz.
 
-The pressure sensor (LPS22HH) is connected through the sensor-hub interface and it is configured in low-power mode at 10 Hz. The sensor-hub configuration to apply is provided in the *output* folder as a separate file and must be loaded before the example main configuration.
+The pressure sensor (LPS22HH) is connected through the sensor-hub interface and it is configured in low-current mode at 10 Hz. The sensor-hub configuration to apply is provided in the *output* folder as a separate file and must be loaded before the example main configuration.
 
 The MotionMD library is provided as binary in the *ispu/lib* folder.
 
