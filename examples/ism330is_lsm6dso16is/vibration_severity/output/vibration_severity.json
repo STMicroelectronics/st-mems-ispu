@@ -1,0 +1,22 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc [mm / s^2]",
+      "type": "float"
+    },
+    {
+      "name": "Acc BP [mm / s^2]",
+      "type": "float"
+    },
+    {
+      "name": "Vel [mm / s]",
+      "type": "float"
+    },
+    {
+      "name": "Vel RMS [mm / s]",
+      "type": "float"
+    }
+  ]
+}
+
