@@ -1,0 +1,15 @@
+{
+  "output":
+  [
+    {
+      "name": "sample",
+      "type": "float"
+    },
+    {
+      "name": "DFT_mag",
+      "type": "float",
+      "size": 14
+    }
+  ]
+}
+
