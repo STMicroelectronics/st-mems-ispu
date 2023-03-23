@@ -1,0 +1,34 @@
+{
+  "output":
+  [
+    {
+      "name": "Mag x [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "Mag y [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "Mag z [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "HI-bias x [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "HI-bias y [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "HI-bias z [uT/50]",
+      "type": "float"
+    },
+    {
+      "name": "Mag accuracy",
+      "type": "uint8_t"
+    }
+  ]
+}
+

@@ -1,0 +1,22 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Acc y [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Acc z [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Acc norm [LSB]",
+      "type": "float"
+    }
+  ]
+}
+

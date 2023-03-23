@@ -1,0 +1,30 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc y [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc z [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc filt x [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc filt y [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc filt z [g]",
+      "type": "float"
+    }
+  ]
+}
+

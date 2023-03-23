@@ -1,0 +1,34 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Acc y [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Acc z [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Gyr x [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Gyr y [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "Gyr z [LSB]",
+      "type": "int16_t"
+    },
+    {
+      "name": "CRC8",
+      "type": "uint8_t"
+    }
+  ]
+}
+

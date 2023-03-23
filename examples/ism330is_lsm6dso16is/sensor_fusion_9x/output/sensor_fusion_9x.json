@@ -1,0 +1,26 @@
+{
+  "output":
+  [
+    {
+      "name": "Quat x",
+      "type": "float"
+    },
+    {
+      "name": "Quat y",
+      "type": "float"
+    },
+    {
+      "name": "Quat z",
+      "type": "float"
+    },
+    {
+      "name": "Quat w",
+      "type": "float"
+    },
+    {
+      "name": "Mag accuracy",
+      "type": "uint8_t"
+    }
+  ]
+}
+

@@ -1,0 +1,22 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc y [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc z [g]",
+      "type": "float"
+    },
+    {
+      "name": "Steps [#]",
+      "type": "uint16_t"
+    }
+  ]
+}
+

@@ -1,0 +1,26 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc y [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc z [g]",
+      "type": "float"
+    },
+    {
+      "name": "Wrist up",
+      "type": "uint8_t"
+    },
+    {
+      "name": "Wrist down",
+      "type": "uint8_t"
+    }
+  ]
+}
+

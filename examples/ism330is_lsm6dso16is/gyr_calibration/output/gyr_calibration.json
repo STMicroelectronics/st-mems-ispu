@@ -1,0 +1,30 @@
+{
+  "output":
+  [
+    {
+      "name": "Gyr x [dps]",
+      "type": "float"
+    },
+    {
+      "name": "Gyr y [dps]",
+      "type": "float"
+    },
+    {
+      "name": "Gyr z [dps]",
+      "type": "float"
+    },
+    {
+      "name": "Bias x [dps]",
+      "type": "float"
+    },
+    {
+      "name": "Bias y [dps]",
+      "type": "float"
+    },
+    {
+      "name": "Bias z [dps]",
+      "type": "float"
+    }
+  ]
+}
+

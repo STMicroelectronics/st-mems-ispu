@@ -1,0 +1,22 @@
+{
+  "output":
+  [
+    {
+      "name": "Quat x",
+      "type": "float"
+    },
+    {
+      "name": "Quat y",
+      "type": "float"
+    },
+    {
+      "name": "Quat z",
+      "type": "float"
+    },
+    {
+      "name": "Quat w",
+      "type": "float"
+    }
+  ]
+}
+

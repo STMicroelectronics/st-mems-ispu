@@ -1,0 +1,26 @@
+{
+  "output":
+  [
+    {
+      "name": "Acc x [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc y [g]",
+      "type": "float"
+    },
+    {
+      "name": "Acc z [g]",
+      "type": "float"
+    },
+    {
+      "name": "Activity",
+      "type": "uint8_t"
+    },
+    {
+      "name": "Confidence",
+      "type": "uint8_t"
+    }
+  ]
+}
+
