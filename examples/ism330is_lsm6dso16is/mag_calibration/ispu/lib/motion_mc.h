@@ -82,21 +82,21 @@ typedef struct
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionMC engine
+ * @brief  Initialize the MotionMC engine.
  * @param  mode calibration mode to set, hard-iron only mode (faster) or hard-iron + soft-iron
  * @retval pointer to the new algorithm instance
  */
 void *MotionMC_initialize(MMC_mode_t mode);
 
 /**
- * @brief  Deinitialize the MotionMC engine
+ * @brief  Deinitialize the MotionMC engine.
  * @param  mmc pointer to the algorithm instance
  * @retval none
  */
 void MotionMC_deinitialize(void *mmc);
 
 /**
- * @brief  This function runs one step of the magnetometer calibration algorithm
+ * @brief  Run one step of the magnetometer calibration algorithm.
  * @param  mmc pointer to the algorithm instance
  * @param  data_out pointer to the structure containing the output data
  * @param  data_in pointer to the structure containing the input data
@@ -105,7 +105,7 @@ void MotionMC_deinitialize(void *mmc);
 void MotionMC_update(void *mmc, MMC_output_t *data_out, MMC_input_t *data_in);
 
 /**
- * @brief  Get the library version
+ * @brief  Get the library version.
  * @param  version pointer to an array of 35 char
  * @retval number of characters in the version string
  */

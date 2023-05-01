@@ -2,7 +2,7 @@
   *******************************************************************************
   * @file    motion_fx.h
   * @author  MEMS Application Team
-  * @version V1.0.0
+  * @version V1.0.1
   * @brief   Header for motion_fx module
   *******************************************************************************
   * @attention
@@ -65,6 +65,25 @@ typedef struct
   float rotation[3];             /* Yaw, pitch and roll [deg] */
 } MFX_output_t;
 
+typedef struct
+{
+  float alpha_acc;              /* Coefficient to control accelerometer mean and variance computation [0 to 1] */
+  float alpha_gyr;              /* Coefficient to control gyroscope mean and variance computation [0 to 1] */
+  float alpha_mag;              /* Coefficient to control magnetometer mean and variance computation [0 to 1] */
+  float kappa_acc;              /* Coefficient to control accelerometer weighting factor [0 to 1] */
+  float kappa_mag;              /* Coefficient to control magnetometer weighting factor [0 to 1] */
+  float acc_max;                /* Linear acceleration threshold [g] */
+  float acc_var_max;            /* Linear acceleration var-based threshold [g] */
+  float mag_var_max;            /* Magnetic anomaly var-based threshold [g] */
+  float gb_alpha;               /* Gbias calibration low-pass filter [0 to 1] */
+  float gb_acc_max;             /* Gbias calibration acceleration norm-based threshold [g] */
+  float gb_gyr_max;             /* Gbias calibration angular rate threshold [dps] */
+  float gb_acc_var_max;         /* Gbias calibration acceleration var-based threshold [g] */
+  float gb_gyr_var_max;         /* Gbias calibration angular rate var-based threshold [dps] */
+  float gb_gyr_var_max_greedy;  /* Gbias calibration initial angular rate var-based threshold [dps] */
+  float gb_time;                /* Gbias calibration time-based threshold [s] */
+} MFX_conf_t;
+
 /**
  *  @}
  */
@@ -80,21 +99,37 @@ typedef struct
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionFX engine
+ * @brief  Initialize the MotionFX engine.
  * @param  mode algorithm mode to set
  * @retval pointer to the new algorithm instance
  */
 void *MotionFX_initialize(MFX_mode_t mode);
 
 /**
- * @brief  Deinitialize the MotionFX engine
+ * @brief  Deinitialize the MotionFX engine.
  * @param  mfx pointer to the algorithm instance
  * @retval none
  */
 void MotionFX_deinitialize(void *mfx);
 
 /**
- * @brief  Set sensor orientation, default orientation is ENU (x - east, y - north, z - up)
+ * @brief  Get the algorithm configuration.
+ * @param  mfx pointer to the algorithm instance
+ * @param  conf pointer to the structure where the current configuration will be written to
+ * @retval none
+ */
+void MotionFX_get_configuration(void *mfx, MFX_conf_t *conf);
+
+/**
+ * @brief  Set the algorithm configuration.
+ * @param  mfx pointer to the algorithm instance
+ * @param  conf pointer to the structure containing the configuration to be set
+ * @retval none
+ */
+void MotionFX_set_configuration(void *mfx, MFX_conf_t *conf);
+
+/**
+ * @brief  Set sensor orientation, default orientation is ENU (x - east, y - north, z - up).
  * @param  mfx pointer to the algorithm instance
  * @param  acc_orientation string with reference to set
  * @param  gyr_orientation string with reference to set
@@ -104,21 +139,21 @@ void MotionFX_deinitialize(void *mfx);
 void MotionFX_set_orientation(void *mfx, const char acc_orientation[4], const char gyro_orientation[4], const char mag_orientation[4]);
 
 /**
- * @brief  Get the status of the euler angles calculation
+ * @brief  Get the status of the euler angles calculation.
  * @param  mfx pointer to the algorithm instance
  * @retval 1 if enabled, 0 if disabled
  */
 MFX_engine_state_t MotionFX_get_status_euler(void *mfx);
 
 /**
- * @brief  Get the status of the gyroscope calibration
+ * @brief  Get the status of the gyroscope calibration.
  * @param  mfx pointer to the algorithm instance
  * @retval 1 if enabled, 0 if disabled
  */
 MFX_engine_state_t MotionFX_get_status_gbias(void *mfx);
 
 /**
- * @brief  Enable or disable euler angles calculation
+ * @brief  Enable or disable euler angles calculation.
  * @param  mfx pointer to the algorithm instance
  * @param  1 to enable, 0 to disable
  * @retval none
@@ -126,7 +161,7 @@ MFX_engine_state_t MotionFX_get_status_gbias(void *mfx);
 void MotionFX_enable_euler(void *mfx, MFX_engine_state_t enable);
 
 /**
- * @brief  Enable or disable gyroscope calibration
+ * @brief  Enable or disable gyroscope calibration.
  * @param  mfx pointer to the algorithm instance
  * @param  1 to enable, 0 to disable
  * @retval none
@@ -134,7 +169,7 @@ void MotionFX_enable_euler(void *mfx, MFX_engine_state_t enable);
 void MotionFX_enable_gbias(void *mfx, MFX_engine_state_t enable);
 
 /**
- * @brief  Set the initial gbias
+ * @brief  Set the initial gbias.
  * @param  mfx pointer to the algorithm instance
  * @param  gbias pointer to a float array containing the 3 gbias values
  * @retval none
@@ -142,7 +177,7 @@ void MotionFX_enable_gbias(void *mfx, MFX_engine_state_t enable);
 void MotionFX_set_gbias(void *mfx, float *gbias);
 
 /**
- * @brief  Get the initial gbias
+ * @brief  Get the initial gbias.
  * @param  mfx pointer to the algorithm instance
  * @param  pointer to a float array containing the 3 gbias values
  * @retval none
@@ -150,7 +185,7 @@ void MotionFX_set_gbias(void *mfx, float *gbias);
 void MotionFX_get_gbias(void *mfx, float *gbias);
 
 /**
- * @brief  This function runs one step of the sensor fusion algorithm
+ * @brief  Run one step of the sensor fusion algorithm.
  * @param  mfx pointer to the algorithm instance
  * @param  data_out pointer to the structure containing the output data
  * @param  data_in pointer to the structure containing the input data
@@ -160,7 +195,7 @@ void MotionFX_get_gbias(void *mfx, float *gbias);
 void MotionFX_update(void *mfx, MFX_output_t *data_out, MFX_input_t *data_in, float dtime);
 
 /**
- * @brief  Get the library version
+ * @brief  Get the library version.
  * @param  version pointer to an array of 35 char
  * @retval number of characters in the version string
  */
