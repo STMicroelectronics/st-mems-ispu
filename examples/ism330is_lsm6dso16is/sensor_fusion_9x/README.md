@@ -31,7 +31,7 @@ The magnetometer is mounted in ESU orientation.
 
 ## 3 - Interrupts
 
-The configuration generates an interrupt on INT1 when the quaternion for the new sample is computed and available in output registers.
+The configuration generates an interrupt on INT1 when the quaternion for the new sample is computed and available in the output registers.
 
 ------
 

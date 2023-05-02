@@ -22,7 +22,7 @@ The accelerometer is mounted in ENU orientation.
 
 ## 3 - Interrupts
 
-The configuration generates an interrupt on INT1 when the wrist tilt events for the new sample are computed and available in output registers.
+The configuration generates an interrupt on INT1 when the wrist tilt events for the new sample are computed and available in the output registers.
 
 ------
 

@@ -21,7 +21,7 @@ None.
 
 ## 3 - Interrupts
 
-The configuration generates an interrupt on INT1 when the number of steps for the new sample are computed and available in output registers.
+The configuration generates an interrupt on INT1 when the number of steps for the new sample are computed and available in the output registers.
 
 ------
 

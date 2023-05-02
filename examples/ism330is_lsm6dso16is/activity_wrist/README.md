@@ -32,7 +32,7 @@ The accelerometer is mounted in ENU orientation.
 
 ## 3 - Interrupts
 
-The configuration generates an interrupt on INT1 when the activity for the new sample is computed and available in output registers.
+The configuration generates an interrupt on INT1 when the activity for the new sample is computed and available in the output registers.
 
 **More Information: [http://www.st.com](http://st.com/MEMS)**
 
