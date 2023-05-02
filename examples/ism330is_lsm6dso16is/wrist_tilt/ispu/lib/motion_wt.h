@@ -134,5 +134,5 @@ uint8_t MotionWT_get_lib_version(char *version);
 }
 #endif
 
-#endif /* _MOTION_WT_H_ */
+#endif /* MOTION_WT_H */
 

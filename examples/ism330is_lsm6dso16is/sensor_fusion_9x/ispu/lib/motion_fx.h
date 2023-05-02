@@ -182,5 +182,5 @@ uint8_t MotionFX_get_lib_version(char *version);
 }
 #endif
 
-#endif /* _MOTION_FX_H_ */
+#endif /* MOTION_FX_H */
 

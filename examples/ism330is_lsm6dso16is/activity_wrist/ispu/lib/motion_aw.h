@@ -174,4 +174,4 @@ void MotionAW_SetMetaClassifier(MAW_metaClassifier_t *metaCounter);
 }
 #endif
 
-#endif /* _MOTION_AW_H_ */
+#endif /* MOTION_AW_H */

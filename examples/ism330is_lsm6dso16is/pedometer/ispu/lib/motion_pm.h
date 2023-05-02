@@ -124,5 +124,5 @@ uint8_t MotionPM_get_lib_version(char *version);
 }
 #endif
 
-#endif /* _MOTION_PM_H_ */
+#endif /* MOTION_PM_H */
 

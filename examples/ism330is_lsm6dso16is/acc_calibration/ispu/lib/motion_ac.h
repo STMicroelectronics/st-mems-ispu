@@ -145,4 +145,4 @@ uint8_t MotionAC_GetLibVersion(char *version);
 }
 #endif
 
-#endif /* _MOTION_AC_H_ */
+#endif /* MOTION_AC_H */

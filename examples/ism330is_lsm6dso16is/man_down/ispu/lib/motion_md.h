@@ -125,5 +125,5 @@ uint8_t MotionMD_get_lib_version(char *version);
 }
 #endif
 
-#endif /* _MOTION_MD_H_ */
+#endif /* MOTION_MD_H */
 

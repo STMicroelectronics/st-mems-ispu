@@ -169,4 +169,4 @@ uint8_t MotionGC_GetLibVersion(char *version);
 }
 #endif
 
-#endif /* _MOTION_GC_H_ */
+#endif /* MOTION_GC_H */
