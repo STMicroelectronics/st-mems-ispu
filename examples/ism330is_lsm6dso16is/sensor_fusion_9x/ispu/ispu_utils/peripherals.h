@@ -28,6 +28,8 @@
 
 #define cast_float(add)    (*((volatile float *)(add)))    /* to read/write a float 32 bit value */
 
+#define cast_char(add)     (*((volatile char *)(add)))     /* to read/write a char 8 bit value */
+
 #define stop_and_wait_start_pulse do { STOP_CLOCK; asm(""); } while (false)
 
 extern volatile uint8_t STOP_CLOCK;
