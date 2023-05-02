@@ -74,7 +74,7 @@ typedef struct
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionPM engine
+ * @brief  Initialize the MotionPM engine.
  * @retval none
  */
 void MotionPM_initialize(void);
@@ -102,7 +102,7 @@ void MotionPM_set_configuration(MPM_conf_t *conf);
 void MotionPM_update(MPM_output_t *data_out, MPM_input_t *data_in);
 
 /**
-  * @brief  Get the library version
+  * @brief  Get the library version.
   * @param  version pointer to an array of 35 char
   * @retval number of characters in the version string
   */

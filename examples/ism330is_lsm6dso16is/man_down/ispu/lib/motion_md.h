@@ -75,7 +75,7 @@ typedef enum
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionMD engine
+ * @brief  Initialize the MotionMD engine.
  * @retval none
  */
 void MotionMD_initialize(void);
@@ -103,7 +103,7 @@ void MotionMD_set_configuration(MMD_conf_t *conf);
 void MotionMD_update(MMD_output_t *data_out, MMD_input_t *data_in);
 
 /**
-  * @brief  Get the library version
+  * @brief  Get the library version.
   * @param  version pointer to an array of 35 char
   * @retval number of characters in the version string
   */

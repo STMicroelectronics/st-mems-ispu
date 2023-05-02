@@ -87,14 +87,14 @@ typedef struct
 /* Exported functions ------------------------------------------------------- */
 
 /**
-  * @brief  Initialize the MotionAC engine
+  * @brief  Initialize the MotionAC engine.
   * @param  enable  enable or disable the library
   * @retval None
   */
 void MotionAC_Initialize(uint8_t enable);
 
 /**
-  * @brief  Run accelerometer calibration algorithm
+  * @brief  Run accelerometer calibration algorithm.
   * @param  data_in  pointer to acceleration [g] and timestamp values [ms]
   * @param  is_calibrated  pointer value returns 1 if calibration is done with current sample, 0 otherwise
   * @retval None
@@ -102,28 +102,28 @@ void MotionAC_Initialize(uint8_t enable);
 void MotionAC_Update(MAC_input_t *data_in, uint8_t *is_calibrated);
 
 /**
-  * @brief  Get the accelerometer compensation parameters
+  * @brief  Get the accelerometer compensation parameters.
   * @param  data_out  pointer to actual accelerometer offset [g], scale factor correction matrix [-] and quality factor
   * @retval None
   */
 void MotionAC_GetCalParams(MAC_output_t *data_out);
 
 /**
-  * @brief  Get current knobs settings
+  * @brief  Get current knobs settings.
   * @param  knobs  pointer to current knobs settings
   * @retval None
   */
 void MotionAC_GetKnobs(MAC_knobs_t *knobs);
 
 /**
-  * @brief  Set new knobs settings
+  * @brief  Set new knobs settings.
   * @param  knobs  pointer to new knobs settings
   * @retval 1 if success => library is running, 0 otherwise
   */
 uint8_t MotionAC_SetKnobs(MAC_knobs_t *knobs);
 
 /**
-  * @brief  Get the library version
+  * @brief  Get the library version.
   * @param  version pointer to an array of 35 char
   * @retval Number of characters in the version string
   */

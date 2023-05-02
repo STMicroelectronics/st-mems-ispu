@@ -45,7 +45,7 @@ extern "C" {
 #define NUM_ACTIVITIES 10
 
 /* Exported types ------------------------------------------------------------*/
- typedef struct
+typedef struct
 {
   float AccX;           /* Acceleration in X axis in [g] */
   float AccY;           /* Acceleration in Y axis in [g] */
@@ -99,21 +99,21 @@ typedef struct {
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionAW engine
+ * @brief  Initialize the MotionAW engine.
  * @param  none
  * @retval none
  */
 void MotionAW_Initialize(void);
 
 /**
- * @brief  Set the MotionAW accelerometer data orientation
+ * @brief  Set the MotionAW accelerometer data orientation.
  * @param  *acc_orientation: reference system of the accelerometer raw data (for instance: south west up became "swu", north east up became "ned")
  * @retval  none
  */
 void MotionAW_SetOrientation_Acc(const char *acc_orientation);
 
 /**
- * @brief  Run activity recognition algorithm
+ * @brief  Run activity recognition algorithm.
  * @param  data_in  pointer to accaleration in [g]
  * @param  t  timestamp in [ms]
  * @param  data_out  pointer to output activity structure
@@ -122,21 +122,21 @@ void MotionAW_SetOrientation_Acc(const char *acc_orientation);
 void MotionAW_Update(MAW_input_t *data_in, MAW_output_t *data_out, int64_t t);
 
 /**
- * @brief  Resets activity recognition algorithm
+ * @brief  Resets activity recognition algorithm.
  * @param  none
  * @retval none
  */
 void MotionAW_Reset(void);
 
 /**
- * @brief  Resets total activity duration counters
+ * @brief  Resets total activity duration counters.
  * @param  none
  * @retval none
  */
 void MotionAW_Reset_Activity_Duration(void);
 
 /**
- * @brief  Get the library version
+ * @brief  Get the library version.
  * @param  version pointer to an array of 35 char
  * @retval Number of characters in the version string
  */
@@ -144,7 +144,7 @@ uint8_t MotionAW_GetLibVersion(char *version);
 
 
 /**
- * @brief  Get Meta Classifier Counter
+ * @brief  Get Meta Classifier Counter.
  * @param  MAW_metaClassifier_t pointer
  * @retval none
  */

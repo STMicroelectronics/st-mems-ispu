@@ -84,7 +84,7 @@ typedef struct
 /* Exported functions ------------------------------------------------------- */
 
 /**
- * @brief  Initialize the MotionWT engine
+ * @brief  Initialize the MotionWT engine.
  * @retval none
  */
 void MotionWT_initialize(void);
@@ -112,7 +112,7 @@ void MotionWT_set_configuration(MWT_conf_t *conf);
 void MotionWT_update(MWT_output_t *data_out, MWT_input_t *data_in);
 
 /**
-  * @brief  Get the library version
+  * @brief  Get the library version.
   * @param  version pointer to an array of 35 char
   * @retval number of characters in the version string
   */
