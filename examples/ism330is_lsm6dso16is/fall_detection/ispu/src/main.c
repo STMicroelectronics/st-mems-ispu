@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "motion_md.h"
+#include "motion_fd.h"
 
 #define ACC_SENS 0.000488f
 #define PRS_SENS 0.000244140625f
@@ -29,24 +29,24 @@ static volatile uint32_t int_status;
 
 void __attribute__ ((signal)) algo_00_init(void)
 {
-	MMD_conf_t conf;
+	MFD_conf_t conf;
 
-	MotionMD_initialize();
+	MotionFD_initialize();
 
-	MotionMD_get_configuration(&conf);
+	MotionFD_get_configuration(&conf);
 	conf.alt = -0.2f;
 	conf.shock = 2.5f;
 	conf.shock_time = 0.05f;
 	conf.alt_var_steady = 0.120f;
 	conf.acc_var_steady = 0.0025f;
 	conf.steady_time = 2.2f;
-	MotionMD_set_configuration(&conf);
+	MotionFD_set_configuration(&conf);
 }
 
 void __attribute__ ((signal)) algo_00(void)
 {
-	MMD_input_t in;
-	MMD_output_t out = MMD_NONE;
+	MFD_input_t in;
+	MFD_output_t out = MFD_NONE;
 
 	in.acc[0] = (float)cast_sint16_t(ISPU_ARAW_X) * ACC_SENS;
 	in.acc[1] = (float)cast_sint16_t(ISPU_ARAW_Y) * ACC_SENS;
@@ -54,7 +54,7 @@ void __attribute__ ((signal)) algo_00(void)
 	uint32_t prs_raw = (uint32_t)cast_uint16_t(ISPU_ERAW_0) + ((uint32_t)cast_uint8_t(ISPU_ERAW_1) << 16);
 	in.prs = (float)prs_raw * PRS_SENS;
 
-	MotionMD_update(&out, &in);
+	MotionFD_update(&out, &in);
 
 	cast_float(ISPU_DOUT_00) = in.acc[0];
 	cast_float(ISPU_DOUT_02) = in.acc[1];

@@ -18,7 +18,7 @@
       "type": "float"
     },
     {
-      "name": "Man-down",
+      "name": "Fall",
       "type": "uint8_t"
     }
   ]

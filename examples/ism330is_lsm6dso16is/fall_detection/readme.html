@@ -1498,7 +1498,7 @@ text-align: center;
 <div class="row">
 <div class="col-sm-12 col-lg-8">
 <h2 id="introduction">1 - Introduction</h2>
-<p>This ISPU example implements the man-down solution based on the
+<p>This ISPU example implements the fall detection solution based on the
 fusion of the accelerometer and pressure sensor data.</p>
 <p>The accelerometer is configured in low-power mode at 104 Hz.</p>
 <p>The pressure sensor (LPS22HH) is connected through the sensor-hub
@@ -1506,7 +1506,7 @@ interface and it is configured in low-current mode at 10 Hz. The
 sensor-hub configuration to apply is provided in the <em>output</em>
 folder as a separate file and must be loaded before the example main
 configuration.</p>
-<p>The MotionMD library is provided as binary in the <em>ispu/lib</em>
+<p>The MotionFD library is provided as binary in the <em>ispu/lib</em>
 folder.</p>
 <p>The outputs are as follows:</p>
 <ul>
@@ -1518,14 +1518,14 @@ ISPU_DOUT_02_L (14h)</li>
 ISPU_DOUT_04_L (18h)</li>
 <li>Pressure [hPa] as float mapped starting from ISPU_DOUT_06_L
 (1Ch)</li>
-<li>Man-down event (1 if the user has fallen) as uint8_t mapped starting
+<li>Fall event (1 if the user has fallen) as uint8_t mapped starting
 from ISPU_DOUT_08_L (20h)</li>
 </ul>
 <h2 id="device-orientation">2 - Device orientation</h2>
 <p>None.</p>
 <h2 id="interrupts">3 - Interrupts</h2>
-<p>The configuration generates an interrupt on INT1 when the man-down
-event for the new sample is computed and available in the output
+<p>The configuration generates an interrupt on INT1 when the fall event
+for the new sample is computed and available in the output
 registers.</p>
 <hr />
 <p><strong>More Information: <a href="http://st.com/MEMS">http://www.st.com</a></strong></p>

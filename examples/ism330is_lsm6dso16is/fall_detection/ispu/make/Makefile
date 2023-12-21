@@ -23,7 +23,7 @@ endif
 
 CFLAGS = -mcpu=reiscl -Os -specs=nano.specs -ffunction-sections -fdata-sections -Wl,--gc-sections -mfp32-format=ieee -Wall -Wextra -Wdouble-promotion -fno-strict-aliasing
 INCS = -I../ispu_utils -I../lib
-LDFLAGS = -L../lib -lMotionMD
+LDFLAGS = -L../lib -lMotionFD
 
 SRC = ../ispu_utils/crt0.S ../src/main.c
 
