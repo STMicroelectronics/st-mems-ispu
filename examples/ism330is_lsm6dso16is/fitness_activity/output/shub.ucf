@@ -3,20 +3,20 @@ Ac 10 40
 Ac 01 40
 Ac 15 BA
 Ac 16 10
-Ac 17 80
+Ac 17 00
 Ac 21 32
 Ac 14 44
-WAIT 80
+WAIT 20
 Ac 14 00
 Ac 01 00
 -- write [device 0xBA], 0x11 = 0x12
 Ac 01 40
 Ac 15 BA
 Ac 16 11
-Ac 17 80
+Ac 17 00
 Ac 21 12
 Ac 14 44
-WAIT 80
+WAIT 20
 Ac 14 00
 Ac 01 00
 -- read [device 0xBA], from 0x28 for 3 bytes

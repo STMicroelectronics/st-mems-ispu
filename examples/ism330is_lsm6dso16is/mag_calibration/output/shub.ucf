@@ -3,30 +3,30 @@ Ac 10 40
 Ac 01 40
 Ac 15 3C
 Ac 16 60
-Ac 17 40
+Ac 17 00
 Ac 21 88
 Ac 14 44
-WAIT 40
+WAIT 20
 Ac 14 00
 Ac 01 00
 -- write [device 0x3C], 0x61 = 0x02
 Ac 01 40
 Ac 15 3C
 Ac 16 61
-Ac 17 40
+Ac 17 00
 Ac 21 02
 Ac 14 44
-WAIT 40
+WAIT 20
 Ac 14 00
 Ac 01 00
 -- write [device 0x3C], 0x62 = 0x10
 Ac 01 40
 Ac 15 3C
 Ac 16 62
-Ac 17 40
+Ac 17 00
 Ac 21 10
 Ac 14 44
-WAIT 40
+WAIT 20
 Ac 14 00
 Ac 01 00
 -- read [device 0x3C], from 0x68 for 6 bytes
