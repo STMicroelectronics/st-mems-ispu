@@ -88,30 +88,30 @@ typedef struct
 
 /**
   * @brief  Initialize the MotionAC engine.
-  * @param  enable  enable or disable the library
-  * @retval None
+  * @param  enable enable or disable the library
+  * @retval none
   */
 void MotionAC_Initialize(uint8_t enable);
 
 /**
   * @brief  Run accelerometer calibration algorithm.
-  * @param  data_in  pointer to acceleration [g] and timestamp values [ms]
-  * @param  is_calibrated  pointer value returns 1 if calibration is done with current sample, 0 otherwise
-  * @retval None
+  * @param  data_in pointer to acceleration [g] and timestamp values [ms]
+  * @param  is_calibrated pointer value returns 1 if calibration is done with current sample, 0 otherwise
+  * @retval none
   */
 void MotionAC_Update(MAC_input_t *data_in, uint8_t *is_calibrated);
 
 /**
   * @brief  Get the accelerometer compensation parameters.
-  * @param  data_out  pointer to actual accelerometer offset [g], scale factor correction matrix [-] and quality factor
-  * @retval None
+  * @param  data_out pointer to actual accelerometer offset [g], scale factor correction matrix [-] and quality factor
+  * @retval none
   */
 void MotionAC_GetCalParams(MAC_output_t *data_out);
 
 /**
   * @brief  Get current knobs settings.
-  * @param  knobs  pointer to current knobs settings
-  * @retval None
+  * @param  knobs pointer to current knobs settings
+  * @retval none
   */
 void MotionAC_GetKnobs(MAC_knobs_t *knobs);
 
@@ -146,3 +146,4 @@ uint8_t MotionAC_GetLibVersion(char *version);
 #endif
 
 #endif /* MOTION_AC_H */
+

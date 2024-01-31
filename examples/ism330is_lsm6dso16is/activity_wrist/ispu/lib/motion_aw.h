@@ -37,10 +37,10 @@ extern "C" {
   * @{
   */
 
-
 /** @defgroup MOTION_AW_Exported_Types MOTION_AW_Exported_Types
  * @{
  */
+
 /* Exported constants --------------------------------------------------------*/
 #define NUM_ACTIVITIES 10
 
@@ -66,9 +66,9 @@ typedef enum
   MAW_OTHERS         = 0x09
 } MAW_activity_t;
 
-/*Confidence Level : Range 0-5 [Low -high]
+/* Confidence Level : Range 0-5 [Low -high].
  * current_activity_duration : the duration of current acitivty
- * activity_total_duration will report duration of each activity*/
+ * activity_total_duration will report duration of each activity */
 typedef struct {
   MAW_activity_t current_activity;
   uint16_t confidence;
@@ -76,14 +76,13 @@ typedef struct {
   uint32_t activity_total_duration[NUM_ACTIVITIES];
 } MAW_output_t;
 
-/*Structure to hold the meta classifier counter.
+/* Structure to hold the meta classifier counter.
  * WinSize : The window used for performing operation of meta classification. Maximum value 32
- * minVote : minimum number of detection in window to declare as class. MinVote can not be more than winSize*/
+ * minVote : minimum number of detection in window to declare as class. MinVote can not be more than winSize */
 typedef struct {
-	uint8_t WinSize[NUM_ACTIVITIES];  //max 32
-	uint8_t MinVote[NUM_ACTIVITIES];  //max 32
+	uint8_t WinSize[NUM_ACTIVITIES];  // max 32
+	uint8_t MinVote[NUM_ACTIVITIES];  // max 32
 } MAW_metaClassifier_t;
-
 
 /**
   * @}
@@ -107,16 +106,16 @@ void MotionAW_Initialize(void);
 
 /**
  * @brief  Set the MotionAW accelerometer data orientation.
- * @param  *acc_orientation: reference system of the accelerometer raw data (for instance: south west up became "swu", north east up became "ned")
- * @retval  none
+ * @param  acc_orientation reference system of the accelerometer raw data (for instance: south west up became "swu", north east up became "ned")
+ * @retval none
  */
 void MotionAW_SetOrientation_Acc(const char *acc_orientation);
 
 /**
  * @brief  Run activity recognition algorithm.
- * @param  data_in  pointer to accaleration in [g]
- * @param  t  timestamp in [ms]
- * @param  data_out  pointer to output activity structure
+ * @param  data_in pointer to acceleration in [g]
+ * @param  t timestamp in [ms]
+ * @param  data_out pointer to output activity structure
  * @retval none
  */
 void MotionAW_Update(MAW_input_t *data_in, MAW_output_t *data_out, int64_t t);
@@ -142,7 +141,6 @@ void MotionAW_Reset_Activity_Duration(void);
  */
 uint8_t MotionAW_GetLibVersion(char *version);
 
-
 /**
  * @brief  Get Meta Classifier Counter.
  * @param  MAW_metaClassifier_t pointer
@@ -156,7 +154,6 @@ void MotionAW_GetMetaClassifier(MAW_metaClassifier_t *metaCounter);
  * @retval none
  */
 void MotionAW_SetMetaClassifier(MAW_metaClassifier_t *metaCounter);
-
 
 /**
   * @}
@@ -175,3 +172,4 @@ void MotionAW_SetMetaClassifier(MAW_metaClassifier_t *metaCounter);
 #endif
 
 #endif /* MOTION_AW_H */
+

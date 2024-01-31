@@ -179,7 +179,7 @@ void MotionFX_set_gbias(void *mfx, float *gbias);
 /**
  * @brief  Get the initial gbias.
  * @param  mfx pointer to the algorithm instance
- * @param  pointer to a float array containing the 3 gbias values
+ * @param  gbias pointer to a float array containing the 3 gbias values
  * @retval none
  */
 void MotionFX_get_gbias(void *mfx, float *gbias);

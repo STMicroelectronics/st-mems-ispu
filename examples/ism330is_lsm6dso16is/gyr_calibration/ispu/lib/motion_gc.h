@@ -96,59 +96,58 @@ typedef struct
 /**
   * @brief  Initialize the MotionGC engine.
   * @param  mcu_type MCU type
-  * @param  freq  sampling frequency
+  * @param  freq sampling frequency
   * @retval none
   */
 void MotionGC_Initialize(MGC_mcu_type_t mcu_type, float *freq);
 
 /**
   * @brief  Get the knobs setting of the library.
-  * @param  knobs  pointer to knobs setting structure
+  * @param  knobs pointer to knobs setting structure
   * @retval none
   */
 void MotionGC_GetKnobs(MGC_knobs_t *knobs);
 
 /**
   * @brief  Set the knobs setting of the library.
-  * @param  knobs  pointer to knobs setting structure
+  * @param  knobs pointer to knobs setting structure
   * @retval none
   */
 void MotionGC_SetKnobs(MGC_knobs_t *knobs);
 
 /**
   * @brief  Run gyroscope calibration algorithm and return compensation parameters.
-  * @param  data_in  pointer to acceleration [g] and angular rate values [dps]
-  * @param  gyro_bias  pointer to actual gyroscope offset value in [dps]
-  * @param  bias_update  pointer to an integer that is set to 1 if the gyroscope bias was updated, 0 otherwise
+  * @param  data_in pointer to acceleration [g] and angular rate values [dps]
+  * @param  gyro_bias pointer to actual gyroscope offset value in [dps]
+  * @param  bias_update pointer to an integer that is set to 1 if the gyroscope bias was updated, 0 otherwise
   * @retval none
   */
 void MotionGC_Update(MGC_input_t *data_in, MGC_output_t *gyro_bias, uint8_t *bias_update);
 
 /**
   * @brief  Get the gyroscope compensation parameters.
-  * @param  gyro_bias  pointer to actual gyroscope offset value in [dps]
+  * @param  gyro_bias pointer to actual gyroscope offset value in [dps]
   * @retval none
   */
 void MotionGC_GetCalParams(MGC_output_t *gyro_bias);
 
 /**
   * @brief  Set the initial gyroscope compensation parameters.
-  * @param  gyro_bias  pointer to actual gyroscope offset value in [dps]
+  * @param  gyro_bias pointer to actual gyroscope offset value in [dps]
   * @retval none
   */
 void MotionGC_SetCalParams(MGC_output_t *gyro_bias);
 
 /**
   * @brief  Set new sample frequency.
-  * @param  freq  new sample frequency in [Hz]
+  * @param  freq new sample frequency in [Hz]
   * @retval none
   */
 void MotionGC_SetFrequency(float *freq);
 
-
 /**
   * @brief  Get the library version.
-  * @param  version  pointer to an array of 35 char
+  * @param  version pointer to an array of 35 char
   * @retval Number of characters in the version string
   */
 uint8_t MotionGC_GetLibVersion(char *version);
@@ -170,3 +169,4 @@ uint8_t MotionGC_GetLibVersion(char *version);
 #endif
 
 #endif /* MOTION_GC_H */
+
