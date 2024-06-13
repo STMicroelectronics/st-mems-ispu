@@ -16,7 +16,7 @@ ifeq ($(OS),Windows_NT)
     NULL := $(shell mkdir -p 2> tmp)
     ifneq (,$(wildcard -p))
         MKDIR = mkdir
-        NULL := $(shell $(RMDIR) -p)
+        NULL := $(shell $(RMDIR) "./-p")
     endif
     NULL := $(shell $(RM) tmp)
 endif
