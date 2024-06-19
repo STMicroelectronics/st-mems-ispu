@@ -1,0 +1,11 @@
+acc_odr 6667
+gyr_odr 0
+
+ispu_irq_rate 0
+ispu_int1 enable
+ispu_int2 enable
+ispu_sleep_int2 disable
+ispu_latch disable
+
+ispu_clock 5
+
