@@ -18,10 +18,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define cast_uint64_t(add) (*((volatile uint64_t *)(add))) /* to read/write an unsigned 64 bit integer */
 #define cast_uint32_t(add) (*((volatile uint32_t *)(add))) /* to read/write an unsigned 32 bit integer */
 #define cast_uint16_t(add) (*((volatile uint16_t *)(add))) /* to read/write an unsigned 16 bit integer */
 #define cast_uint8_t(add)  (*((volatile uint8_t *)(add)))  /* to read/write an unsigned  8 bit integer */
 
+#define cast_sint64_t(add) (*((volatile int64_t *)(add)))  /* to read/write a signed 64 bit integer */
 #define cast_sint32_t(add) (*((volatile int32_t *)(add)))  /* to read/write a signed 32 bit integer */
 #define cast_sint16_t(add) (*((volatile int16_t *)(add)))  /* to read/write a signed 16 bit integer */
 #define cast_sint8_t(add)  (*((volatile int8_t *)(add)))   /* to read/write a signed  8 bit integer */
