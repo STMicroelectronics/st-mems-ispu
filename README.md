@@ -1,6 +1,6 @@
 # ISPU - intelligent sensor processing unit
 
-This repository provides examples, tutorials, and other development resources for the **ISPU**, a dedicated ultralow-power, high-performance, programmable core, able to execute real-time processing directly inside the sensor.
+This repository provides examples, tutorials, firmware, and other development resources for the **ISPU**, a dedicated ultralow-power, high-performance, programmable core, able to execute real-time processing directly inside the sensor.
 
 The ISPU allows implementing algorithms written in C code running directly inside the sensor instead of on an application processor, enabling consistent reduction in power consumption, latency, and cost. Any type of algorithm can be implemented, from artificial intelligence to signal processing.
 
@@ -22,6 +22,7 @@ This repository is structured as follows:
 
 - An [examples](https://github.com/STMicroelectronics/ispu-examples) folder, containing templates and example projects as well as libraries to start programming with the ISPU, together with prebuilt files ready to be used with the sensors. Additionally, it contains instructions on how to set up the development environment.
 - A [tutorials](./tutorials/) folder, containing tutorials describing how to create example solutions using different ST hardware kits and software tools.
+- A [host_firmware](./host_firmware/) folder, containing various firmware for boards hosting sensors embedding the ISPU.
 
 Here is where to find the resources helpful when using [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html), [MEMS-Studio](https://www.st.com/en/development-tools/mems-studio.html)'s ISPU Model Converter, and the [ST Edge AI Developer Cloud](https://www.st.com/en/development-tools/stedgeai-dc.html):
 

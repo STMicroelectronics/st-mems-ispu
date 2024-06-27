@@ -1,0 +1,6 @@
+build
+.settings
+Debug
+Release
+*.launch
+.mxproject
