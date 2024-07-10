@@ -18,6 +18,7 @@ The toolchain must be extracted from the downloaded archive to any folder on the
 
   * Open the Start search, type "env" and choose "Edit environment variables for your account".
   * Under the "User variables" section, find the row with "Path" in the "Variable" column, select it and click "Edit...".
+  * Click on the "New" button to add a new entry.
   * Click on the "Browse..." button, browse to the folder where the toolchain is installed, select the *bin* folder and click "OK".
   * Close all remaining windows by clicking "OK".
   * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *reisc-gcc* command should be found if the user tries to run it).
