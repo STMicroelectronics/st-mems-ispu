@@ -28,6 +28,8 @@ The following **hardware** is also used:
 
     ![](images/image2.jpeg)
 
+    Note: JP6 (*USER_INT* routing selector) must be positioned to connect pins 13 and 14 to route *M_INT2_O*, the INT2 pin of the DIL24 adapter socket
+
 -   [STEVAL-MKI233KA](https://www.st.com/en/evaluation-tools/steval-mki233ka.html):
     evaluation kit consisting of the STEVAL-MKI233A main sensing board, which mounts the ISM330ISNTR 3-axis accelerometer and 3-axis gyroscope with embedded ISPU, the STEVAL-MKIGIBV5 adapter board, and a flat cable for connecting the two. The adapter board must be plugged into the DIL24 socket on the X-NUCLEO-IKS01A3 board.
 
