@@ -1,0 +1,29 @@
+general:
+  name: lsm6dso16is_ISPU_reference_dataset
+
+dataset:
+  name: lsm6dso16is_ISPU_reference_dataset
+  path: datasets/lsm6dso16is_ISPU_reference_dataset
+
+preprocessing:
+  f_sample: 52.0
+  full_scale_g: 8
+  power_mode: high_performance
+  win_len_samples: 104
+  lp_cut: 5
+  hp_cut: 1
+  win_ths_g: 0.25
+  trig_len_samples: 5
+  reset_len_samples: 52
+  discard_len_samples: 10
+  show_segmentation: null
+
+training:
+  epochs: 150
+  batch_size: 32
+  train_test_split: 0.8
+  train_validation_split: 0.1
+  show_stats: true
+
+application:
+  prediction_threshold: 0.6
