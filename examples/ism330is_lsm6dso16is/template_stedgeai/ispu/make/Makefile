@@ -25,7 +25,7 @@ CFLAGS = -mcpu=reiscl -Os -specs=nano.specs -ffunction-sections -fdata-sections 
 INCS = -I../ispu_utils -I../inc -I../inc/ai
 LDFLAGS = -L../lib/ai -lNetworkRuntime_ISPU_GCC
 
-SRC = ../ispu_utils/crt0.S ../src/main.c ../src/network_data.c ../src/network.c
+SRC = ../ispu_utils/crt0.S ../src/main.c ../src/network_data.c ../src/network.c ../src/network_utils.c
 
 OUTDIR = bin
 NAME = ispu
