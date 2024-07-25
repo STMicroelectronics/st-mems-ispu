@@ -1,0 +1,37 @@
+{
+    "output": [
+        {
+            "name": "Acc x [mg]",
+            "type": "float"
+        },
+        {
+            "name": "Acc y [mg]",
+            "type": "float"
+        },
+        {
+            "name": "Acc z [mg]",
+            "type": "float"
+        },
+        {
+            "name": "Output stationary",
+            "type": "float"
+        },
+        {
+            "name": "Output walking",
+            "type": "float"
+        },
+        {
+            "name": "Output running",
+            "type": "float"
+        },
+        {
+            "name": "Output cycling",
+            "type": "float"
+        },
+        {
+            "name": "Prediction",
+            "type": "char",
+            "size": 10
+        }
+    ]
+}
