@@ -223,7 +223,7 @@ def yaml2header(model_dir: str, user_config: dict, iir2_a: tuple, iir2_b: tuple)
             iir2_b (tuple): b coefficients of the iir2 filter
     """
     offline_confs = ['show_segmentation',
-                     'discard_len_samples', 'hp_cut', 'lp_cut']
+                     'discard_len_samples', 'hp_cut', 'lp_cut', 'power_mode']
 
     def format_c_const(n):
         return (type(n) == int and str(n)) or (type(n) == float and str(n) + 'f')

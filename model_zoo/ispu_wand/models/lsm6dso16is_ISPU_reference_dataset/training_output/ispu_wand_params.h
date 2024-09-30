@@ -19,7 +19,6 @@
 #define ACC_SENS_G 0.000244f
 #define F_SAMPLE 52.0f
 #define FULL_SCALE_G 8
-#define POWER_MODE False
 #define RESET_LEN_SAMPLES 52
 #define TRIG_LEN_SAMPLES 5
 #define WIN_LEN_SAMPLES 104
