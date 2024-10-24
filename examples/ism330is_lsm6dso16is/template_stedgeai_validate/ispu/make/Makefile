@@ -30,8 +30,38 @@ SRC = ../ispu_utils/crt0.S ../src/main.c ../src/network_data.c ../src/network.c
 OUTDIR = bin
 NAME = ispu
 
+LAYER_START_DEFINE = _STAI_NETWORK_EVENT_NODE_START_CB(_node_id, _buffers_size, ...)
+define LAYER_START
+(*((volatile uint8_t *)(0x685C))) = 2u; \
+if (net_ctx->_callback) { \
+  const stai_event_node_start_stop _start_event = { \
+    .node_id=(_node_id), \
+    .buffers={ \
+      .size=(_buffers_size), \
+      .data=(stai_ptr const*)(const stai_ptr[_buffers_size])STAI_PACK(__VA_ARGS__) \
+    } \
+  }; \
+  net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_START, (const void*)&_start_event); \
+}
+endef
+
+LAYER_STOP_DEFINE = _STAI_NETWORK_EVENT_NODE_STOP_CB(_node_id, _buffers_size, ...)
+define LAYER_STOP
+(*((volatile uint8_t *)(0x685C))) = 0u; \
+if (net_ctx->_callback) { \
+  const stai_event_node_start_stop _stop_event = { \
+    .node_id=(_node_id), \
+    .buffers={ \
+      .size=(_buffers_size), \
+      .data=(stai_ptr const*)(stai_ptr[_buffers_size])STAI_PACK(__VA_ARGS__) \
+    } \
+  }; \
+  net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_STOP, (const void*)&_stop_event); \
+}
+endef
+
 build: $(SRC) $(OUTDIR) Makefile
-	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) $(LDFLAGS) -T ../ispu_utils/boot.ld $(INCS)
+	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) $(LDFLAGS) -T ../ispu_utils/boot.ld $(INCS) -D'$(LAYER_START_DEFINE)=$(LAYER_START)' -D'$(LAYER_STOP_DEFINE)=$(LAYER_STOP)'
 	$(SIZE_REISC) $(OUTDIR)/$(NAME)
 	$(OBJ_COPY) -O srec $(OUTDIR)/$(NAME) $(OUTDIR)/$(NAME).srec
 	$(ISPU_GEN) -b -c -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h

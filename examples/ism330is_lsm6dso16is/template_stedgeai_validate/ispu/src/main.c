@@ -184,11 +184,20 @@ static void init_network(void)
 #endif
 }
 
+static void set_version(void)
+{
+	const uint8_t version[3] = { 1, 1, 0 };
+
+	cast_uint8_t(ISPU_DOUT_28 + 1) = version[0];
+	cast_uint8_t(ISPU_DOUT_28 + 2) = version[1];
+	cast_uint8_t(ISPU_DOUT_28 + 3) = version[2];
+}
+
 static void run_network(void)
 {
-	cast_uint8_t(ISPU_INT_PIN) = cast_uint8_t(ISPU_INT_PIN) & 1u;
+	cast_uint8_t(ISPU_INT_PIN) = 0u;
 	stai_return_code res = stai_network_run(net, STAI_MODE_SYNC);
-	cast_uint8_t(ISPU_INT_PIN) = cast_uint8_t(ISPU_INT_PIN) | 2u;
+	cast_uint8_t(ISPU_INT_PIN) = 2u;
 
 	cast_uint32_t(ISPU_DOUT_00) = (uint32_t)res;
 }
@@ -200,54 +209,81 @@ static void signal_and_wait(void)
 	}
 }
 
-static void send_info(uint8_t req)
+static void send_tensor_info(uint16_t num, const stai_tensor *tensors, const int32_t *indexes)
+{
+	cast_uint16_t(ISPU_DOUT_00) = num;
+	signal_and_wait();
+
+	for (uint16_t i = 0; i < num; i++) {
+		int32_t idx = indexes ? indexes[i] : i;
+
+		cast_uint32_t(ISPU_DOUT_00) = (uint32_t)tensors[idx].format;
+		signal_and_wait();
+
+		cast_uint32_t(ISPU_DOUT_00) = tensors[idx].shape.size;
+		signal_and_wait();
+		for (uint8_t j = 0; j < tensors[idx].shape.size; j++) {
+			cast_sint32_t(ISPU_DOUT_00) = tensors[idx].shape.data[j];
+			signal_and_wait();
+		}
+
+		cast_uint32_t(ISPU_DOUT_00) = tensors[idx].scale.size;
+		signal_and_wait();
+		for (uint8_t j = 0; j < tensors[idx].scale.size; j++) {
+			cast_float(ISPU_DOUT_00) = tensors[idx].scale.data[j];
+			signal_and_wait();
+		}
+
+		cast_uint32_t(ISPU_DOUT_00) = tensors[idx].zeropoint.size;
+		signal_and_wait();
+		for (uint8_t j = 0; j < tensors[idx].zeropoint.size; j++) {
+			cast_sint16_t(ISPU_DOUT_00) = tensors[idx].zeropoint.data[j];
+			signal_and_wait();
+		}
+
+		if (tensors[idx].name == NULL) {
+			cast_uint32_t(ISPU_DOUT_00) = 0;
+			signal_and_wait();
+		} else {
+			cast_uint32_t(ISPU_DOUT_00) = strlen(tensors[idx].name);
+			signal_and_wait();
+			for (uint32_t j = 0; j < strlen(tensors[idx].name); j += 4) {
+				strncpy((char *)ISPU_DOUT_00, &tensors[idx].name[j], 4);
+				signal_and_wait();
+			}
+		}
+	}
+}
+
+static void send_io_info(uint8_t req)
 {
 	stai_network_info info;
 	(void)memset(&info, 0, sizeof(info));
 	(void)stai_network_get_info(net, &info);
 
-	uint16_t num = 0;
-	const stai_tensor *tensors = NULL;
-
-	switch (req) {
-	case 0:
-		num = info.n_inputs;
-		tensors = info.inputs;
-		break;
-	case 1:
-		num = info.n_outputs;
-		tensors = info.outputs;
-		break;
-	default:
-		num = 0;
-		tensors = NULL;
-		break;
+	if (req == 0u) {
+		send_tensor_info(info.n_inputs, info.inputs, NULL);
 	}
+	if (req == 1u) {
+		send_tensor_info(info.n_outputs, info.outputs, NULL);
+	}
+}
 
-	cast_uint16_t(ISPU_DOUT_00) = num;
+extern const stai_network_details g_network_details;
+
+static void send_nodes(void)
+{
+	cast_uint32_t(ISPU_DOUT_00) = g_network_details.n_nodes;
 	signal_and_wait();
 
-	for (uint16_t i = 0; i < num; i++) {
-		cast_uint32_t(ISPU_DOUT_00) = (uint32_t)tensors[i].format;
+	for (uint32_t i = 0; i < g_network_details.n_nodes; i++) {
+		cast_sint32_t(ISPU_DOUT_00) = g_network_details.nodes[i].id;
 		signal_and_wait();
-		cast_uint32_t(ISPU_DOUT_00) = tensors[i].shape.size;
+		cast_sint16_t(ISPU_DOUT_00) = g_network_details.nodes[i].type;
 		signal_and_wait();
-		for (uint8_t j = 0; j < tensors[i].shape.size; j++) {
-			cast_sint32_t(ISPU_DOUT_00) = tensors[i].shape.data[j];
-			signal_and_wait();
-		}
-		cast_uint32_t(ISPU_DOUT_00) = tensors[i].scale.size;
-		signal_and_wait();
-		for (uint8_t j = 0; j < tensors[i].scale.size; j++) {
-			cast_float(ISPU_DOUT_00) = tensors[i].scale.data[j];
-			signal_and_wait();
-		}
-		cast_uint32_t(ISPU_DOUT_00) = tensors[i].zeropoint.size;
-		signal_and_wait();
-		for (uint8_t j = 0; j < tensors[i].zeropoint.size; j++) {
-			cast_sint16_t(ISPU_DOUT_00) = tensors[i].zeropoint.data[j];
-			signal_and_wait();
-		}
+
+		send_tensor_info(g_network_details.nodes[i].input_tensors.size, g_network_details.tensors, g_network_details.nodes[i].input_tensors.data);
+		send_tensor_info(g_network_details.nodes[i].output_tensors.size, g_network_details.tensors, g_network_details.nodes[i].output_tensors.data);
 	}
 }
 
@@ -278,6 +314,7 @@ int main(void)
 
 	init_network();
 	set_addresses();
+	set_version();
 
 	// set boot done flag
 	uint8_t status = cast_uint8_t(ISPU_STATUS);
@@ -295,21 +332,26 @@ int main(void)
 		uint8_t info_in = cast_uint8_t(ISPU_IF2S_FLAG) & 0x02u;
 		uint8_t info_out = cast_uint8_t(ISPU_IF2S_FLAG) & 0x04u;
 		uint8_t versions = cast_uint8_t(ISPU_IF2S_FLAG) & 0x08u;
+		uint8_t nodes = cast_uint8_t(ISPU_IF2S_FLAG) & 0x10u;
 
 		if (run != 0u) {
 			run_network();
 		}
 
 		if (info_in != 0u) {
-			send_info(0);
+			send_io_info(0);
 		}
 
 		if (info_out != 0u) {
-			send_info(1);
+			send_io_info(1);
 		}
 
 		if (versions != 0u) {
 			send_versions();
+		}
+
+		if (nodes != 0u) {
+			send_nodes();
 		}
 
 		cast_uint8_t(ISPU_IF2S_FLAG) = 0xFF; // reset flags
