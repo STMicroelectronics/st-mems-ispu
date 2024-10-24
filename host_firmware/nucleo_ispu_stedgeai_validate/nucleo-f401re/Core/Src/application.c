@@ -36,6 +36,11 @@
 
 #define TIMEOUT_ERROR 0x00000001
 #define STACK_ERROR 0x00000002
+#define UCF_VERSION_ERROR 0x00000004
+
+#define LAYERS_BUF_SIZE 256
+
+static const uint8_t expected_ucf_version[2] = { 1, 1 };
 
 union mem {
 	uint8_t bytes[4];
@@ -73,8 +78,12 @@ static uint32_t input_offset;
 
 static volatile uint8_t enable_int;
 static volatile uint8_t ispu_int;
+static volatile uint8_t layer_int;
 static uint8_t waiting_interrupt;
-static uint32_t exec_time;
+static uint32_t exec_time, layer_start, layer_time[LAYERS_BUF_SIZE];
+static uint16_t layer_next, layer_curr;
+static uint8_t first_exec_int;
+static GPIO_PinState prev_int2_state;
 
 static uint32_t timeout_boot = TIMEOUT_BOOT;
 static uint32_t timeout_run = TIMEOUT_RUN;
@@ -111,7 +120,7 @@ void application(void)
 			uart_received = 0;
 
 			if (strcmp(uart_buf, "ver") == 0) {
-				printf("ISPU validation firmware 1.0.0\n");
+				printf("ISPU validation firmware 1.1.0\n");
 			} else if (strcmp(uart_buf, "name") == 0) {
 				char name[1024];
 
@@ -274,16 +283,55 @@ void application(void)
 				}
 
 				write(0x01, 0x00);
+			} else if (strcmp(uart_buf, "get_nodes") == 0) {
+				write(0x01, 0x80);
+				write(0x0C, 0x10); // give nodes command to the ISPU
+				write(0x01, 0x00);
+				write(0x18, 0xA0); // wake up the ISPU
+
+				write(0x01, 0x80);
+
+				wait_ispu();
+				uint32_t n_nodes = 0;
+				read(0x10, (uint8_t *)&n_nodes, 4);
+				printf("%lu\n", n_nodes);
+				signal_ispu();
+
+				for (uint32_t i = 0; i < n_nodes; i++) {
+					wait_ispu();
+					int32_t id = 0;
+					read(0x10, (uint8_t *)&id, 4);
+					printf("%ld\n", id);
+					signal_ispu();
+
+					wait_ispu();
+					int16_t type = 0;
+					read(0x10, (uint8_t *)&type, 2);
+					printf("%d\n", type);
+					signal_ispu();
+
+					get_and_send_info(); // input tensors
+					get_and_send_info(); // output tensors
+				}
+
+				write(0x01, 0x00);
 			} else if (strcmp(uart_buf, "run") == 0) {
+				HAL_TIM_Base_Start(&htim5);
+
+				first_exec_int = 1;
+				prev_int2_state = GPIO_PIN_SET;
+				waiting_interrupt = 1;
+
+				layer_next = layer_curr = 0;
+
+				printf("Requested execution.\n");
+
 				write(0x01, 0x80);
 				write(0x0C, 0x01); // give run command to ISPU
 				write(0x01, 0x00);
 				write(0x18, 0xA0); // wake up the ISPU
 
-				waiting_interrupt = 1;
 				__HAL_TIM_SET_COUNTER(&htim2, 0);
-
-				printf("Requested execution.\n");
 			}
 		}
 
@@ -387,13 +435,35 @@ void application(void)
 					if (stack_overflow())
 						return_code |= STACK_ERROR;
 
+					uint8_t version[3] = { 0, 0, 0 };
+					if (return_code == 0) {
+						write(0x01, 0x80);
+						read(0x49, version, 3);
+						write(0x01, 0x00);
+						if (version[0] != expected_ucf_version[0] || version[1] != expected_ucf_version[1])
+							return_code |= UCF_VERSION_ERROR;
+					}
+
 					printf("0x%lX\n", return_code);
+
+					if (return_code & UCF_VERSION_ERROR) {
+						printf("%u.%u.%u\n", version[0], version[1], version[2]);
+						printf("%u.%u\n", expected_ucf_version[0], expected_ucf_version[1]);
+					}
 				}
 			}
 		}
 
 		if (ispu_int && !waiting_interrupt)
 			ispu_int = 0; // ignore if interrupt arrives after timeout
+
+		if (layer_int) {
+			layer_int = 0;
+			while (layer_curr != layer_next) {
+				printf("%lu\n", layer_time[layer_curr]);
+				layer_curr = (layer_curr + 1) % LAYERS_BUF_SIZE;
+			}
+		}
 
 		if (ispu_int) {
 			ispu_int = 0;
@@ -406,7 +476,7 @@ void application(void)
 			if (stack_overflow())
 				return_code |= STACK_ERROR;
 
-			printf("0x%lX\n", return_code);
+			printf("ret 0x%lX\n", return_code);
 
 			if (return_code == 0) {
 				write(0x01, 0x80);
@@ -415,6 +485,7 @@ void application(void)
 				uint32_t ret;
 				read(0x10, (uint8_t *)&ret, sizeof(ret));
 				printf("%lu\n", exec_time);
+				HAL_TIM_Base_Stop(&htim5);
 
 				uint8_t reg = 0x10 + 13; // start after inputs
 				uint8_t num_out = 0;
@@ -475,7 +546,7 @@ void application(void)
 				if (stack_overflow())
 					return_code |= STACK_ERROR;
 
-				printf("0x%lX\n", return_code);
+				printf("ret 0x%lX\n", return_code);
 			}
 		}
 	}
@@ -547,6 +618,21 @@ static void get_and_send_info()
 			read(0x10, (uint8_t *)&zeropoint, 2);
 			printf("%d\n", zeropoint);
 			signal_ispu();
+		}
+
+		wait_ispu();
+		read(0x10, (uint8_t *)&size, 4);
+		printf("%lu\n", size);
+		signal_ispu();
+		if (size > 0) {
+			char name[4096] = "";
+			for (uint32_t j = 0; j < size; j += 4) {
+				wait_ispu();
+				read(0x10, (uint8_t *)&name[j], 4);
+				signal_ispu();
+			}
+			name[size] = '\0';
+			printf("%s\n", name);
 		}
 	}
 
@@ -682,30 +768,30 @@ int _write(int fd, const void *buf, size_t count)
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
-	GPIO_TypeDef *int2_port;
-	uint16_t int2_pin;
-
 	if (enable_int) {
 		switch (GPIO_Pin) {
+		case DIL24_INT2_Pin:
+		case IKS4A1_LSM6DSO16IS_INT2_Pin:
+			if (waiting_interrupt) {
+				if (prev_int2_state == GPIO_PIN_SET) {
+					if (first_exec_int) {
+						__HAL_TIM_SET_COUNTER(&htim5, 0);
+						first_exec_int = 0;
+					} else {
+						layer_time[layer_next++] = __HAL_TIM_GET_COUNTER(&htim5) - layer_start;
+						layer_int = 1;
+					}
+					prev_int2_state = GPIO_PIN_RESET;
+				} else {
+					layer_start = __HAL_TIM_GET_COUNTER(&htim5);
+					exec_time = layer_start;
+					prev_int2_state = GPIO_PIN_SET;
+				}
+			}
+			break;
 		case INT1_Pin:
 			ispu_int = 1;
 			break;
-		case DIL24_INT2_Pin:
-		case IKS4A1_LSM6DSO16IS_INT2_Pin:
-			if (GPIO_Pin == DIL24_INT2_Pin) {
-				int2_port = DIL24_INT2_GPIO_Port;
-				int2_pin = DIL24_INT2_Pin;
-			} else {
-				int2_port = IKS4A1_LSM6DSO16IS_INT2_GPIO_Port;
-				int2_pin = IKS4A1_LSM6DSO16IS_INT2_Pin;
-			}
-			if (HAL_GPIO_ReadPin(int2_port, int2_pin) == GPIO_PIN_RESET) {
-				__HAL_TIM_SET_COUNTER(&htim5, 0);
-				HAL_TIM_Base_Start(&htim5);
-			} else if (HAL_GPIO_ReadPin(int2_port, int2_pin) == GPIO_PIN_SET) {
-				HAL_TIM_Base_Stop(&htim5);
-				exec_time = __HAL_TIM_GET_COUNTER(&htim5);
-			}
 		}
 	}
 }

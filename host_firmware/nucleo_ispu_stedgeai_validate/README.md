@@ -2,6 +2,8 @@
 
 This firmware allows performing the validation on target (that is, on the ISPU) of neural network models converted with [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html).
 
+Note that the current firmware supports ST Edge AI Core 2.0.0 and higher. For ST Edge AI Core 1.0.0 please refer to tag [stedgeai_core_1.0](https://github.com/STMicroelectronics/st-mems-ispu/tree/stedgeai_core_1.0) of the GitHub repository.
+
 ## Supported hardware and how to configure it
 
 The firmware supports the combination of the following hardware:
