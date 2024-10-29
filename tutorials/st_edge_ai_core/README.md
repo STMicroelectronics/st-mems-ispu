@@ -14,13 +14,9 @@ For reproducing all the steps in this tutorial project, the following hardware a
 
     ![NUCLEO-F401RE](images/nucleo-f401re.png)
 
-- [X-NUCLEO-IKS01A3](https://www.st.com/en/ecosystems/x-nucleo-iks01a3.html): motion MEMS and environmental sensors expansion board, which must be connected to the NUCLEO-F401RE through the Arduino UNO V3 connector
+- [X-NUCLEO-IKS4A1](https://www.st.com/en/ecosystems/x-nucleo-iks4a1.html): motion MEMS and environmental sensors expansion board, which must be connected to the NUCLEO-F401RE through the Arduino UNO V3 connector
 
-    ![X-NUCLEO-IKS01A3](images/x-nucleo-iks01a3.png)
-
-- [STEVAL-MKI229AA](https://www.st.com/en/evaluation-tools/steval-mki229a.html): adapter board for the LSM6DSO16IS sensor, which embeds a 3-axis accelerometer, a 3-axis gyroscope, and the ISPU (intelligent sensor processing unit), capable of running AI models, which must be plugged into the DIL24 socket of the X-NUCLEO-IKS01A3 expansion board
-
-    ![STEVAL-MKI229AA](images/steval-mki229a.png)
+    ![X-NUCLEO-IKS4A1](images/x-nucleo-iks4a1.png)
 
 ### Software
 
@@ -35,27 +31,25 @@ For reproducing all the steps in this tutorial project, the following hardware a
 
 For the first step of this tutorial, the Nucleo board (with the expansion board and adapter board mounted on top) and MEMS Studio can be used to collect multiple data logs for each of the activities.
 
-1. Mount the X-NUCLEO-IKS01A3 expansion board on top of the NUCLEO-F401RE board and insert the STEVAL-MKI229AA sensor adapter into the DIL24 socket on top of the expansion board.
+1. Mount the X-NUCLEO-IKS4A1 expansion board on top of the NUCLEO-F401RE board and connect it to a USB port of your computer. Do not plug any sensor adapter board in the DIL24 socket if it hosts a sensor with the same I2C address as the LSM6DSO16IS sensor already available on the expansion board, as a clash of addresses does not allow the firmware to work correctly.
 
     ![Nucleo setup](images/nucleo_setup.png)
 
-2. Connect the Nucleo board to a USB port of your computer.
+2. Flash the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS4A1/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware from the X-CUBE-ISPU package to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage).
 
-3. Flash the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS01A3/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware from the X-CUBE-ISPU package to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage)
-
-4. Open MEMS Studio, under *Connect*, select *Serial* as *Communication type* and the serial port the board is connected to as *Communication port*, and then press *Connect*. Then, if *LSM6DSO16IS (DIL24)* is correctly detected, press *Select*.
+3. Open MEMS Studio, under *Connect*, select *Serial* as *Communication type* and the serial port the board is connected to as *Communication port*, and then press *Connect*. Then, if not already showing, select *LSM6DSO16IS* under the *Accelerometer sensor* dropdown menu and press *Select*.
 
     ![MEMS Studio connect](images/mems-studio_connect.png)
 
-5. Go to the `Sensor Evaluation` section and select the `Quick Setup` page to configure the sensor (*Accelerometer Full Scale*: 16 g; *Accelerometer Output Data Rate*: 26 Hz), then press the `▶` button in the top left corner to start streaming data from the sensor.
+4. Go to the `Sensor Evaluation` section and select the `Quick Setup` page to configure the sensor (*Accelerometer Full Scale*: 16 g; *Accelerometer Output Data Rate*: 26 Hz), then press the `▶` button in the top left corner to start streaming data from the sensor.
 
     ![MEMS Studio setup](images/mems-studio_setup.png)
 
-6. Go to the `Save to File` page, select a save path for the CSV log in the `data/<id>_<activity>` folder (where <*activity*> corresponds to the desired activity name and <*id*> corresponds to the numeric identifier of the activity used for its classification), select only *Accelerometer* in both *Data* and *Datalog period source* sections.
+5. Go to the `Save to File` page, select a save path for the CSV log in the `data/<id>_<activity>` folder (where <*activity*> corresponds to the desired activity name and <*id*> corresponds to the numeric identifier of the activity used for its classification), select only *Accelerometer* in both *Data* and *Datalog period source* sections.
 
     ![MEMS Studio datalog](images/mems-studio_datalog.png)
 
-7. Use the `Start` / `Stop` buttons to start and stop data collection making sure to acquire data in the most realistic setting with only one activity type per log.
+6. Use the `Start` / `Stop` buttons to start and stop data collection making sure to acquire data in the most realistic setting with only one activity type per log.
 
 ### PAMAP2 dataset
 
@@ -252,36 +246,28 @@ To evaluate model performance and the correctness of the conversion performed by
 
 The command offers various functionalities but, in its basic form, by inputting the model with no extra arguments, the tool will generate random data to be used as input to both the original and converted model to check that predictions coincide; alternatively, the user can provide the input / output data directly to ensure more control over the frequencies of the predicted classes.
 
-Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target (LSM6DSO16IS) and get its execution time. Before doing so, two preliminary steps are required:
+Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target (LSM6DSO16IS) and get its execution time. Before doing so, the generated C-model must be copied inside the [template_stedgeai_validate](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai_validate) project that must be compiled to create a sensor configuration (.ucf) file:
 
-- The Nucleo board setup, previously used for data collection, needs to be flashed using the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin)
+1. First, copy the `template_stedgeai_validate` project available in the examples folder of this repository:
 
-    Note: Make sure the X-NUCLEO-IKS01A3 jumper JP6 is connecting pins 13-14 together for correct functioning of the validation.
+    ```powershell
+    cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai_validate/ispu ispu_validation
+    ```
 
-    ![X-NUCLEO-IKS01A3 JP6](images/x-nucleo-iks01a3_jp6.png)
+2. Then copy the content of `generated` inside the template project:
 
-- The generated C-model must be copied inside the [template_stedgeai_validate](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai_validate) project that must be compiled to create a sensor configuration (.ucf) file:
+    ```powershell
+    cp -r generated/* ispu_validation
+    ```
 
-    1. First, copy the `template_stedgeai_validate` project available in the examples folder of this repository:
+3. Lastly, compile the project using `make` to generate the sensor configuration (.ucf) file and copy it to the `output` folder:
 
-        ```powershell
-        cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai_validate/ispu ispu_validation
-        ```
+    ```powershell
+    make -C ispu_validation/make
+    cp ispu_validation/make/bin/ispu.ucf output/har_validate.ucf
+    ```
 
-    2. Then copy the content of `generated` inside the template project:
-
-        ```powershell
-        cp -r generated/* ispu_validation
-        ```
-
-    3. Lastly, compile the project using `make` to generate the sensor configuration (.ucf) file and copy it to the `output` folder:
-
-        ```powershell
-        make -C ispu_validation/make
-        cp ispu_validation/make/bin/ispu.ucf output/har_validate.ucf
-        ```
-
-        Note: Make sure you have the ISPU-Toolchain correctly set up on your system to be able to compile the code for the ISPU architecture.
+    Note: Make sure you have the ISPU-Toolchain correctly set up on your system to be able to compile the code for the ISPU architecture.
 
 Finally, having completed all the previous steps, it is possible to perform the validation on target by connecting the Nucleo board to a USB port of the PC, and running the `validate` command specifying the model (.h5), the sensor configuration (.ucf), and the validation data (.npz) as arguments:
 
@@ -326,21 +312,29 @@ In this case, the converted model performance is practically the same as the ori
 
 To accomodate users that prefer to use a graphical interface over the command line, ST Edge AI Core has been integrated in MEMS Studio.
 
-After opening MEMS Studio, go to the `Advanced Features` section and select the `ISPU Model Converter` page. In the lower portion of the page are located three buttons that open up subpages corresponding to ST Edge AI Core's main commands:
+After opening MEMS Studio, go to the `Advanced Features` section and select the `ISPU Model Converter` page. In the lower portion of the page are located four buttons that open up subpages corresponding to ST Edge AI Core's main functionalities:
 
-- Load NN model / Generate:
+- Load NN model / Generate: generate a C library optimized for the ISPU architecture from the trained model
 
-    ![MEMS Studio datalog](images/mems-studio_stedgeai_generate.png)
+    ![MEMS Studio generate](images/mems-studio_stedgeai_generate.png)
 
-- Analyze:
+- Analyze: obtain useful information regarding the model's memory footprint and the number of operations
 
-    ![MEMS Studio datalog](images/mems-studio_stedgeai_analyze.png)
+    ![MEMS Studio analyze](images/mems-studio_stedgeai_analyze.png)
 
-- Validate:
+- Validate: evaluate model performance and the correctness of the conversion performed by ST Edge AI Core
 
-    ![MEMS Studio datalog](images/mems-studio_stedgeai_validate.png)
+    - On host: run the validation on the user's computer
 
-Note: Validation on target functionality is not yet supported by MEMS Studio and is only available through CLI usage at the moment.
+        ![MEMS Studio validate on host](images/mems-studio_stedgeai_validate_on_host.png)
+
+    - On target: run the validation directly on the ISPU (note: requires the Nucleo board to be flashed with the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin") firmware)
+
+        ![MEMS Studio validate on target](images/mems-studio_stedgeai_validate_on_target.png)
+
+- Benchmark: assess all benchmark results (original model, c-model, and X-cross) from both host and target validations
+
+    ![MEMS Studio benchmark](images/mems-studio_stedgeai_benchmark.png)
 
 ## ISPU firmware integration
 
@@ -545,7 +539,7 @@ A pre-made output format file is already available in the `output` folder.
 
 Finally, MEMS Studio can be used to upload and test the sensor configuration (.ucf) containing the ISPU program:
 
-1. Make sure the Nucleo board has been flashed using the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS01A3/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware (note: this is the same firmware used before for data logging)
+1. Make sure the Nucleo board has been flashed using the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS4A1/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware (note: this is the same firmware used before for data logging)
 
 2. Connect the board, go to the `Sensor Evaluation` section, and then select the `Quick Setup` page
 
