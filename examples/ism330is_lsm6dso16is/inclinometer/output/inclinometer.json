@@ -1,0 +1,18 @@
+{
+  "output":
+  [
+    {
+      "name": "Pitch [deg]",
+      "type": "float"
+    },
+    {
+      "name": "Roll [deg]",
+      "type": "float"
+    },
+    {
+      "name": "Acc accuracy",
+      "type": "uint8_t"
+    }
+  ]
+}
+
