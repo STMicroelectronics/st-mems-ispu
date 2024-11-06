@@ -23,7 +23,6 @@ The outputs are as follows:
   * 2 is *ok*
   * 3 is *good*
 
-
 The calibration procedure requires acquiring the accelerometer samples at six different orientations with the device steady for a couple of seconds. The six positions can be with every axis towards the ceiling and the ground such that each axis senses about +1 g or -1 g.
 
 

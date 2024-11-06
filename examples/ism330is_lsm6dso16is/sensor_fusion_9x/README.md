@@ -6,7 +6,7 @@ The accelerometer and gyroscope are configured in high-performance mode at 104 H
 
 The magnetometer (LIS2MDL) is connected through the sensor-hub interface and it is configured in high-performance mode at 100 Hz. The sensor-hub configuration to apply is provided in the *output* folder as a separate file and must be loaded before the example main configuration.
 
-The MotionFX and MotionMC libraries are provided as binary in the *ispu/lib* folder.
+The MotionFX and MotionMC libraries are provided as binaries in the *ispu/lib* folder.
 
 The outputs are as follows:
 
@@ -20,6 +20,7 @@ The outputs are as follows:
   * 2 is *good*
   * 3 is *best*
 
+The magnetometer calibration procedure requires rotating the device for acquiring magnetometer samples at different orientations.
 
 
 ## 2 - Device orientation

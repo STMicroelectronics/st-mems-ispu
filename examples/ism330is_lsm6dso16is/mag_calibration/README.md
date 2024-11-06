@@ -22,7 +22,6 @@ The outputs are as follows:
   * 2 is *good*
   * 3 is *best*
 
-
 The calibration procedure requires rotating the device for acquiring magnetometer samples at different orientations.
 
 
