@@ -14,6 +14,8 @@ Regarding the expansion board, make sure that the INT2 pin of the sensor is corr
  - On the X-NUCLEO-IKS02A1, JP6 (*USER_INT* routing selector) must be positioned to connect pins 5 and 6  to route *M_INT2_O*, the INT2 pin of the DIL24 adapter socket
  - On the X-NUCLEO-IKS4A1, the on-board LSM6DSO16IS sensor is used and routing the INT2 pin is not dependent on any jumper configuration
 
+If using the X-NUCLEO-IKS4A1, do not plug any sensor adapter board in the DIL24 socket if it hosts a sensor with the same I2C address as the LSM6DSO16IS sensor already available on the expansion board, as a clash of addresses does not allow the firmware to work correctly. If a sensor with the same I2C address must necessarily be plugged in the DIL24 socket (not needed for the purpose of this firmware), then SB34, SB35, SB43 and SB44 soldering bridges must be modified to connect the SA0 pin of the DIL24 socket to VDD and the SA0 pin of the LSM6DSO16IS sensor of the expansion board to ground, or viceversa, in order to differentiate the I2C addresses.
+
  Note: make sure that the Nucleo board ST-LINK firmware is updated to the latest version, as it may affect the correct functioning of the communication between the board and the PC. To check the ST-LINK firmware version and upgrade it, you may use the [dedicated upgrade utility](https://www.st.com/en/development-tools/stsw-link007.html) or other ST tools that embed it (for example, [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html) or [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html)).
 
 ## Prebuilt binaries, build and porting
