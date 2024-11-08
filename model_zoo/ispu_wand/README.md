@@ -51,7 +51,7 @@ The different services and the corresponding operations are described in the tab
 | `validate_target` | Evaluate a model accuracy and benchmark it on the ISPU |
 | `generate`        | Deploy a model on the ISPU                                       |
 
-If no argument is specified when executing the services, the files for the pretrained model are used. You can refer to the [Worflow](#workflow) section below and to the training [README](./training/README.md) to know how to retrain the model with your custom data collection, how to measure its performance, and deploy it to the ISPU target.
+If no argument is specified when executing the services, the files for the pretrained model are used. You can refer to the [Workflow](#workflow) section below and to the training [README](./training/README.md) to know how to retrain the model with your custom data collection, how to measure its performance, and deploy it to the ISPU target.
 
 ## Guidelines
 
