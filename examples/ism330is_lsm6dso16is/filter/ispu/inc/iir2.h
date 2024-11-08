@@ -15,13 +15,21 @@
 #ifndef IIR2_H
 #define IIR2_H
 
-struct iir2 {
+#include <stdbool.h>
+
+struct iir2_conf {
 	float b[3];
 	float a[3];
-	float w[3];
+	bool fast_set;
 };
 
-void iir2_init(struct iir2 *f, const float b[3], const float a[3]);
+struct iir2 {
+	struct iir2_conf conf;
+	float w[3];
+	bool fast_set;
+};
+
+void iir2_init(struct iir2 *f, const struct iir2_conf *conf);
 float iir2_run(struct iir2 *f, float x);
 
 #endif

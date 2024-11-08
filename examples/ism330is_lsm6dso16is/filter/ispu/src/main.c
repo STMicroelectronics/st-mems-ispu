@@ -30,11 +30,14 @@ static struct iir2 filt[3];
 
 void __attribute__ ((signal)) algo_00_init(void)
 {
-	const float b[3] = { 1.242629257209507e-02f,  2.485258514419015e-02f, 1.242629257209507e-02f };
-	const float a[3] = { 1.000000000000000e+00f, -1.660834370919655e+00f, 7.105395412080350e-01f };
+	struct iir2_conf filt_conf = {
+		.b = { 1.242629257209507e-02f,  2.485258514419015e-02f, 1.242629257209507e-02f },
+		.a = { 1.000000000000000e+00f, -1.660834370919655e+00f, 7.105395412080350e-01f },
+		.fast_set = true
+	};
 
 	for (uint8_t i = 0; i < 3u; i++) {
-		iir2_init(&filt[i], b, a);
+		iir2_init(&filt[i], &filt_conf);
 	}
 }
 
