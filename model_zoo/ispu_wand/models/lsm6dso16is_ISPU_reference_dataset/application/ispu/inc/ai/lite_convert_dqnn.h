@@ -27,62 +27,62 @@
 
 LITE_API_ENTRY
 void forward_lite_node_convert_is1os8(
-  const ai_pbits *p_in, 
-  ai_i8 *p_out, 
-  const ai_i32 n_channels, 
+  const ai_pbits *p_in,
+  ai_i8 *p_out,
+  const ai_i32 n_channels,
   const ai_i32 n_pixels,
   const ai_i8 *n_values);
 
 
 LITE_API_ENTRY
 void forward_lite_node_convert_is1os16(
-  const ai_pbits *p_in, 
-  ai_i16 *p_out, 
-  const ai_i32 n_channels, 
+  const ai_pbits *p_in,
+  ai_i16 *p_out,
+  const ai_i32 n_channels,
   const ai_i32 n_pixels,
   const ai_i16 *n_values);
 
 
 LITE_API_ENTRY
 void forward_lite_node_convert_is1of32(
-  const ai_pbits *p_in, 
-  ai_float *p_out, 
-  const ai_i32 n_channels, 
+  const ai_pbits *p_in,
+  ai_float *p_out,
+  const ai_i32 n_channels,
   const ai_i32 n_pixels,
   const ai_float *n_values);
 
 
 /*!
- * @brief Handles data conversion from 8-bits signed input to signed binary 
+ * @brief Handles data conversion from 8-bits signed input to signed binary
  *        outputs - Lite API version
  * @ingroup lite_pw_dqnn
  */
 LITE_API_ENTRY
 void forward_lite_node_convert_is8os1(
-  const ai_i8 *p_in, 
-  ai_pbits *p_out, 
-  const ai_i32 n_channels, 
-  const ai_i32 n_pixels, 
+  const ai_i8 *p_in,
+  ai_pbits *p_out,
+  const ai_i32 n_channels,
+  const ai_i32 n_pixels,
   const ai_i8 zp,
   const ai_i8 pad);
 
 
 LITE_API_ENTRY
 void forward_lite_node_convert_is16os1(
-  const ai_i16 *p_in, 
-  ai_pbits *p_out, 
-  const ai_i32 n_channels, 
-  const ai_i32 n_pixels, 
+  const ai_i16 *p_in,
+  ai_pbits *p_out,
+  const ai_i32 n_channels,
+  const ai_i32 n_pixels,
   const ai_i8 zp,
   const ai_i8 pad);
 
 
 LITE_API_ENTRY
 void forward_lite_node_convert_if32os1(
-  const ai_float *p_in, 
-  ai_pbits *p_out, 
-  const ai_i32 n_channels, 
-  const ai_i32 n_pixels, 
+  const ai_float *p_in,
+  ai_pbits *p_out,
+  const ai_i32 n_channels,
+  const ai_i32 n_pixels,
   const ai_i8 zp,
   const ai_i8 pad);
 

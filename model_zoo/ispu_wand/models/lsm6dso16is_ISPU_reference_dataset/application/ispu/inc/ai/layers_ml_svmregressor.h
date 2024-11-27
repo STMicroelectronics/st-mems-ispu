@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_svmreg Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

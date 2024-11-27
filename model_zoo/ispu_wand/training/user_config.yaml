@@ -9,11 +9,11 @@ preprocessing:
   f_sample: 52.0
   full_scale_g: 8
   power_mode: high_performance
-  win_len_samples: 104
   lp_cut: 5
   hp_cut: 1
   win_ths_g: 0.25
   trig_len_samples: 5
+  win_len_samples: 104
   reset_len_samples: 52
   discard_len_samples: 10
   show_segmentation: null
@@ -26,4 +26,4 @@ training:
   show_stats: true
 
 application:
-  prediction_threshold: 0.6
+  pred_ths: 0.6

@@ -25,8 +25,8 @@
  * @defgroup core_common Common Core Library Routines
  * @brief Common macros, datatypes and routines of core common module
  * @details This module contains the definitons and handling of the @ref ai_node
- * datastructures. An ai_node is a generic abstraction for a network node that 
- * could be either a fixed function layer or an operator. Ideally the platform 
+ * datastructures. An ai_node is a generic abstraction for a network node that
+ * could be either a fixed function layer or an operator. Ideally the platform
  * interface defined in api module should handle an process generic nodes in the
  * network, not relying on the fact that they are layers or operators datastructs
  * Specific implementative details should be kept inside layers and operators
@@ -248,7 +248,7 @@ AI_INTERNAL_API
 ai_bool core_init(void);
 
 /*!
- * @brief get 1st error raised during processing 
+ * @brief get 1st error raised during processing
  * @ingroup core_common
  * @param[out] error the @ref ai_error recorded during processing
  * @return the 1st error generated during processing. If no errors AI_ERROR_NONE
@@ -262,7 +262,7 @@ ai_error core_get_error(ai_error* error);
  * @param[out] error the @ref ai_error to set
  * @param[in] type the specific error type to set
  * @param[in] code the specific error code to set
- * @return true if the error is set, false in case a precedent error was already 
+ * @return true if the error is set, false in case a precedent error was already
  */
 AI_INTERNAL_API
 ai_bool core_set_error(

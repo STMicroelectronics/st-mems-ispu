@@ -174,10 +174,10 @@
 
 /*!  AI_TENSORS SECTION                     ***********************************/
 #define AI_TENSOR_KLASS(tensor_) \
-  ((tensor_) ? (tensor_)->klass : NULL) 
+  ((tensor_) ? (tensor_)->klass : NULL)
 
 #define AI_TENSOR_SHAPE(tensor_) \
-  (&((tensor_)->shape)) 
+  (&((tensor_)->shape))
 
 #define AI_TENSOR_STRIDE(tensor_) \
   (&((tensor_)->stride))
@@ -196,7 +196,7 @@
 
 #define AI_TENSOR_DATA_SIZE(tensor_) \
   ((tensor_) ? AI_TENSOR_INFO(tensor_)->data_size : 0)
-  
+
 /*!  AI_OFFSETS SECTION                     ***********************************/
 //#define AI_OFFSET_BATCH(b, stride)  ((ai_ptr_offset)(b)  * AI_STRIDE_BATCH(stride))
 #define AI_OFFSET_H(y, stride)      ((ai_ptr_offset)(y)  * AI_STRIDE_H(stride))
@@ -249,9 +249,9 @@
     ? ((type_*)((list_)->info->zeropoint)) : NULL )
 
 #define AI_KLASS_GET_INTQ_INFO_LIST(tensor_) \
-  ((ai_intq_info_list*)((tensor_)->klass))    
-    
-    
+  ((ai_intq_info_list*)((tensor_)->klass))
+
+
 AI_API_DECLARE_BEGIN
 
 /*!
@@ -360,7 +360,7 @@ ai_size ai_shape_get_npixels(const ai_shape* shape)
  * @param major major version value
  * @param minor minor version value
  * @param micro micro version value
- * @return a packed version info obtained serializing input values 
+ * @return a packed version info obtained serializing input values
  */
 AI_INTERNAL_API
 ai_version ai_version_get(const ai_u8 major, const ai_u8 minor, const ai_u8 micro);
@@ -369,7 +369,7 @@ ai_version ai_version_get(const ai_u8 major, const ai_u8 minor, const ai_u8 micr
  * @brief Get un-packed version from packed version representaion.
  * @ingroup datatypes_internal
  * @param version a packed varsion info
- * @return struct with de-serialized major, minor, micro values 
+ * @return struct with de-serialized major, minor, micro values
  */
 AI_INTERNAL_API
 ai_platform_version ai_platform_version_get(const ai_version version);

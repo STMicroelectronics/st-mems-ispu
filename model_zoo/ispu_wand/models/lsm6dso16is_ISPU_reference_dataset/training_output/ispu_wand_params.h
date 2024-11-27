@@ -15,20 +15,18 @@
 #ifndef ISPU_WAND_PARAMS_H
 #define ISPU_WAND_PARAMS_H
 
-#define NUM_AXES 3
-#define ACC_SENS_G 0.000244f
 #define F_SAMPLE 52.0f
 #define FULL_SCALE_G 8
-#define RESET_LEN_SAMPLES 52
+#define WIN_THS_G 0.25f
 #define TRIG_LEN_SAMPLES 5
 #define WIN_LEN_SAMPLES 104
-#define WIN_THS_G 0.25f
-#define NUM_LABELS 4
+#define RESET_LEN_SAMPLES 52
+#define ACC_SENS_G 0.000244f
 #define PRED_THS 0.6f
-
-const float IIR2_B[] = { 0.19773946280316276f, 0.0f, -0.19773946280316276 };
-const float IIR2_A[] = { 1.0f, -1.5451525924244163f, 0.6045210743936745 };
-const char LABELS[] = { 'I', 'S', 'P', 'U', ' ' };
+#define NUM_AXES 3
+#define NUM_LABELS 4
+#define IIR2_B { 0.197739f, 0.000000f, -0.197739f }
+#define IIR2_A { 1.000000f, -1.545153f, 0.604521f }
 
 enum {
 	LABEL_I,
@@ -37,5 +35,6 @@ enum {
 	LABEL_U,
 	LABEL_NULL,
 };
+const char LABELS[] = { 'I', 'S', 'P', 'U', ' ' };
 
 #endif //ISPU_WAND_PARAMS_H

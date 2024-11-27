@@ -33,13 +33,13 @@
   ai_shape_2d dilation;                 /*!< dilation value along axis of the filter */ \
   ai_shape    filter_pad;               /*!< filter pad 4d */ \
   ai_layer_format_type in_ch_format;    /*!< Input format  (Channel 1st vs Channel last */ \
-  ai_layer_format_type out_ch_format;   /*!< Output format (Channel 1st vs Channel last */ 
+  ai_layer_format_type out_ch_format;   /*!< Output format (Channel 1st vs Channel last */
 
 
 
 /*!
  * @defgroup layers_conv2d Convolutive Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -71,6 +71,20 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_gemm_ {
   ai_u8 tA;          /*!< transpose A flag */
   ai_u8 tB;          /*!< transpose B flag */
 } ai_layer_gemm;
+
+/*!
+ * @struct ai_layer_matmul
+ * @ingroup layers_conv2d
+ * @brief layer for General Matrix Multiplication
+ *
+ */
+typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_matmul_ {
+  AI_LAYER_COMMON_FIELDS_DECLARE
+  ai_float alpha;    /*!< alpha coefficient */
+  ai_float beta;     /*!< beta coefficient */
+  ai_u8 tA;          /*!< transpose A flag */
+  ai_u8 tB;          /*!< transpose B flag */
+} ai_layer_matmul;
 
 /*!
  * @struct ai_layer_conv2d
@@ -194,7 +208,7 @@ AI_INTERNAL_API
 void forward_conv2d_fixed(ai_layer *pLayer);
 
 /*!
- * @brief Computes the activations of a fixed point @ref ai_layer_conv2d_nl_pool 
+ * @brief Computes the activations of a fixed point @ref ai_layer_conv2d_nl_pool
  * layer.
  * The @ref ai_layer_conv2d_nl_pool is a fused conv2D + optional nonlinear
  * layer + optional pooling / nonlinearity (average, max)
@@ -239,6 +253,16 @@ void forward_conv2d_is8os8ws8_sssa_ch(ai_layer *pLayer);
 AI_INTERNAL_API
 void forward_dw_sssa8_ch(ai_layer *pLayer);
 
+
+/*!
+ * @brief Computes the activations of a int8 quantized DW layer
+ *        for SSSA per channel quantized scheme Optimized for HSP
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_dw_hsp_sssa8_ch(ai_layer *pLayer);
+
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
  *        for SSSA per channel quantized scheme, with 3x3 kernels
@@ -250,7 +274,18 @@ void forward_dw_3x3_sssa8_ch(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
- *        for SSSA per channel quantized scheme, with 3x3 kernels and input are 
+ *        for SSSA per channel quantized scheme, with 1xN kernels
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_dw_1xN_sssa8_ch(ai_layer *pLayer);
+
+
+
+/*!
+ * @brief Computes the activations of a int8 quantized DW layer
+ *        for SSSA per channel quantized scheme, with 3x3 kernels and input are
  *        channel first
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer
@@ -283,6 +318,15 @@ void forward_dw_all_sssa8_ch(ai_layer *pLayer);
  */
 AI_INTERNAL_API
 void forward_pw_sssa8_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a int8 quantized PW layer
+ *        for SSSA per channel quantized scheme. Optimized for HSP
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_pw_hsp_sssa8_ch(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized dilated Conv2d layer
@@ -323,6 +367,17 @@ AI_INTERNAL_API
 void forward_conv2d_sssa8_ch(ai_layer *pLayer);
 
 /*!
+ * @brief Computes the activations of a int8 non dilated Conv2d layer
+ *        for SSSA per channel quantized scheme (valid or same padding)
+ *        Used for configuration supported by HSP and if HSP is available
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_conv2d_hsp_sssa8_ch(ai_layer *pLayer);
+
+
+/*!
  * @brief Computes the activations of a int8 quantized Conv2d layer
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer
@@ -350,7 +405,7 @@ void forward_dw_sssa8_ch_nl_pool(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
- *        for SSSA per channel quantized scheme, with 3x3 kernels, 
+ *        for SSSA per channel quantized scheme, with 3x3 kernels,
  *        with pooling fused
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer
@@ -360,7 +415,7 @@ void forward_dw_3x3_sssa8_ch_nl_pool(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
- *        for SSSA per channel quantized scheme, with 3x3 kernels, 
+ *        for SSSA per channel quantized scheme, with 3x3 kernels,
  *        with pooling fused
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer
@@ -388,7 +443,7 @@ AI_INTERNAL_API
 void forward_dw_all_sssa8_ch_nl_pool(ai_layer *pLayer);
 
 /*!
- * @brief Computes the activations of a int8 quantized PW layer, 
+ * @brief Computes the activations of a int8 quantized PW layer,
  *        with pooling fused
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer
@@ -564,6 +619,8 @@ void forward_conv2d_nl_pool_integer_UAUA_ch(ai_layer *pLayer);
 AI_INTERNAL_API
 void forward_dense_integer(ai_layer *pLayer);
 
+
+
 /*!
  * @brief Computes the activations of a integer dense (fully connected) layer
  *        for SSSA per layer quantized scheme
@@ -575,7 +632,16 @@ void forward_dense_integer_SSSA(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a integer dense (fully connected) layer
- *        for SSSA per channel quantized scheme
+ *        for SSSA per layer quantized scheme Optimized for HSP
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_hsp_sssa8(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSSA per channel quantized scheme: HSP variant
  * @ingroup layers_dense
  * @param layer the dense layer
  */

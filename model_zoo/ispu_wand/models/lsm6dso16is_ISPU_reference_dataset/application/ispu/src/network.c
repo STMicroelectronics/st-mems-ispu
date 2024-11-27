@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    network.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    2024-07-17T17:39:15+0200
+  * @date    2025-02-05T14:48:06+0100
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -25,9 +25,9 @@
 #include "network_data.h"
 #include "stai_events.h"
 
-#include "ai_lite_inspect.h"
-
 #include "lite_operators.h"
+
+#include "ai_lite_inspect.h"
 /*****************************************************************************/
 #define STAI_INTERNAL_API_MAJOR               (1)
 #define STAI_INTERNAL_API_MINOR               (0)
@@ -113,6 +113,7 @@
 #define STAI_EVENT_NODE_STOP_CB
 
 #ifdef STAI_EVENT_NODE_START_CB
+#ifndef _STAI_NETWORK_EVENT_NODE_START_CB
   #define _STAI_NETWORK_EVENT_NODE_START_CB(_node_id, _buffers_size, ...) \
   if (net_ctx->_callback) { \
     const stai_event_node_start_stop _start_event = { \
@@ -124,12 +125,14 @@
     }; \
     net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_START, (const void*)&_start_event); \
   }
+#endif
 #else
   #define _STAI_NETWORK_EVENT_NODE_START_CB(_node_id, _buffers_size, ...) \
     do { /* _STAI_NETWORK_EVENT_NODE_START_CB() */ } while(0);
 #endif      /* STAI_EVENT_NODE_START_CB */
 
 #ifdef STAI_EVENT_NODE_STOP_CB
+#ifndef _STAI_NETWORK_EVENT_NODE_STOP_CB
   #define _STAI_NETWORK_EVENT_NODE_STOP_CB(_node_id, _buffers_size, ...) \
   if (net_ctx->_callback) { \
     const stai_event_node_start_stop _stop_event = { \
@@ -141,6 +144,7 @@
     }; \
     net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_STOP, (const void*)&_stop_event); \
   }
+#endif
 #else
   #define _STAI_NETWORK_EVENT_NODE_STOP_CB(_node_id, _buffers_size, ...) \
     do { /* _STAI_NETWORK_EVENT_NODE_STOP_CB() */ } while(0);
@@ -148,8 +152,8 @@
 
 
 /*****************************************************************************/
-#define _STAI_NETWORK_MODEL_SIGNATURE     "0x0d894768cd45a8890762439681def151"
-#define _STAI_NETWORK_DATETIME            "2024-07-17T17:39:15+0200"
+#define _STAI_NETWORK_MODEL_SIGNATURE     "0x38a6ae31d73a7c0218d36dc8074490e0"
+#define _STAI_NETWORK_DATETIME            "2025-02-05T14:48:06+0100"
 #define _STAI_NETWORK_COMPILE_DATETIME    __DATE__ " " __TIME__
 
 #define _STAI_CONTEXT_ALIGNMENT        (STAI_NETWORK_CONTEXT_ALIGNMENT)
@@ -168,8 +172,8 @@ static const stai_network_info g_network_info = {
   .c_model_name = STAI_NETWORK_MODEL_NAME,
   .c_model_datetime = _STAI_NETWORK_DATETIME,
   .c_model_signature = 0x0,
-  .runtime_version = STAI_INIT_VERSION(9, 1, 0),
-  .tool_version = STAI_INIT_VERSION(1, 0, 0),
+  .runtime_version = STAI_INIT_VERSION(10, 0, 0),
+  .tool_version = STAI_INIT_VERSION(2, 0, 0),
   .api_version = STAI_INIT_VERSION(1, 0, 0),
   .n_macc = STAI_NETWORK_MACC_NUM,
   .n_nodes = STAI_NETWORK_NODES_NUM,
@@ -215,7 +219,7 @@ static const stai_network_info g_network_info = {
       STAI_NETWORK_WEIGHT_1_FLAGS,
       STAI_FORMAT_U8,
       STAI_NETWORK_WEIGHT_1_SIZE_BYTES,
-      STAI_DECLARE_ARRAY(int32_t, 1, 3600),
+      STAI_DECLARE_ARRAY(int32_t, 1, 3792),
       STAI_EMPTY_ARRAY(),
       STAI_EMPTY_ARRAY()),
     },
@@ -325,7 +329,7 @@ stai_return_code stai_network_deinit(
 
 /* Array#0 */
 AI_ARRAY_OBJ_DECLARE(
-  activation_output_array, AI_ARRAY_FORMAT_FLOAT,
+  batch_normalization_output_array, AI_ARRAY_FORMAT_FLOAT,
   NULL, NULL, 832, AI_STATIC)
 
 /* Array#1 */
@@ -335,7 +339,7 @@ AI_ARRAY_OBJ_DECLARE(
 
 /* Array#2 */
 AI_ARRAY_OBJ_DECLARE(
-  activation_1_output_array, AI_ARRAY_FORMAT_FLOAT,
+  batch_normalization_1_output_array, AI_ARRAY_FORMAT_FLOAT,
   NULL, NULL, 416, AI_STATIC)
 
 /* Array#3 */
@@ -345,7 +349,7 @@ AI_ARRAY_OBJ_DECLARE(
 
 /* Array#4 */
 AI_ARRAY_OBJ_DECLARE(
-  activation_2_output_array, AI_ARRAY_FORMAT_FLOAT,
+  batch_normalization_2_output_array, AI_ARRAY_FORMAT_FLOAT,
   NULL, NULL, 208, AI_STATIC)
 
 /* Array#5 */
@@ -357,57 +361,57 @@ AI_ARRAY_OBJ_DECLARE(
 
 /* Tensor #0 */
 AI_TENSOR_OBJ_DECLARE(
-  activation_output, AI_STATIC,
-  12, 0x0,
+  batch_normalization_output, AI_STATIC,
+  7, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 104), AI_STRIDE_INIT(4, 4, 4, 32, 32),
-  1, &activation_output_array, NULL)
+  1, &batch_normalization_output_array, NULL)
 
 /* Tensor #1 */
 AI_TENSOR_OBJ_DECLARE(
   max_pooling1d_output, AI_STATIC,
-  13, 0x0,
+  28, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 52), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &max_pooling1d_output_array, NULL)
 
 /* Tensor #2 */
 AI_TENSOR_OBJ_DECLARE(
-  activation_1_output, AI_STATIC,
-  15, 0x0,
+  batch_normalization_1_output, AI_STATIC,
+  1, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 52), AI_STRIDE_INIT(4, 4, 4, 32, 32),
-  1, &activation_1_output_array, NULL)
+  1, &batch_normalization_1_output_array, NULL)
 
 /* Tensor #3 */
 AI_TENSOR_OBJ_DECLARE(
   max_pooling1d_1_output, AI_STATIC,
-  16, 0x0,
+  25, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 26), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &max_pooling1d_1_output_array, NULL)
 
 /* Tensor #4 */
 AI_TENSOR_OBJ_DECLARE(
-  activation_2_output, AI_STATIC,
-  18, 0x0,
+  batch_normalization_2_output, AI_STATIC,
+  4, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 26), AI_STRIDE_INIT(4, 4, 4, 32, 32),
-  1, &activation_2_output_array, NULL)
+  1, &batch_normalization_2_output_array, NULL)
 
 /* Tensor #5 */
 AI_TENSOR_OBJ_DECLARE(
   max_pooling1d_2_output, AI_STATIC,
-  19, 0x0,
+  26, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 13), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &max_pooling1d_2_output_array, NULL)
 
 
 AI_TENSOR_CHAIN_OBJ_DECLARE(
   max_pooling1d_chain, AI_STATIC_CONST, 4,
-  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &activation_output),
+  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &batch_normalization_output),
   AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &max_pooling1d_output),
   AI_TENSOR_LIST_OBJ_EMPTY,
   AI_TENSOR_LIST_OBJ_EMPTY
 )
 
 AI_LAYER_OBJ_DECLARE(
-  max_pooling1d_layer, 4,
+  max_pooling1d_layer, 3,
   POOL_TYPE, 0x0, NULL,
   pool, forward_mp,
   &max_pooling1d_chain,
@@ -419,14 +423,14 @@ AI_LAYER_OBJ_DECLARE(
 
 AI_TENSOR_CHAIN_OBJ_DECLARE(
   max_pooling1d_1_chain, AI_STATIC_CONST, 4,
-  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &activation_1_output),
+  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &batch_normalization_1_output),
   AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &max_pooling1d_1_output),
   AI_TENSOR_LIST_OBJ_EMPTY,
   AI_TENSOR_LIST_OBJ_EMPTY
 )
 
 AI_LAYER_OBJ_DECLARE(
-  max_pooling1d_1_layer, 8,
+  max_pooling1d_1_layer, 6,
   POOL_TYPE, 0x0, NULL,
   pool, forward_mp,
   &max_pooling1d_1_chain,
@@ -438,14 +442,14 @@ AI_LAYER_OBJ_DECLARE(
 
 AI_TENSOR_CHAIN_OBJ_DECLARE(
   max_pooling1d_2_chain, AI_STATIC_CONST, 4,
-  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &activation_2_output),
+  AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &batch_normalization_2_output),
   AI_TENSOR_LIST_OBJ_INIT(AI_FLAG_NONE, 1, &max_pooling1d_2_output),
   AI_TENSOR_LIST_OBJ_EMPTY,
   AI_TENSOR_LIST_OBJ_EMPTY
 )
 
 AI_LAYER_OBJ_DECLARE(
-  max_pooling1d_2_layer, 12,
+  max_pooling1d_2_layer, 9,
   POOL_TYPE, 0x0, NULL,
   pool, forward_mp,
   &max_pooling1d_2_chain,
@@ -457,33 +461,33 @@ AI_LAYER_OBJ_DECLARE(
 /**  Hybrid layers declarations section  *************************************/
 void forward_lite_max_pooling1d(_stai_network_context* net_ctx)
 {
-  activation_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  activation_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  _STAI_NETWORK_EVENT_NODE_START_CB(4, 1, { activation_output.data->data});
+  batch_normalization_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  batch_normalization_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  _STAI_NETWORK_EVENT_NODE_START_CB(3, 1, { batch_normalization_output.data->data});
   forward_mp(&max_pooling1d_layer);
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(4, 1, { max_pooling1d_output.data->data});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(3, 1, { max_pooling1d_output.data->data});
 }
 void forward_lite_max_pooling1d_1(_stai_network_context* net_ctx)
 {
-  activation_1_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  activation_1_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_1_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 1664));
-  max_pooling1d_1_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 1664));
-  _STAI_NETWORK_EVENT_NODE_START_CB(8, 1, { activation_1_output.data->data});
+  batch_normalization_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 1664);
+  batch_normalization_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 1664);
+  max_pooling1d_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  _STAI_NETWORK_EVENT_NODE_START_CB(6, 1, { batch_normalization_1_output.data->data});
   forward_mp(&max_pooling1d_1_layer);
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(8, 1, { max_pooling1d_1_output.data->data});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(6, 1, { max_pooling1d_1_output.data->data});
 }
 void forward_lite_max_pooling1d_2(_stai_network_context* net_ctx)
 {
-  activation_2_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 832));
-  activation_2_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 832));
-  max_pooling1d_2_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_2_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  _STAI_NETWORK_EVENT_NODE_START_CB(12, 1, { activation_2_output.data->data});
+  batch_normalization_2_output_array.data = AI_PTR(net_ctx->_activations[0] + 832);
+  batch_normalization_2_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 832);
+  max_pooling1d_2_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_2_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  _STAI_NETWORK_EVENT_NODE_START_CB(9, 1, { batch_normalization_2_output.data->data});
   forward_mp(&max_pooling1d_2_layer);
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(12, 1, { max_pooling1d_2_output.data->data});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(9, 1, { max_pooling1d_2_output.data->data});
 }
 
 /*****************************************************************************/
@@ -509,9 +513,9 @@ stai_return_code stai_network_run(
                   STAI_ERROR_NETWORK_INVALID_WEIGHTS_PTR, net_ctx->_return_code)
 
 
-  /* LITE_KERNEL_SECTION BEGIN conv_hidden_0 */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_0_conv2d */
   {
-      const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 2196);
+      const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_inputs[0] + 0);
     ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
     const ai_u8* t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 0);
     const ai_u8* t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 288);
@@ -531,38 +535,52 @@ stai_return_code stai_network_run(
     const ai_u16 l_dilation_H_const_u16 = 1;
     const ai_u16 l_dilation_W_const_u16 = 1;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(2, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+  _STAI_NETWORK_EVENT_NODE_START_CB(1, 1, {(stai_ptr) t_in_0_ptr_const_f32});
     
   forward_lite_conv2d_if32of32wf32(t_in_0_ptr_const_f32, t_out_0_ptr_f32, t_weight_0_ptr_const_u8, t_weight_1_ptr_const_u8, t_scratch_0_ptr_f32, t_in_0_shape_ch_const_u32, t_out_0_shape_ch_const_u32, t_in_0_shape_w_const_u32, t_in_0_shape_h_const_u32, t_out_0_shape_w_const_u32, t_out_0_shape_h_const_u32, t_weight_0_shape_w_const_u32, t_weight_0_shape_h_const_u32, l_pad_W_0_const_s32, l_pad_H_0_const_s32, l_stride_1_const_u16, l_stride_0_const_u16, 3, 1, l_dilation_H_const_u16, l_dilation_W_const_u16, (ai_size)(1));
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(2, 1, {(stai_ptr) t_out_0_ptr_f32});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(1, 1, {(stai_ptr) t_out_0_ptr_f32});
   }
-  /* LITE_KERNEL_SECTION END conv_hidden_0 */
-  /* LITE_KERNEL_SECTION BEGIN activation */
+  /* LITE_KERNEL_SECTION END conv_hidden_0_conv2d */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_0 */
   {
       ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 0);
     const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 0);
     const ai_i32 t_in_0_shape_ch_h_prod_const_s32 = 832;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(3, 1, {(stai_ptr) t_in_0_ptr_const_handle});
+  _STAI_NETWORK_EVENT_NODE_START_CB(1, 1, {(stai_ptr) t_in_0_ptr_const_handle});
     
   forward_lite_nl_relu_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_h_prod_const_s32, NULL);
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(3, 1, {(stai_ptr) t_out_0_ptr_handle});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(1, 1, {(stai_ptr) t_out_0_ptr_handle});
   }
-  /* LITE_KERNEL_SECTION END activation */
+  /* LITE_KERNEL_SECTION END conv_hidden_0 */
+  /* LITE_KERNEL_SECTION BEGIN batch_normalization */
+  {
+      ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    const ai_float* t_weight_0_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 320);
+    const ai_float* t_weight_1_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 352);
+  
+  _STAI_NETWORK_EVENT_NODE_START_CB(2, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+    
+  forward_lite_bn_if32of32wf32(t_out_0_ptr_f32, t_in_0_ptr_const_f32, t_weight_0_ptr_const_f32, t_weight_1_ptr_const_f32, (ai_u32)(832), (ai_size)(8));
+    
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(2, 1, {(stai_ptr) t_out_0_ptr_f32});
+  }
+  /* LITE_KERNEL_SECTION END batch_normalization */
   /* LITE_KERNEL_SECTION BEGIN max_pooling1d */
   {
     
   forward_lite_max_pooling1d(net_ctx);
   }
   /* LITE_KERNEL_SECTION END max_pooling1d */
-  /* LITE_KERNEL_SECTION BEGIN conv_hidden_1 */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_1_conv2d */
   {
       const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
     ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 1664);
-    const ai_u8* t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 320);
-    const ai_u8* t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 1088);
+    const ai_u8* t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 384);
+    const ai_u8* t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 1152);
     ai_float* t_scratch_0_ptr_f32 = (ai_float*)(NULL);
     const ai_u32 t_in_0_shape_ch_const_u32 = 8;
     const ai_u32 t_out_0_shape_ch_const_u32 = 8;
@@ -579,38 +597,52 @@ stai_return_code stai_network_run(
     const ai_u16 l_dilation_H_const_u16 = 1;
     const ai_u16 l_dilation_W_const_u16 = 1;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(6, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+  _STAI_NETWORK_EVENT_NODE_START_CB(4, 1, {(stai_ptr) t_in_0_ptr_const_f32});
     
   forward_lite_conv2d_if32of32wf32(t_in_0_ptr_const_f32, t_out_0_ptr_f32, t_weight_0_ptr_const_u8, t_weight_1_ptr_const_u8, t_scratch_0_ptr_f32, t_in_0_shape_ch_const_u32, t_out_0_shape_ch_const_u32, t_in_0_shape_w_const_u32, t_in_0_shape_h_const_u32, t_out_0_shape_w_const_u32, t_out_0_shape_h_const_u32, t_weight_0_shape_w_const_u32, t_weight_0_shape_h_const_u32, l_pad_W_0_const_s32, l_pad_H_0_const_s32, l_stride_1_const_u16, l_stride_0_const_u16, 3, 1, l_dilation_H_const_u16, l_dilation_W_const_u16, (ai_size)(1));
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(6, 1, {(stai_ptr) t_out_0_ptr_f32});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(4, 1, {(stai_ptr) t_out_0_ptr_f32});
   }
-  /* LITE_KERNEL_SECTION END conv_hidden_1 */
-  /* LITE_KERNEL_SECTION BEGIN activation_1 */
+  /* LITE_KERNEL_SECTION END conv_hidden_1_conv2d */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_1 */
   {
       ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 0);
     const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 1664);
     const ai_i32 t_in_0_shape_ch_h_prod_const_s32 = 416;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(7, 1, {(stai_ptr) t_in_0_ptr_const_handle});
+  _STAI_NETWORK_EVENT_NODE_START_CB(4, 1, {(stai_ptr) t_in_0_ptr_const_handle});
     
   forward_lite_nl_relu_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_h_prod_const_s32, NULL);
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(7, 1, {(stai_ptr) t_out_0_ptr_handle});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(4, 1, {(stai_ptr) t_out_0_ptr_handle});
   }
-  /* LITE_KERNEL_SECTION END activation_1 */
+  /* LITE_KERNEL_SECTION END conv_hidden_1 */
+  /* LITE_KERNEL_SECTION BEGIN batch_normalization_1 */
+  {
+      ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 1664);
+    const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    const ai_float* t_weight_0_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 1184);
+    const ai_float* t_weight_1_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 1216);
+  
+  _STAI_NETWORK_EVENT_NODE_START_CB(5, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+    
+  forward_lite_bn_if32of32wf32(t_out_0_ptr_f32, t_in_0_ptr_const_f32, t_weight_0_ptr_const_f32, t_weight_1_ptr_const_f32, (ai_u32)(416), (ai_size)(8));
+    
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(5, 1, {(stai_ptr) t_out_0_ptr_f32});
+  }
+  /* LITE_KERNEL_SECTION END batch_normalization_1 */
   /* LITE_KERNEL_SECTION BEGIN max_pooling1d_1 */
   {
     
   forward_lite_max_pooling1d_1(net_ctx);
   }
   /* LITE_KERNEL_SECTION END max_pooling1d_1 */
-  /* LITE_KERNEL_SECTION BEGIN conv_hidden_2 */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_2_conv2d */
   {
-      const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 1664);
-    ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
-    const ai_u8* t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 1120);
-    const ai_u8* t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 1888);
+      const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 832);
+    const ai_u8* t_weight_0_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 1248);
+    const ai_u8* t_weight_1_ptr_const_u8 = (ai_u8*)(net_ctx->_weights[0] + 2016);
     ai_float* t_scratch_0_ptr_f32 = (ai_float*)(NULL);
     const ai_u32 t_in_0_shape_ch_const_u32 = 8;
     const ai_u32 t_out_0_shape_ch_const_u32 = 8;
@@ -627,26 +659,40 @@ stai_return_code stai_network_run(
     const ai_u16 l_dilation_H_const_u16 = 1;
     const ai_u16 l_dilation_W_const_u16 = 1;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(10, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+  _STAI_NETWORK_EVENT_NODE_START_CB(7, 1, {(stai_ptr) t_in_0_ptr_const_f32});
     
   forward_lite_conv2d_if32of32wf32(t_in_0_ptr_const_f32, t_out_0_ptr_f32, t_weight_0_ptr_const_u8, t_weight_1_ptr_const_u8, t_scratch_0_ptr_f32, t_in_0_shape_ch_const_u32, t_out_0_shape_ch_const_u32, t_in_0_shape_w_const_u32, t_in_0_shape_h_const_u32, t_out_0_shape_w_const_u32, t_out_0_shape_h_const_u32, t_weight_0_shape_w_const_u32, t_weight_0_shape_h_const_u32, l_pad_W_0_const_s32, l_pad_H_0_const_s32, l_stride_1_const_u16, l_stride_0_const_u16, 3, 1, l_dilation_H_const_u16, l_dilation_W_const_u16, (ai_size)(1));
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(10, 1, {(stai_ptr) t_out_0_ptr_f32});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(7, 1, {(stai_ptr) t_out_0_ptr_f32});
   }
-  /* LITE_KERNEL_SECTION END conv_hidden_2 */
-  /* LITE_KERNEL_SECTION BEGIN activation_2 */
+  /* LITE_KERNEL_SECTION END conv_hidden_2_conv2d */
+  /* LITE_KERNEL_SECTION BEGIN conv_hidden_2 */
   {
-      ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 832);
-    const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 0);
+      ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 0);
+    const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 832);
     const ai_i32 t_in_0_shape_ch_h_prod_const_s32 = 208;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(11, 1, {(stai_ptr) t_in_0_ptr_const_handle});
+  _STAI_NETWORK_EVENT_NODE_START_CB(7, 1, {(stai_ptr) t_in_0_ptr_const_handle});
     
   forward_lite_nl_relu_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_h_prod_const_s32, NULL);
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(11, 1, {(stai_ptr) t_out_0_ptr_handle});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(7, 1, {(stai_ptr) t_out_0_ptr_handle});
   }
-  /* LITE_KERNEL_SECTION END activation_2 */
+  /* LITE_KERNEL_SECTION END conv_hidden_2 */
+  /* LITE_KERNEL_SECTION BEGIN batch_normalization_2 */
+  {
+      ai_float* t_out_0_ptr_f32 = (ai_float*)(net_ctx->_activations[0] + 832);
+    const ai_float* t_in_0_ptr_const_f32 = (ai_float*)(net_ctx->_activations[0] + 0);
+    const ai_float* t_weight_0_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 2048);
+    const ai_float* t_weight_1_ptr_const_f32 = (ai_float*)(net_ctx->_weights[0] + 2080);
+  
+  _STAI_NETWORK_EVENT_NODE_START_CB(8, 1, {(stai_ptr) t_in_0_ptr_const_f32});
+    
+  forward_lite_bn_if32of32wf32(t_out_0_ptr_f32, t_in_0_ptr_const_f32, t_weight_0_ptr_const_f32, t_weight_1_ptr_const_f32, (ai_u32)(208), (ai_size)(8));
+    
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(8, 1, {(stai_ptr) t_out_0_ptr_f32});
+  }
+  /* LITE_KERNEL_SECTION END batch_normalization_2 */
   /* LITE_KERNEL_SECTION BEGIN max_pooling1d_2 */
   {
     
@@ -658,33 +704,31 @@ stai_return_code stai_network_run(
       forward_lite_dense_if32of32wf32_args arg_30f51e = {
       .output = (float*)(net_ctx->_activations[0] + 416),
       .input = (float*)(net_ctx->_activations[0] + 0),
-      .weights = (float*)(net_ctx->_weights[0] + 1920),
-      .bias = (float*)(net_ctx->_weights[0] + 3584),
+      .weights = (float*)(net_ctx->_weights[0] + 2112),
+      .bias = (float*)(net_ctx->_weights[0] + 3776),
       .n_channel_in = 104,
       .n_channel_out = 4,
       .n_elements = 1,
     };
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(14, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 0)});
+  _STAI_NETWORK_EVENT_NODE_START_CB(11, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 0)});
     
   forward_lite_dense_if32of32wf32((forward_lite_dense_if32of32wf32_args*)&arg_30f51e);
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(14, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 416)});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(11, 1, {(stai_ptr) (float*)(net_ctx->_activations[0] + 416)});
   }
   /* LITE_KERNEL_SECTION END dense_out */
   /* LITE_KERNEL_SECTION BEGIN output */
   {
-      ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_activations[0] + 0);
+      ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_outputs[0] + 0);
     const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 416);
     const ai_i32 t_in_0_shape_ch_prod_const_s32 = 4;
-    const ai_u32 t_in_0_shape_ch_const_u32 = 4;
-    const ai_u32 t_out_0_shape_ch_const_u32 = 4;
   
-  _STAI_NETWORK_EVENT_NODE_START_CB(16, 1, {(stai_ptr) t_in_0_ptr_const_handle});
+  _STAI_NETWORK_EVENT_NODE_START_CB(13, 1, {(stai_ptr) t_in_0_ptr_const_handle});
     
-  forward_lite_nl_softmax_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_prod_const_s32, t_in_0_shape_ch_const_u32, t_in_0_shape_ch_const_u32, t_out_0_shape_ch_const_u32);
+  forward_lite_nl_softmax_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_prod_const_s32, 1, 4);
     
-  _STAI_NETWORK_EVENT_NODE_STOP_CB(16, 1, {(stai_ptr) t_out_0_ptr_handle});
+  _STAI_NETWORK_EVENT_NODE_STOP_CB(13, 1, {(stai_ptr) t_out_0_ptr_handle});
   }
   /* LITE_KERNEL_SECTION END output */
   return net_ctx->_return_code;

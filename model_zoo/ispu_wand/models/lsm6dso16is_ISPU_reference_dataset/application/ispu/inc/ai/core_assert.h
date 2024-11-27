@@ -19,7 +19,7 @@
 #define CORE_ASSERT_H
 
 #ifdef HAS_AI_ASSERT
-// Override __FILE__ macro to disable full path asserts() 
+// Override __FILE__ macro to disable full path asserts()
 // Need to add during build also -Wbuiltin-macro-redefined options to avoid warnings
 #undef __FILE__
 #define __FILE__ (__builtin_strrchr("/" __BASE_FILE__, '/') + 1)

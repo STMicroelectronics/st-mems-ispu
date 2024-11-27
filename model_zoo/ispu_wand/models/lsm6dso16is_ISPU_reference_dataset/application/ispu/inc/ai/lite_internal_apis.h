@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    lite_internal_apis.h
   * @author  STMicroelectronics
-  * @brief   
+  * @brief
   ******************************************************************************
   * @attention
   *
@@ -43,15 +43,14 @@ void forward_lite_nl_ ## nl_name_ ## _if32of32( \
  * @ingroup lite_nl_generic_float
  * @param output The pointer to output buffer.
  * @param input The pointer to input buffer.
- * @param in_size. The size of the input.
- * @param channel_size The nsize of each channel.
- * @param in_channel_step
- * @param out_channel_step
+ * @param in_size The size of the input.
+ * @param inner_loop_cnt The size of the inner loop (elements after the selected axis)
+ * @param axis_elem The elements number along the selected axis.
  */
 LITE_API_ENTRY
 void forward_lite_nl_softmax_if32of32(
-  ai_handle out_ptr, const ai_handle in_ptr, const ai_i32 in_size, const ai_size ch_size,
-  const ai_i32 in_ch_step, const ai_i32 out_ch_step);
+  ai_handle out_ptr, const ai_handle in_ptr,
+  const ai_size in_size, const ai_size inner_loop_cnt, const ai_size axis_elem);
 
 
 /**
@@ -78,5 +77,17 @@ void forward_lite_nl_softmax_zero_channel_if32of32(
  */
   typedef void (*func_nl_lite)(ai_handle out_ptr, const ai_handle in_ptr,
                                const ai_i32 in_size, const ai_handle params);
+
+/**
+ * @brief lite function for a float gelu non-linearity.
+ * @ingroup lite_nl_generic_float \
+ * @param out_ptr The pointer to output buffer. \
+ * @param in_ptr The pointer to input buffer. \
+ * @param in_size. The size of the input. \
+ * @param params opaque handler to optional NL params. \
+ */
+LITE_API_ENTRY
+void forward_lite_nl_gelu_if32of32(
+  ai_handle out_ptr, const ai_handle in_ptr, const ai_i32 in_size, const ai_handle params);
 
 #endif /* LITE_INTERNAL_APIS */

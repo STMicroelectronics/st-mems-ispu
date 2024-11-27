@@ -24,7 +24,7 @@
 
 /*!
  * @defgroup layers_pool Pooling Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -71,8 +71,8 @@ void pool_func_mp_array_fixed(ai_handle in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
-                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
+                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_handle out);
 
 /*!
@@ -98,8 +98,8 @@ void pool_func_mp_array_integer(ai_handle in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
-                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
+                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_handle out);
 
 /*!
@@ -125,8 +125,8 @@ void pool_func_mp_array_integer_INT8(ai_handle in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
-                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
+                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_handle out);
 
 /*!
@@ -152,8 +152,8 @@ void pool_func_mp_array_integer_UINT8(ai_handle in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
-                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
+                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_handle out);
 
 /*!
@@ -303,6 +303,15 @@ void forward_mp_integer_INT8(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of an integer-quantized max pooling layer
+ *        with int8 I/O. Optimized for HSP
+ * @ingroup layers_pool
+ * @param layer the pooling (pool) layer
+ */
+AI_INTERNAL_API
+void forward_mp_hsp_INT8(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of an integer-quantized max pooling layer
  *        with uint8 I/O
  * @ingroup layers_pool
  * @param layer the pooling (pool) layer
@@ -336,6 +345,7 @@ void forward_mp_integer_UINT16(ai_layer *pLayer);
 AI_INTERNAL_API
 void forward_ap(ai_layer* layer);
 
+
 /*!
  * @brief Computes the activations of a fixed point average pooling layer.
  * @ingroup layers_pool
@@ -351,6 +361,14 @@ void forward_ap_fixed(ai_layer *pLayer);
  */
 AI_INTERNAL_API
 void forward_ap_integer(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of an average pooling layer. Optimized for HSP
+ * @ingroup layers_pool
+ * @param layer the pooling (pool) layer
+ */
+AI_INTERNAL_API
+void forward_ap_hsp_INT8(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of an integer-quantized average pooling layer

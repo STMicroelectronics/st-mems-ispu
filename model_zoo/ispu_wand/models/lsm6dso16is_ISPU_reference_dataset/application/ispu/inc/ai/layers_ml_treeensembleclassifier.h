@@ -26,7 +26,7 @@
 
 /*!
  * @defgroup layers_ml_treensembleclassifier Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

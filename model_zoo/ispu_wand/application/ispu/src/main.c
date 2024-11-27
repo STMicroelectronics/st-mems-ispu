@@ -30,7 +30,7 @@ enum {
 	STATE_RESET
 };
 
-struct iir2 filters[3];
+struct iir2 filters[NUM_AXES];
 static uint8_t algo_state;
 static uint16_t trig_cnt;
 static uint16_t win_cnt;
@@ -75,8 +75,13 @@ void __attribute__ ((signal)) algo_00_init(void)
 	init_network_buffers(net, input_buffers, output_buffers);
 
 	// initialize filters
+	struct iir2_conf filter_conf = {
+		.b = IIR2_B,
+		.a = IIR2_A,
+		.fast_set = true,
+	};
 	for (uint8_t i = 0; i < NUM_AXES; i++) {
-		iir2_init(&(filters[i]), IIR2_B, IIR2_A);
+		iir2_init(&(filters[i]), &filter_conf);
 	}
 
 	// initialize state logic variables
@@ -91,6 +96,7 @@ void __attribute__ ((signal)) algo_00(void)
 {
 	float raw_data[NUM_AXES];
 	float filt_data[NUM_AXES];
+
 	// CNN input and output pointers
 	float (*input)[WIN_LEN_SAMPLES][3] = (float (*)[WIN_LEN_SAMPLES][3])input_buffers[0];
 	float (*output)[NUM_LABELS] = (float (*)[NUM_LABELS])output_buffers[0];

@@ -225,7 +225,7 @@ ai_bool ai_layer_type_is_valid(const ai_layer_type type);
  * @brief check scratch size computed with actual scratch buffer size
  * @ingroup layers
  * @param layer_type the layer type
- * @param fmt buffers format 
+ * @param fmt buffers format
  * @param filt_width filter width (when relevant)
  * @param filt_height filter height (when relevant)
  * @param n_channel_in the number of channels in

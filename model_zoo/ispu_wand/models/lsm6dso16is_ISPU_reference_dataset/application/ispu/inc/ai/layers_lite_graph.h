@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_lite_graph Lite Graph Wrapper Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

@@ -20,7 +20,7 @@
 
 /*!
  * @defgroup layers Layers Compilation Config Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

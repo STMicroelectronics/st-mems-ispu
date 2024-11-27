@@ -29,8 +29,6 @@
  */
 
 /* define to track datatypes used by codegen */
-#define AI_INTERFACE_TYPE             /* AI_INTERFACE_TYPE */
-
 #define AI_INTERNAL_API               /* AI_INTERNAL_API */
 
 #define AI_CONST                      const

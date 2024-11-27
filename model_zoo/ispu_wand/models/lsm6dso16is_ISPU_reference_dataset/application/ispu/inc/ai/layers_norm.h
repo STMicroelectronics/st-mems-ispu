@@ -22,7 +22,7 @@
 
 /*!
  * @defgroup layers_norm Normalization Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -193,7 +193,7 @@ AI_INTERNAL_API
 void forward_norm(ai_layer* layer);
 
 /*!
- * @brief Batch Normalization with 16-bit input, 16-bit threshold and binary output. 
+ * @brief Batch Normalization with 16-bit input, 16-bit threshold and binary output.
  *        It is implemented using a threshold, and this is possible because the output is binary.
  * @param layer the batch normalization layer
  */

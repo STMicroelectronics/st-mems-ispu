@@ -15,7 +15,7 @@
   *
   ******************************************************************************
   */
-#ifndef LITE_POOL_F32_H 
+#ifndef LITE_POOL_F32_H
 #define LITE_POOL_F32_H
 
 #include "ai_lite_interface.h"
@@ -37,8 +37,8 @@ typedef void (*func_pool)(ai_float* in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
-                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
+                      const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_float* out);
 
 
@@ -62,7 +62,7 @@ void pool_func_ap_array_f32(ai_float *pData_in,
                       const ai_u16 ch_im_in,
                       const ai_u16 dim_kernel_x, const ai_u16 dim_kernel_y,
                       const ai_u16 padding_x, const ai_u16 padding_y,
-                      const ai_u16 stride_x, const ai_u16 stride_y, 
+                      const ai_u16 stride_x, const ai_u16 stride_y,
                       const ai_u16 dim_im_out_x, const ai_u16 dim_im_out_y,
                       ai_float *pData_out);
 

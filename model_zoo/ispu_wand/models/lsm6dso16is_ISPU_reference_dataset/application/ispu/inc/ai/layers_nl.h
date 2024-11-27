@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_nl Normalization Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -49,7 +49,11 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_nl_ {
  *
  * It is a sequential layer. see @ref ai_layer
  */
-typedef ai_layer_nl ai_layer_sm;
+typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_sm_ {
+  AI_LAYER_COMMON_FIELDS_DECLARE
+  AI_CONST ai_array* nl_params;  /*!< associated parameters array */
+  ai_i16   axis;
+} ai_layer_sm;
 
 /*!
  * @typedef (*func_nl)
@@ -729,7 +733,7 @@ void forward_relu(ai_layer* layer);
  * @ingroup layers_nl
  * @param layer the nonlinear (nl) layer
  */
-AI_INTERNAL_API 
+AI_INTERNAL_API
 void forward_relu_fixed(ai_layer *pLayer);
 
 /*!
@@ -737,7 +741,7 @@ void forward_relu_fixed(ai_layer *pLayer);
  * @ingroup layers_nl
  * @param layer the nonlinear (nl) layer
  */
-AI_INTERNAL_API 
+AI_INTERNAL_API
 void forward_relu_integer(ai_layer *pLayer);
 
 /*!
@@ -761,7 +765,7 @@ void forward_relu_thresholded(ai_layer* layer);
  * @ingroup layers_nl
  * @param layer the nonlinear (nl) layer
  */
-AI_INTERNAL_API 
+AI_INTERNAL_API
 void forward_relu_max_fixed(ai_layer *pLayer);
 
 
@@ -1103,7 +1107,7 @@ void forward_sm_integer(ai_layer* layer);
 
 /*!
  * @brief Computes the activations of an integer quantized nonlinear layer.
- *        Non linear operation is function of used LUT defined through 
+ *        Non linear operation is function of used LUT defined through
  *        (pLayer->nl_params->data)
  * @ingroup layers_nl
  * @param layer the nonlinear (nl) layer
@@ -1113,7 +1117,7 @@ void forward_nl_integer(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of an integer quantized PReLu.
- *        Slope params are located like weights, not params because they are 
+ *        Slope params are located like weights, not params because they are
  *        quantized
  * @ingroup layers_nl
  * @param layer the nonlinear (nl) layer

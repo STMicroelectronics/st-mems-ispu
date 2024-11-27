@@ -70,7 +70,7 @@ typedef struct {
  * @brief acquire the custom layer from its handle
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the custom layer
- * @return a pointer to ai_layer_custom if found and valid, else NULL 
+ * @return a pointer to ai_layer_custom if found and valid, else NULL
  */
 AI_INTERFACE_TYPE
 ai_layer_custom* ai_layer_custom_get(
@@ -89,7 +89,7 @@ void ai_layer_custom_release(
  * @brief get the number of inputs tensors of a custom layer
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the custom layer
- * @return the number of input tensors of the layer. 0 if no input tensors or error 
+ * @return the number of input tensors of the layer. 0 if no input tensors or error
  */
 AI_INTERFACE_TYPE
 ai_size ai_layer_get_tensor_in_size(
@@ -99,7 +99,7 @@ ai_size ai_layer_get_tensor_in_size(
  * @brief get the number of outputs tensors of a custom layer
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the custom layer
- * @return the number of outputs tensors of the layer. 0 if no outputs tensors or error 
+ * @return the number of outputs tensors of the layer. 0 if no outputs tensors or error
  */
 AI_INTERFACE_TYPE
 ai_size ai_layer_get_tensor_out_size(
@@ -110,7 +110,7 @@ ai_size ai_layer_get_tensor_out_size(
  * @brief get the number of weights tensors of a custom layer
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the custom layer
- * @return the number of weights tensors of the layer. 0 if no weights tensors or error 
+ * @return the number of weights tensors of the layer. 0 if no weights tensors or error
  */
 AI_INTERFACE_TYPE
 ai_size ai_layer_get_tensor_weights_size(
@@ -122,7 +122,7 @@ ai_size ai_layer_get_tensor_weights_size(
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the layer
  * @param pos the index position in the tensor list
- * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL 
+ * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL
  */
 AI_INTERFACE_TYPE
 ai_tensor* ai_layer_get_tensor_in(
@@ -133,7 +133,7 @@ ai_tensor* ai_layer_get_tensor_in(
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the layer
  * @param pos the index position in the tensor list
- * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL 
+ * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL
  */
 AI_INTERFACE_TYPE
 ai_tensor* ai_layer_get_tensor_out(
@@ -145,7 +145,7 @@ ai_tensor* ai_layer_get_tensor_out(
  * @ingroup ai_layer_custom_interface
  * @param layer an opaque handler to the layer
  * @param pos the index position in the tensor list
- * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL 
+ * @return a pointer to a tensor if found, else, if invalid or out-of-range NULL
  */
 AI_INTERFACE_TYPE
 ai_tensor* ai_layer_get_tensor_weights(
@@ -157,7 +157,7 @@ ai_tensor* ai_layer_get_tensor_weights(
  * @brief check if the tensor has integer quantization informations @ref ai_tensor_intq_info
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return true if tensot has integer quantization informations, false otherwise 
+ * @return true if tensot has integer quantization informations, false otherwise
  */
 AI_INTERFACE_TYPE
 ai_bool ai_tensor_has_intq(
@@ -177,7 +177,7 @@ ai_tensor_intq_info ai_tensor_get_intq(
  * @brief get the format of the tensor see @ref ai_tensor_format
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the tensor format 
+ * @return the tensor format
  */
 AI_INTERFACE_TYPE
 ai_tensor_format ai_tensor_get_format(
@@ -188,7 +188,7 @@ ai_tensor_format ai_tensor_get_format(
  * @brief get the dimensionality of the tensor shapes
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the dimensionality of the tensor shape 
+ * @return the dimensionality of the tensor shape
  */
 AI_INTERFACE_TYPE
 ai_size ai_tensor_get_shape_size(
@@ -198,7 +198,7 @@ ai_size ai_tensor_get_shape_size(
  * @brief get the value of the shape dimensionality pos
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the value of the shape dimensionality at pos of the tensor 
+ * @return the value of the shape dimensionality at pos of the tensor
  */
 AI_INTERFACE_TYPE
 ai_shape_dimension ai_tensor_get_shape(
@@ -219,7 +219,7 @@ ai_size ai_tensor_get_stride_size(
  * @brief get the value of the stride dimensionality pos
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the value of the stride dimensionality at pos of the tensor 
+ * @return the value of the stride dimensionality at pos of the tensor
  */
 AI_INTERFACE_TYPE
 ai_stride_dimension ai_tensor_get_stride(
@@ -230,27 +230,27 @@ ai_stride_dimension ai_tensor_get_stride(
  * @brief get tensor storage data buffer pointer
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return a pointer to the tensor data buffer, set to NULL if error 
+ * @return a pointer to the tensor data buffer, set to NULL if error
  */
 AI_INTERFACE_TYPE
 ai_any_ptr ai_tensor_get_data(
   const ai_tensor* t);
 
 /*!
- * @brief get number of tensor elements 
+ * @brief get number of tensor elements
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the number of tensor elements or 0 if error 
+ * @return the number of tensor elements or 0 if error
  */
 AI_INTERFACE_TYPE
 ai_size ai_tensor_get_data_size(
   const ai_tensor* t);
 
 /*!
- * @brief get the size in bytes of the tensor data buffer 
+ * @brief get the size in bytes of the tensor data buffer
  * @ingroup ai_layer_custom_interface
  * @param tensor a pointer to the tensor
- * @return the size in bytes of the tensor data buffer. 0 if error 
+ * @return the size in bytes of the tensor data buffer. 0 if error
  */
 AI_INTERFACE_TYPE
 ai_size ai_tensor_get_data_byte_size(

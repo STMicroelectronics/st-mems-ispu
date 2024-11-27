@@ -69,10 +69,12 @@
 #ifdef __cplusplus
 #define AI_API_DECLARE_BEGIN extern "C" {
 #define AI_API_DECLARE_END }
+#define ai_register             /* register */
 #else
 #include <stdbool.h>
 #define AI_API_DECLARE_BEGIN    /* AI_API_DECLARE_BEGIN */
 #define AI_API_DECLARE_END      /* AI_API_DECLARE_END   */
+#define ai_register             register
 #endif
 
 /*****************************************************************************/
@@ -240,7 +242,7 @@ typedef uint32_t ai_shape_dimension;
 
 #define AI_INTQ_INFO_LIST_SCALE(list_, type_, pos_) \
   (((list_) && (list_)->info && ((pos_)<(list_)->size)) \
-   ? ((type_*)((list_)->info->scale))[(pos_)] : 0)
+   ? ((type_*)((list_)->info->scale))[(pos_)] : 1.0f)
 
 #define AI_INTQ_INFO_LIST_ZEROPOINT(list_, type_, pos_) \
   (((list_) && (list_)->info && ((pos_)<(list_)->size)) \
@@ -265,6 +267,7 @@ typedef int32_t ai_buffer_format;
 #define AI_BUFFER_META_FLAG_ZEROPOINT_S16   (0x1U << 4)
 
 /*! ai_buffer format variable flags & macros *********************************/
+#define AI_BUFFER_FMT_MASK                  (0x01FFFFFF)
 #define AI_BUFFER_FMT_TYPE_NONE             (0x0)
 #define AI_BUFFER_FMT_TYPE_FLOAT            (0x1)
 #define AI_BUFFER_FMT_TYPE_Q                (0x2)
@@ -308,7 +311,18 @@ typedef int32_t ai_buffer_format;
 
 #define AI_BUFFER_FMT_SET(type_id_, sign_bit_, float_bit_, bits_, fbits_) \
   AI_BUFFER_FMT_OBJ( \
-    AI_BUFFER_FMT_PACK(float_bit_, 0x1, 24) | \
+    AI_BUFFER_FMT_PACK(0, 0x1, 24) | \
+    AI_BUFFER_FMT_PACK(sign_bit_, 0x1, 23) | \
+    AI_BUFFER_FMT_PACK(0, 0x3, 21) | \
+    AI_BUFFER_FMT_PACK(type_id_, 0xF, 17) | \
+    AI_BUFFER_FMT_PACK(0, 0x7, 14) | \
+    AI_BUFFER_FMT_SET_BITS(bits_) | \
+    AI_BUFFER_FMT_SET_FBITS(fbits_) \
+  )
+
+#define AI_BUFFER_FMT_SET_COMPLEX(type_id_, sign_bit_, bits_, fbits_) \
+  AI_BUFFER_FMT_OBJ( \
+    AI_BUFFER_FMT_PACK(1, 0x1, 24) | \
     AI_BUFFER_FMT_PACK(sign_bit_, 0x1, 23) | \
     AI_BUFFER_FMT_PACK(0, 0x3, 21) | \
     AI_BUFFER_FMT_PACK(type_id_, 0xF, 17) | \
@@ -321,7 +335,7 @@ typedef int32_t ai_buffer_format;
   ( AI_BUFFER_FMT_GET(fmt1_) == AI_BUFFER_FMT_GET(fmt2_) )
 
 #define AI_BUFFER_FMT_GET(fmt_) \
-  (AI_BUFFER_FMT_OBJ(fmt_) & 0x01FFFFFF)
+  (AI_BUFFER_FMT_OBJ(fmt_) & AI_BUFFER_FMT_MASK)
 
 #define AI_BUFFER_FORMAT(buf_) \
   AI_BUFFER_FMT_GET((buf_)->format)
@@ -530,7 +544,7 @@ union { \
  */
 enum {
   AI_BUFFER_FORMAT_NONE     = AI_BUFFER_FMT_SET(AI_BUFFER_FMT_TYPE_NONE, 0, 0,  0, 0),
-  AI_BUFFER_FORMAT_FLOAT    = AI_BUFFER_FMT_SET(AI_BUFFER_FMT_TYPE_FLOAT, 1, 1, 32, 0),
+  AI_BUFFER_FORMAT_FLOAT    = AI_BUFFER_FMT_SET(AI_BUFFER_FMT_TYPE_FLOAT, 1, 0, 32, 0),
 
   AI_BUFFER_FORMAT_U1       = AI_BUFFER_FMT_SET(AI_BUFFER_FMT_TYPE_Q, 0, 0,  1, 0),
   AI_BUFFER_FORMAT_U8       = AI_BUFFER_FMT_SET(AI_BUFFER_FMT_TYPE_Q, 0, 0,  8, 0),
@@ -872,7 +886,7 @@ typedef enum {
 #define CHANNEL_FIRST_FLAG  (1 << 1)
 /* Padding pattern supported:         */
 /* 0 = (1, 1, 1,1),  1 = (0, 0, 2, 2) */
-#define CHANNEL_PADDING_PATTERN  (1 << 2)  
+#define CHANNEL_PADDING_PATTERN  (1 << 2)
 /* Carefull when changing those definitions
    bit0 shall always select output padding (Valid vs Same)
    bit1 shall always select Channel first /channel lst format

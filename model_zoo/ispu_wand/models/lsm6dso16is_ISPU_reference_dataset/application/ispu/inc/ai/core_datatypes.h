@@ -30,10 +30,10 @@
  * @brief platform runtime core library version
  */
 #ifndef AI_PLATFORM_RUNTIME_MAJOR
-#define AI_PLATFORM_RUNTIME_MAJOR    (9)
+#define AI_PLATFORM_RUNTIME_MAJOR    (10)
 #endif
 #ifndef AI_PLATFORM_RUNTIME_MINOR
-#define AI_PLATFORM_RUNTIME_MINOR    (1)
+#define AI_PLATFORM_RUNTIME_MINOR    (0)
 #endif
 #ifndef AI_PLATFORM_RUNTIME_MICRO
 #define AI_PLATFORM_RUNTIME_MICRO    (0)
@@ -53,9 +53,9 @@
 /*!
  * @typedef ai_id_obj
  * @ingroup core_datatypes
- * @brief numeric identifier for generic object instances (e.g. layers, 
+ * @brief numeric identifier for generic object instances (e.g. layers,
  * operators, etc.) It is used by codegen tool to keep tracks of specific
- * instances created 
+ * instances created
  */
 typedef uint16_t ai_id_obj;
 

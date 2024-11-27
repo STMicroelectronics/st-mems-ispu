@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    lite_nl_list.h
   * @author  STMicroelectronics
-  * @brief   header file of lite supported non-linearities routines 
+  * @brief   header file of lite supported non-linearities routines
   ******************************************************************************
   * @attention
   *
@@ -65,7 +65,7 @@ LITE_NL_ENTRY(102, relu_thresholded, AI_MATH_RELU_THRESHOLDED, 2)
 LITE_NL_ENTRY(201, clip, AI_CLAMP, 3)
 LITE_NL_ENTRY(202, hard_sigmoid, AI_MATH_HARD_SIGMOID, 3)
 LITE_NL_ENTRY(203, selu, AI_MATH_SELU, 3)
-LITE_NL_ENTRY(204, gelu, AI_MATH_GELU, 2)
+// LITE_NL_ENTRY(204, gelu, AI_MATH_GELU, 2)
 
 
 #undef LITE_NL_ENTRY

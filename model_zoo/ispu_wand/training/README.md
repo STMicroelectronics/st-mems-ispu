@@ -25,10 +25,14 @@ The YAML configuration file can be seen as a set of key-value pairs expressing t
 
 - `preprocessing`:
 	- `f_sample`: sensor ODR (mandatory)
-	- `full_scale`: sensor full-scale (mandatory)
+	- `full_scale_g`: sensor full-scale (mandatory)
 	- `power_mode`: sensor power mode (optional, default=`high_performance`)
 	- `lp_cut`: low-pass cut frequency of the IIR2 Butterworth filter used for signal filtering (optional, nullable, default=`null`)
 	- `hp_cut`: high-pass cut frequency of the IIR2 Butterworth filter used for signal filtering (required for the gesture segmentation trigger) (optional, default=`1`)
+	- `win_ths_g`: threshold on the filtered x-axis used to trigger the gesture segmentation (optional, default=`0.25`)
+	- `trig_len_samples`: number of consecutive samples over threshold `win_ths_g` for the x-axis to trigger the gesture segmentation (optional, default=`1`)
+	- `win_len_samples`: model input window length in number of samples (mandatory)
+	- `reset_len_samples`: minimum number of consecutive samples between two segmented gestures (optional, default=`0`)
 	- `discard_len_samples`: number of initial samples to be discarded in every log (optional, default=`0`)
 	- gesture segmentation configuration parameters described in detail in the [Gesture segmentation](./README.md#gesture-segmentation) section
 	- `show_segmentation`: plot logs data with applied segmentation. This configuration can be set to `null` to disable the segmentation monitor, `raw` to inspect the segmented gestures as raw signal or `filtered` to inspect the filtered signal (optional, nullable, default=`null`)
@@ -41,19 +45,13 @@ The YAML configuration file can be seen as a set of key-value pairs expressing t
 	- `show_stats`: plot training history and confusion matrix (optional, default=`true`)
 
 - `application`:
-	- `prediction_threshold`: minimum threshold to trust a gesture prediction. If the predicted letter has probability below this threshold, no output letter will be displayed (optional, default=`0.6`)
+	- `pred_ths`: minimum threshold to trust a gesture prediction. If the predicted letter has probability below this threshold, no output letter will be displayed (optional, default=`0.6`)
 
 ## Gesture segmentation
 
 A crucial configuration is the gesture segmentation. This is a trigger mechanism that will be used by the application to trigger the collection of the window of signal that will be input to the 1D CNN model.
 
-The accelerometer signal is filtered with a second order bandpass Butterworth filter (with default cut frequencies of 1 Hz and 5 Hz), to remove low frequencies indicative of the device orientation and high frequency movements.
-
-The gesture segmentation can be defined by this set of user-configurable parameters in the YAML file:
-- `win_ths_g`: threshold on the filtered x-axis used to trigger the gesture segmentation
-- `trig_len_samples`: number of consecutive samples over threshold `win_ths_g` for the x-axis to trigger the gesture segmentation
-- `win_len_samples`: model input window length in number of samples
-- `reset_len_samples`: minimum number of consecutive samples between two segmented gestures
+The accelerometer signal is filtered with a second order bandpass Butterworth filter (with default cut frequencies of 1 Hz and 5 Hz), to remove low frequencies indicative of the device orientation and high frequency movements. A segmentation algorithm is then applied to automatically segment the input data in windows of `win_len_samples` samples; the algorithm can be tuned by setting the following parameters in the YAML configuration file: `win_ths_g`, `trig_len_samples` and `reset_len_samples`.
 
 By setting the `show_segmentation` parameter to `filtered` or `raw`, the user can inspect the gestures segmented in every log to see if the trigger mechanism is working properly. Then, the number of segmented letters is printed to the standard output to make the user aware of the number of gestures segmented and check if it matches the number of air-written letters collected in the dataset. An example of the gesture segmentation for the letter I from the `lsm6dso16is_ISPU_reference_dataset` dataset is shown in the figure below (using the default user_config.yaml file).
 
