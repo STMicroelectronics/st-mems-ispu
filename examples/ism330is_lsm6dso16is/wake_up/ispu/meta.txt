@@ -1,0 +1,9 @@
+description "Wake-up detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Wake-up" uint8_t
+	0="inactive"
+	1="active"
+

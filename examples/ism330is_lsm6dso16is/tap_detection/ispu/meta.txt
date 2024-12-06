@@ -1,0 +1,11 @@
+description "Tap detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Tap" uint8_t
+	0="none"
+	1="single"
+	2="double"
+	3="triple"
+

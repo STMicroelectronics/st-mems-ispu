@@ -1,0 +1,18 @@
+description "Activity recognition for wrist"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Activity" uint8_t
+	0="no activity"
+	1="stationary"
+	2="standing"
+	3="sitting"
+	4="lying"
+	5="walking"
+	6="fast walking"
+	7="jogging"
+	8="biking"
+	9="others"
+output "Confidence" uint8_t
+

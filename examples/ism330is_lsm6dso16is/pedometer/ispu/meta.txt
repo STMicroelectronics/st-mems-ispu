@@ -1,0 +1,7 @@
+description "Pedometer"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Steps [#]" uint16_t
+

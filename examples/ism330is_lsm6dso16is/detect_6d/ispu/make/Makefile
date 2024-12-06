@@ -23,18 +23,21 @@ endif
 
 CFLAGS = -mcpu=reiscl -Os -specs=nano.specs -ffunction-sections -fdata-sections -Wl,--gc-sections -mfp32-format=ieee -Wall -Wextra -Wdouble-promotion -fno-strict-aliasing
 INCS = -I../ispu_utils -I../inc
+LDFLAGS =
 
 SRC = ../ispu_utils/crt0.S ../src/main.c ../src/iir2.c ../src/detect_6d.c
+
+EXTRA_FILES= -s ../conf.txt -m ../meta.txt -sh ../shub.txt
 
 OUTDIR = bin
 NAME = ispu
 
 build: $(SRC) $(OUTDIR) Makefile
-	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) -T ../ispu_utils/boot.ld $(INCS)
+	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) $(LDFLAGS) -T ../ispu_utils/boot.ld $(INCS)
 	$(SIZE_REISC) $(OUTDIR)/$(NAME)
 	$(OBJ_COPY) -O srec $(OUTDIR)/$(NAME) $(OUTDIR)/$(NAME).srec
-	$(ISPU_GEN) -b -c -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
-	$(ISPU_GEN) -b -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).ucf
+	$(ISPU_GEN) -c $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
+	$(ISPU_GEN) $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).json
 
 $(OUTDIR):
 	$(MKDIR) $(OUTDIR)

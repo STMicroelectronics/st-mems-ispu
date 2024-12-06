@@ -1,0 +1,7 @@
+shub_odr 26
+
+# LPS22HH
+w 0xBA 0x10 0x32 # pressure @ 25 Hz, block data update
+w 0xBA 0x11 0x12 # low-noise mode
+r 0xBA 0x28 3 # pressure data
+

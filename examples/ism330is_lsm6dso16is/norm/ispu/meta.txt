@@ -1,0 +1,7 @@
+description "Norm"
+
+output "Acc x [LSB]" int16_t
+output "Acc y [LSB]" int16_t
+output "Acc z [LSB]" int16_t
+output "Acc norm [LSB]" float
+

@@ -39,5 +39,15 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/conf.txt</locationURI>
 		</link>
+		<link>
+			<name>shub.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/shub.txt</locationURI>
+		</link>
+		<link>
+			<name>meta.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/meta.txt</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

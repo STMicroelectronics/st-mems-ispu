@@ -1,0 +1,6 @@
+shub_odr 104
+
+# LPS22HH
+w 0xBA 0x10 0x2E # pressure @ 10 Hz, low-pass filter @ ODR/20, block data update
+r 0xBA 0x28 3 # pressure data
+

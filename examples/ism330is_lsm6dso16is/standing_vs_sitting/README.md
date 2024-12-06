@@ -1,6 +1,6 @@
 ## 1 - Introduction
 
-This ISPU example implements the standing vs sitting solution based on the fusion of the accelerometer and pressure sensor data.
+This ISPU example implements the standing vs sitting at desk solution based on the fusion of the accelerometer and pressure sensor data.
 
 The accelerometer is configured in low-power mode at 26 Hz.
 

@@ -1,0 +1,10 @@
+description "32-bit cyclic redundancy check"
+
+output "Acc x [LSB]" int16_t
+output "Acc y [LSB]" int16_t
+output "Acc z [LSB]" int16_t
+output "Gyr x [LSB]" int16_t
+output "Gyr y [LSB]" int16_t
+output "Gyr z [LSB]" int16_t
+output "CRC32" uint32_t
+

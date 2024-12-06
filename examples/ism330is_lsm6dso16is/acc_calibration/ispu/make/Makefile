@@ -27,6 +27,8 @@ LDFLAGS = -L../lib -lMotionAC
 
 SRC = ../ispu_utils/crt0.S ../src/main.c
 
+EXTRA_FILES= -s ../conf.txt -m ../meta.txt -sh ../shub.txt
+
 OUTDIR = bin
 NAME = ispu
 
@@ -34,8 +36,8 @@ build: $(SRC) $(OUTDIR) Makefile
 	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) $(LDFLAGS) -T ../ispu_utils/boot.ld $(INCS)
 	$(SIZE_REISC) $(OUTDIR)/$(NAME)
 	$(OBJ_COPY) -O srec $(OUTDIR)/$(NAME) $(OUTDIR)/$(NAME).srec
-	$(ISPU_GEN) -b -c -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
-	$(ISPU_GEN) -b -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).ucf
+	$(ISPU_GEN) -c $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
+	$(ISPU_GEN) $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).json
 
 $(OUTDIR):
 	$(MKDIR) $(OUTDIR)

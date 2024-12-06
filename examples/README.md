@@ -6,9 +6,23 @@ Each project can be built using the command line (make) or any Eclipse-based IDE
 
 Prebuilt files containing the ready-to-use device configuration are available in the *output* folder of each example project. For the examples related to STMicroelectronics libraries, the library in binary format is also available to be integrated in other projects based on user needs.
 
-## 2 - Command line
+## 2 - Build and deploy flow
 
-In order to build a project using the command line, the ISPU toolchain must be installed on the system. Besides the toolchain, the *make* build tool must be installed.
+The figure below illustrates the flow to build and deploy a program on the ISPU. The steps in light blue, which make up the build process, are automatically performed by make or by the Eclipse-based IDE, but are here explained for clarity of the process.
+
+![](./_media/build_deploy_ispu.png)
+
+1. The first step is to write the C code to implement the desired algorithms and data processing to run on the ISPU.
+2. The C code is then compiled and linked using `reisc-gcc` to obtain the program in a binary format (ELF).
+3. The program is then converted to the SREC format, which is needed for the next step, using `reisc-objcopy`.
+4. The program is then input to the `ispu_gen` tool to generate both a JSON file and a C header file. These files are equivalent and contain the sequence of write operations required to load the program from the device serial interface. Optionally, additional files (*conf.txt*, *meta.txt*, and *shub.txt*) can be specified as input to the `ispu_gen` tool to add sensor configuration, sensor hub configuration, and metadata to the output files.
+5. The files obtained at the previous step can then be used by the firmware of an external MCU to load the ISPU program via the serial interface normally used to communicate with the sensor. The JSON file can be used to load a program at runtime (for example, using [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), which allows to quicky evaluate the solution), while the C header file can be used to embed it in the MCU firmware at build time.
+
+For how to write the C code and the other input files, please refer to the template for the device of interest and its readme file. For how to setup your development environment and build a project with the command line or an Eclipse-based IDE, continue reading this readme file.
+
+## 3 - Command line
+
+In order to build a project using the command line, the ISPU toolchain must be installed on the system. Besides the toolchain, the `make` build tool must be installed.
 
 The toolchain can be downloaded for Windows, Linux and macOS at the following link: [https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/sensor-software-development-tools/ispu-toolchain.html](https://www.st.com/content/st_com/en/products/development-tools/software-development-tools/sensor-software-development-tools/ispu-toolchain.html).
 
@@ -33,9 +47,9 @@ The toolchain must be extracted from the downloaded archive to any folder on the
 
   * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *reisc-gcc* command should be found if the user tries to run it).
 
-Once the toolchain is installed, in order to build a project, the user must enter the *ispu/make* directory inside the project and run *make*. Enjoy.
+Once the toolchain is installed, in order to build a project, the user must enter the *ispu/make* directory inside the project and run `make`. Enjoy.
 
-## 3 - Eclipse
+## 4 - Eclipse
 
 In order to build a project using an Eclipse-based IDE, the ISPU plugins must be installed in the IDE that the user desires to use.
 
@@ -49,7 +63,7 @@ The URL to use is:
 * On Linux: [https://sw-center.st.com/mems/ispu/ispu_repository_linux](https://sw-center.st.com/mems/ispu/ispu_repository_linux)
 * On macOS: [https://sw-center.st.com/mems/ispu/ispu_repository_mac](https://sw-center.st.com/mems/ispu/ispu_repository_mac)
 
-Once the plugins are installed, in order to build a project, the user must go to "File", click on "Import...". Under "General", select "Existing Project into Workspace", click on the "Next" button, click on the "Browse" button, select the folder containing the project (*ispu/eclipse* directory), and click on the "Finish" button. The project is now imported and can be built. Enjoy.
+Once the plugins are installed, in order to build a project, the user must go to "File", click on "Import...". Under "General", select "Existing Project into Workspace", click on the "Next" button, click on the "Browse" button, select the folder containing the project (*ispu/eclipse* directory), make sure that the "Copy projects into workspace" is **not** selected (otherwise Eclipse will not be able to locate the source files), and click on the "Finish" button. The project is now imported and can be built. Enjoy.
 
 ------
 

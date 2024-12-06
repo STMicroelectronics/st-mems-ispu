@@ -1,0 +1,7 @@
+description "Sensor fusion 6-axis"
+
+output "Quat x" float
+output "Quat y" float
+output "Quat z" float
+output "Quat w" float
+

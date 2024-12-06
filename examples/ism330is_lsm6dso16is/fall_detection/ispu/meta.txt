@@ -1,0 +1,8 @@
+description "Fall detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Prs [hPa]" float
+output "Fall" uint8_t
+

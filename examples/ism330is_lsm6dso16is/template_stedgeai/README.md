@@ -157,7 +157,7 @@ Once the code has been generated, the project will build, but it will output a n
   * Generate the interrupt every time a new inference has been run and the output values have been copied to the output registers.
   * In the case of a classification model, generate the interrupt only when the detected class changes, so that the host can go as long as possible without being woken up by the sensor.
 
-As always, also *ispu/conf.txt* should be modified to set the required sensor settings.
+As always, *ispu/conf.txt*, *ispu/meta.txt*, and *ispu/shub.txt* should also be modified as required. For more information on these files, please refer to the regular (not specific for ST Edge AI) ISPU template.
 
 Note: the template supports one single model generated with the default name "network". Integrating multiple networks or one network with a different name would require modifying the code to a greater extent than what was shown here.
 

@@ -1,0 +1,10 @@
+description "Inclinometer"
+
+output "Pitch [deg]" float
+output "Roll [deg]" float
+output "Acc accuracy" uint8_t
+	0="unknown"
+	1="poor"
+	2="ok"
+	3="good"
+

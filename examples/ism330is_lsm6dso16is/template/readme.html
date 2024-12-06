@@ -21,8 +21,9 @@ vertical-align: middle;
 }
 .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -1556,118 +1557,198 @@ margin-right: auto;
 text-align: center;
 }
 </style>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <div class="row">
 <div class="col-sm-12 col-lg-8">
 <h2 id="introduction">1 - Introduction</h2>
-<p>This is a template for creating a new project for ISPU.</p>
+<p>This is a template for creating a new project for the ISPU.</p>
 <p>The <em>ispu</em> folder may be copied by itself (no dependencies
 other than the CLI toolchain or IDE environment that must be installed)
-and used as a starting blank project to implement any solution running
-on ISPU.</p>
+and used as a starting project to implement any solution running on the
+ISPU.</p>
 <h2 id="structure-and-how-to-use">2 - Structure and how to use</h2>
 <p>The <em>ispu</em> folder contains:</p>
 <ul>
-<li><strong><em>src</em></strong>:
+<li><p><strong><em>eclipse</em></strong>: folder containing the Eclipse
+project files. A <strong><em>release</em></strong> subfolder containing
+the output files is created upon build.</p></li>
+<li><p><strong><em>ispu_utils</em></strong>: folder containing several
+utilities. Usually, there is no need to modify these files.</p>
 <ul>
-<li><em>main.c</em>: main source file template. This is where the user
-code must be implemented:
+<li><strong><em>boot.ld</em></strong>: linker script.</li>
+<li><strong><em>crt0.S</em></strong>: startup assembly code.</li>
+<li><strong><em>global.S</em></strong>: additional assembly code.</li>
+<li><strong><em>peripherals.h</em></strong>: cast macros and more.</li>
+<li><strong><em>reg_map.h</em></strong>: register map macros.</li>
+</ul></li>
+<li><p><strong><em>make</em></strong>: folder containing the Makefile
+for building using the command line. A <strong><em>bin</em></strong>
+subfolder containing the output files is created upon build.</p></li>
+<li><p><strong><em>src</em></strong>:</p>
 <ul>
-<li>The <em>main</em> function should not be modified.</li>
-<li>The user should fill in <em>algo_00_init</em> and <em>algo_00</em>
-respectively with the initialization and running code of the
-algorithm.</li>
-<li>Please note that analogous functions (e.g., <em>algo_01_init</em>
-and <em>algo_01</em>) can be added in order to have additional
-algorithms (up to 30).</li>
-</ul></li>
-</ul></li>
-<li><strong><em>ispu_utils</em></strong>: folder containing several
-utilities. Usually, there is no need to modify these files.
+<li><strong><em>main.c</em></strong>: main source file template. This is
+where the user code must be implemented:
 <ul>
-<li><em>boot.ld</em>: linker script.</li>
-<li><em>crt0.S</em>: startup file.</li>
-<li><em>global.S</em>: additional assembly file.</li>
-<li><em>reg_map.h</em>: register map defines.</li>
-<li><em>peripherals.h</em>: cast defines and others.</li>
+<li><p>The <code>main</code> function should not be modified.</p></li>
+<li><p>The user should fill in <code>algo_00_init</code> and
+<code>algo_00</code> functions respectively with the initialization and
+running code of the algorithm.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> __attribute__ <span class="op">((</span>signal<span class="op">))</span> algo_00_init<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">// </span><span class="al">TODO</span><span class="co">: initialize algorithm</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> __attribute__ <span class="op">((</span>signal<span class="op">))</span> algo_00<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">// </span><span class="al">TODO</span><span class="co">: read and process sensor data</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// interrupt generation (set bit 0 for algo 0, bit 1 for algo 1, etc.)</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  int_status <span class="op">=</span> int_status <span class="op">|</span> <span class="bn">0x1</span><span class="bu">u</span><span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Note that <code>algo_00_init</code> is executed only when the first
+data sample is generated by the sensor (after boot or after disabling
+and re-enabling the algorithm), while <code>algo_00</code> is executed
+every time a new data sample is generated by the sensor (only one sample
+every few samples may be processed if the ISPU rate is configured to be
+lower than the sensor output data rate). For more details on the
+processing flow of the ISPU, please refer to section 9.1 of the
+application notes of the devices <a href="https://www.st.com/resource/en/application_note/an5850-ism330is-alwayson-3axis-accelerometer-and-3axis-gyroscope-with-ispu--intelligent-sensor-processing-unit-stmicroelectronics.pdf">ISM330IS</a>
+and <a href="https://www.st.com/resource/en/application_note/an5799-lsm6dso16is-alwayson-3axis-accelerometer-and-3axis-gyroscope-with-ispu--intelligent-sensor-processing-unit-stmicroelectronics.pdf">LSM6DSO16IS</a>.</p></li>
+<li><p>Analogous functions (for example, <code>algo_01_init</code> and
+<code>algo_01</code>) can be added in order to implement additional
+algorithms (up to 30).</p></li>
+<li><p>The global variable <code>int_status</code> can be used to report
+events to an external microcontroller. Normally, each bit is dedicated
+to one algorithm (or anyway a type of event), and it should be set to
+<code>1</code> when the corresponding event is to be reported. In the
+template, function <code>algo_00</code> always sets the first bit to
+<code>1</code> in order to report an event every time a new data sample
+is processed by the algorithm.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">static</span> <span class="dt">volatile</span> <span class="dt">uint32_t</span> int_status<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">...</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> __attribute__ <span class="op">((</span>signal<span class="op">))</span> algo_00<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">// interrupt generation (set bit 0 for algo 0, bit 1 for algo 1, etc.)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  int_status <span class="op">=</span> int_status <span class="op">|</span> <span class="bn">0x1</span><span class="bu">u</span><span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>After the execution of the configured algorithms to process the
+current data sample, the value of <code>int_status</code> is copied to
+the ISPU_INT_STATUS registers and is used to generate interrupts on the
+INT1 and INT2 pins based on the configuration available in registers
+ISPU_INT1_CTRL and ISPU_INT2_CTRL.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">(</span><span class="dt">void</span><span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">...</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> <span class="op">(</span><span class="kw">true</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// get interrupt flags</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">uint8_t</span> int_pin <span class="op">=</span> <span class="dv">0</span><span class="bu">u</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    int_pin <span class="op">|=</span> <span class="op">((</span>int_status <span class="op">&amp;</span> cast_uint32_t<span class="op">(</span>ISPU_INT1_CTRL<span class="op">))</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="bu">u</span><span class="op">)</span> <span class="op">?</span> <span class="bn">0x01</span><span class="bu">u</span> <span class="op">:</span> <span class="bn">0x00</span><span class="bu">u</span><span class="op">;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    int_pin <span class="op">|=</span> <span class="op">((</span>int_status <span class="op">&amp;</span> cast_uint32_t<span class="op">(</span>ISPU_INT2_CTRL<span class="op">))</span> <span class="op">&gt;</span> <span class="dv">0</span><span class="bu">u</span><span class="op">)</span> <span class="op">?</span> <span class="bn">0x02</span><span class="bu">u</span> <span class="op">:</span> <span class="bn">0x00</span><span class="bu">u</span><span class="op">;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">// set status registers and generate interrupts</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    cast_uint32_t<span class="op">(</span>ISPU_INT_STATUS<span class="op">)</span> <span class="op">=</span> int_status<span class="op">;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    cast_uint8_t<span class="op">(</span>ISPU_INT_PIN<span class="op">)</span> <span class="op">=</span> int_pin<span class="op">;</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div></li>
 </ul></li>
-<li><strong><em>conf.txt</em></strong>: file containing sensor
-configuration. Please refer to the help of the <em>ispu_gen</em> command
-line tool (included in the toolchain or Eclipse IDE) for how to modify
-the configuration.</li>
-<li><strong><em>make</em></strong>: folder containing the makefile for
-building using the command line.</li>
-<li><strong><em>eclipse</em></strong>: folder containing the Eclipse
-project.</li>
+<li>Other source files may be added, for example files implementing
+functions for specific algorithms, that may then be called from
+<strong><em>main.c</em></strong>.</li>
+</ul></li>
+<li><p><strong><em>conf.txt</em></strong>: file containing the sensor
+configuration to add to the output files. This can be used to configure,
+for example, the output data rate and full scale of the sensor, the rate
+of processing of the ISPU, and the generation of interrupts.</p>
+<p>The file included in the template already contains a minimal
+configuration:</p>
+<ul>
+<li>Accelerometer at 26 Hz, with 8 g full scale, and in high-performance
+mode</li>
+<li>ISPU processing at 26 Hz</li>
+<li>Interrupts for ISPU events enabled on INT1 (in pulsed mode)</li>
+<li>INT2 configured with the ISPU sleep signal (useful for execution
+time measurements)</li>
+<li>Algorithm 00 enabled (with interrupt on INT1 also enabled)</li>
 </ul>
-<h2 id="output-data-format-definition">3 - Output data format
-definition</h2>
+<pre><code>acc_odr 26
+acc_fs 8
+acc_mode high_performance
+
+ispu_irq_rate 26
+ispu_int1 enable
+ispu_sleep_int2 enable
+ispu_latch disable
+
+algo 0 enable
+algo_int1 0 enable</code></pre>
+<p>For all available settings and their syntax, refer to the
+<strong>CONFIGURATION</strong> section of the help of the
+<code>ispu_gen</code> tool, which can be displayed by running
+<code>ispu_gen -h -d imu_22</code> from the command line or can be found
+going to “Help”, “Help Contents”, and navigating to “ISPU Tools
+Documentation”, “ispu_gen” if using an Eclipse-based IDE.</p></li>
+<li><p><strong><em>meta.txt</em></strong>: file containing the metadata
+to add to the output files. This can be used to add information about
+the outputs of the ISPU: position, data type, length, and, optionally,
+labels to associate to specific output values.</p>
 <p>Since the format of the output data written to the ISPU_DOUT
 registers depends on the specific user code, STMicroelectronics tools
-(e.g., Unicleo-GUI) utilize JSON files to define the output data format
-with a specific syntax.</p>
-<p>An “output” key must be defined at the highest level of the JSON
-structure. The “output” key must contain an array. Each element of the
-array must describe one output. Each element must have a “name” key, a
-“type” key and, optionally, a “size” key:</p>
-<ul>
-<li><p>The value of the “name” key can be any string defining a label
-for the element.</p></li>
-<li><p>The value of the “type” key must be a string representing one of
-the following data types:</p>
-<ul>
-<li>uint8_t</li>
-<li>int8_t</li>
-<li>uint16_t</li>
-<li>int16_t</li>
-<li>uint32_t</li>
-<li>int32_t</li>
-<li>float</li>
-<li>char</li>
-</ul></li>
-<li><p>If the output is an array, the value of the “size” key must be
-integer representing the array size.</p></li>
+(for example, <a href="https://www.st.com/en/development-tools/mems-studio.html">MEMS
+Studio</a>) utilize this information to display the ISPU outputs in
+their proper format.</p>
+<p>Here below is the metadata file for the norm example. In this case,
+the output contains the original accelerometer data for the 3 axes, in
+<code>int16_t</code> format, followed by the norm, which is a
+<code>float</code> value. Since all outputs are consecutive and stored
+starting from the first ISPU_DOUT register, the position does not need
+to be explicitly specified. The length, being equal to 1 for all
+outputs, can also be omitted.</p>
+<pre><code>description &quot;Norm&quot;
+
+output &quot;Acc x [LSB]&quot; int16_t
+output &quot;Acc y [LSB]&quot; int16_t
+output &quot;Acc z [LSB]&quot; int16_t
+output &quot;Acc norm [LSB]&quot; float</code></pre>
+<p>For all the details on the syntax for this file, refer to the
+<strong>METADATA</strong> section of the help of the
+<code>ispu_gen</code> tool, which can be displayed by running
+<code>ispu_gen -h -d imu_22</code> from the command line or can be found
+going to “Help”, “Help Contents”, and navigating to “ISPU Tools
+Documentation”, “ispu_gen” if using an Eclipse-based IDE.</p></li>
+<li><p><strong><em>shub.txt</em></strong>: file containing the sensor
+hub configuration to add to the output files. This can be used to
+configure an external sensor attached via sensor hub and to configure
+the sensor hub to read data from the external sensor, so that it can be
+processed by the ISPU.</p>
+<p>Here below is the sensor hub file for the example of fitness
+activity. In this case, two write operations are used to turn on the
+external pressure sensor in low-noise mode at 25 Hz, with block data
+update enabled. A read operation is then configured to read the 3 bytes
+of pressure data, which will be performed at the specified rate of 26
+Hz.</p>
+<pre><code>shub_odr 26
+
+# LPS22HH
+w 0xBA 0x10 0x32 # pressure @ 25 Hz, block data update
+w 0xBA 0x11 0x12 # low-noise mode
+r 0xBA 0x28 3 # pressure data</code></pre>
+<p>For the syntax to use for this file, refer to the <strong>SENSOR
+HUB</strong> section of the help of the <code>ispu_gen</code> tool,
+which can be displayed by running <code>ispu_gen -h -d imu_22</code>
+from the command line or can be found going to “Help”, “Help Contents”,
+and navigating to “ISPU Tools Documentation”, “ispu_gen” if using an
+Eclipse-based IDE.</p></li>
 </ul>
-<p>For example, supposing that the user code copies the accelerometer
-raw values to ISPU_DOUT_00, ISPU_DOUT_01 and ISPU_DOUT_02 registers, the
-JSON file below defines three elements containing the three axes of the
-accelerometer in LSB, written to the output registers as 16-bit words in
-two’s complement (int16_t data type).</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;output&quot;</span><span class="fu">:</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">[</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Acc x [LSB]&quot;</span><span class="fu">,</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;int16_t&quot;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Acc y [LSB]&quot;</span><span class="fu">,</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;int16_t&quot;</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Acc z [LSB]&quot;</span><span class="fu">,</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;int16_t&quot;</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
-<p>An equivalent definition can be achieved by defining one single
-element as an array of size three.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;output&quot;</span><span class="fu">:</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="ot">[</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Acc [LSB]&quot;</span><span class="fu">,</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;int16_t&quot;</span><span class="fu">,</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">&quot;size&quot;</span><span class="fu">:</span> <span class="dv">3</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="ot">]</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
 <hr />
-<p><strong>More Information: <a href="http://st.com/MEMS">http://www.st.com</a></strong></p>
+<p><strong>More information: <a href="http://st.com/MEMS">http://www.st.com</a></strong></p>
 <p><strong>Copyright © 2022 STMicroelectronics</strong></p>
 </div>
 </div>
