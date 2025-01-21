@@ -58,7 +58,7 @@ void __attribute__ ((signal)) algo_00(void)
 	cast_float(ISPU_DOUT_02) = in.AccY;
 	cast_float(ISPU_DOUT_04) = in.AccZ;
 	cast_uint8_t(ISPU_DOUT_06) = (uint8_t)out.current_activity;
-	cast_uint8_t(ISPU_DOUT_06_B) = (uint8_t)out.confidence;
+	cast_uint8_t(ISPU_DOUT_06_H) = (uint8_t)out.confidence;
 
 	int_status = int_status | 0x1u;
 }

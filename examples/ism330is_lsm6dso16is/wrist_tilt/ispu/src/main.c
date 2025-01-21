@@ -67,7 +67,7 @@ void __attribute__ ((signal)) algo_00(void)
 	cast_float(ISPU_DOUT_02) = in.acc[1];
 	cast_float(ISPU_DOUT_04) = in.acc[2];
 	cast_uint8_t(ISPU_DOUT_06) = out.wrist_up;
-	cast_uint8_t(ISPU_DOUT_06_B) = out.wrist_down;
+	cast_uint8_t(ISPU_DOUT_06_H) = out.wrist_down;
 
 	int_status = int_status | 0x1u;
 }
