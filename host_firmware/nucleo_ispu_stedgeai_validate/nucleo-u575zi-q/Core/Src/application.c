@@ -58,10 +58,10 @@ static void read(uint8_t reg, uint8_t *val, uint16_t len);
 static void write(uint8_t reg, uint8_t val);
 static void write_mul(uint8_t reg, uint8_t *val, uint16_t len);
 
-static char uart_char;
-static uint8_t uart_received;
-static char uart_buf[UART_BUF_SIZE + 1];
-static uint16_t uart_size;
+static volatile char uart_char;
+static volatile uint8_t uart_received;
+static volatile char uart_buf[UART_BUF_SIZE + 1];
+static volatile uint16_t uart_size;
 
 static uint32_t size;
 static uint8_t buf_i, buf_i_read;
@@ -106,8 +106,13 @@ void application(void)
 		read(0x0F, &who_am_i, 1);
 	} while (who_am_i != 0x22);
 
-	write(0x12, 0x01); // software reset
-	HAL_Delay(1);
+	// software reset
+	uint8_t tmp;
+	read(0x12, &tmp, 1);
+	write(0x12, tmp | 0x01);
+	do {
+		read(0x12, &tmp, 1);
+	} while ((tmp & 0x01) != 0);
 
 	HAL_TIM_Base_Start(&htim2);
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)&uart_char, 1);
@@ -120,9 +125,9 @@ void application(void)
 			uart_size = 0;
 			uart_received = 0;
 
-			if (strcmp(uart_buf, "ver") == 0) {
+			if (strcmp((char *)uart_buf, "ver") == 0) {
 				printf("ISPU validation firmware 1.1.0\n");
-			} else if (strcmp(uart_buf, "name") == 0) {
+			} else if (strcmp((char *)uart_buf, "name") == 0) {
 				char name[1024];
 
 				write(0x01, 0x80);
@@ -145,7 +150,7 @@ void application(void)
 				write(0x01, 0x00);
 
 				printf("%s\n", name);
-			} else if (strcmp(uart_buf, "clock") == 0) {
+			} else if (strcmp((char *)uart_buf, "clock") == 0) {
 				uint8_t ctrl10 = 0;
 				read(0x19, &ctrl10, 1);
 
@@ -154,7 +159,7 @@ void application(void)
 					freq = 10000000;
 
 				printf("%lu\n", freq);
-			} else if (strcmp(uart_buf, "macc") == 0) {
+			} else if (strcmp((char *)uart_buf, "macc") == 0) {
 				uint64_t macc = 0;
 
 				write(0x01, 0x80);
@@ -162,19 +167,19 @@ void application(void)
 				write(0x01, 0x00);
 
 				printf("%llu\n", macc);
-			} else if (strcmp(uart_buf, "blocksize") == 0) {
+			} else if (strcmp((char *)uart_buf, "blocksize") == 0) {
 				printf("%u\n", BUF_SIZE);
-			} else if (strncmp(uart_buf, "timeout_boot", 12) == 0) {
-				sscanf(uart_buf, "timeout_boot%lu", &timeout_boot);
+			} else if (strncmp((char *)uart_buf, "timeout_boot", 12) == 0) {
+				sscanf((char *)uart_buf, "timeout_boot%lu", &timeout_boot);
 				timeout_boot *= 1000000;
 				printf("Timeout boot = %lu", timeout_boot);
-			} else if (strncmp(uart_buf, "timeout_run", 11) == 0) {
-				sscanf(uart_buf, "timeout_run%lu", &timeout_run);
+			} else if (strncmp((char *)uart_buf, "timeout_run", 11) == 0) {
+				sscanf((char *)uart_buf, "timeout_run%lu", &timeout_run);
 				timeout_run *= 1000000;
 				printf("Timeout run = %lu", timeout_run);
-			} else if (strcmp(uart_buf, "") == 0) {
+			} else if (strcmp((char *)uart_buf, "") == 0) {
 				printf("%u\n", BUF_SIZE);
-			} else if (strcmp(uart_buf, "canary") == 0) {
+			} else if (strcmp((char *)uart_buf, "canary") == 0) {
 				uint8_t canary = 0x00;
 
 				write(0x01, 0x80);
@@ -193,21 +198,21 @@ void application(void)
 				write(0x01, 0x00);
 
 				printf("0x%lX = 0x%02X\n", canary_addr.value, canary);
-			} else if (strcmp(uart_buf, "get_in_info") == 0) {
+			} else if (strcmp((char *)uart_buf, "get_in_info") == 0) {
 				write(0x01, 0x80);
 				write(0x0C, 0x02); // give input info command to the ISPU
 				write(0x01, 0x00);
 				write(0x18, 0xA0); // wake up the ISPU
 
 				get_and_send_info(); // get info from the ISPU and send over uart
-			} else if (strcmp(uart_buf, "get_out_info") == 0) {
+			} else if (strcmp((char *)uart_buf, "get_out_info") == 0) {
 				write(0x01, 0x80);
 				write(0x0C, 0x04); // give output info command to the ISPU
 				write(0x01, 0x00);
 				write(0x18, 0xA0); // wake up the ISPU
 
 				get_and_send_info(); // get info from the ISPU and send over uart
-			} else if (strcmp(uart_buf, "activation_sizes") == 0) {
+			} else if (strcmp((char *)uart_buf, "activation_sizes") == 0) {
 				write(0x01, 0x80);
 
 				uint8_t reg = 0x10 + 30; // after macc
@@ -237,7 +242,7 @@ void application(void)
 				}
 
 				write(0x01, 0x00);
-			} else if (strcmp(uart_buf, "weight_sizes") == 0) {
+			} else if (strcmp((char *)uart_buf, "weight_sizes") == 0) {
 				write(0x01, 0x80);
 
 				uint8_t reg = 0x10 + 35; // after activations
@@ -267,7 +272,7 @@ void application(void)
 				}
 
 				write(0x01, 0x00);
-			} else if (strcmp(uart_buf, "get_versions") == 0) {
+			} else if (strcmp((char *)uart_buf, "get_versions") == 0) {
 				write(0x01, 0x80);
 				write(0x0C, 0x08); // give versions command to the ISPU
 				write(0x01, 0x00);
@@ -284,7 +289,7 @@ void application(void)
 				}
 
 				write(0x01, 0x00);
-			} else if (strcmp(uart_buf, "get_nodes") == 0) {
+			} else if (strcmp((char *)uart_buf, "get_nodes") == 0) {
 				write(0x01, 0x80);
 				write(0x0C, 0x10); // give nodes command to the ISPU
 				write(0x01, 0x00);
@@ -316,7 +321,7 @@ void application(void)
 				}
 
 				write(0x01, 0x00);
-			} else if (strcmp(uart_buf, "run") == 0) {
+			} else if (strcmp((char *)uart_buf, "run") == 0) {
 				HAL_TIM_Base_Start(&htim5);
 
 				first_exec_int = 1;
@@ -718,7 +723,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		uart_buf[uart_size++] = uart_char;
 	}
 
-	if (uart_received && strncmp(uart_buf, "ucf", 3) == 0) {
+	if (uart_received && strncmp((char *)uart_buf, "ucf", 3) == 0) {
 		uart_size = 0;
 		uart_received = 0;
 
@@ -729,13 +734,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		buf_i_read = 0;
 		done = 0;
 
-		sscanf(uart_buf, "ucf%lu", &size);
+		sscanf((char *)uart_buf, "ucf%lu", &size);
 
 		block_size = size > BUF_SIZE ? BUF_SIZE : size;
 		HAL_UART_Receive_DMA(&huart1, buf[buf_i], block_size);
 
 		printf("Ready to receive block of size %lu\n", block_size);
-	} else if (uart_received && strncmp(uart_buf, "in", 2) == 0) {
+	} else if (uart_received && strncmp((char *)uart_buf, "in", 2) == 0) {
 		uart_size = 0;
 		uart_received = 0;
 
@@ -746,7 +751,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		buf_i_read = 0;
 		done = 0;
 
-		sscanf(uart_buf, "in%lu%lu", &input_idx, &size);
+		sscanf((char *)uart_buf, "in%lu%lu", &input_idx, &size);
 
 		block_size = size > BUF_SIZE ? BUF_SIZE : size;
 		HAL_UART_Receive_DMA(&huart1, buf[buf_i], block_size);
@@ -761,7 +766,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 int _write(int fd, const void *buf, size_t count)
 {
-	uint8_t status = HAL_UART_Transmit(&huart1, (uint8_t *)buf, count, 1000);
+	uint8_t status = HAL_UART_Transmit(&huart1, (uint8_t *)buf, count, HAL_MAX_DELAY);
 
 	return (status == HAL_OK ? count : 0);
 }
