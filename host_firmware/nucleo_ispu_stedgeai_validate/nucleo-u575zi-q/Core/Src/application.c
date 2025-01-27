@@ -126,7 +126,7 @@ void application(void)
 			uart_received = 0;
 
 			if (strcmp((char *)uart_buf, "ver") == 0) {
-				printf("ISPU validation firmware 1.1.0\n");
+				printf("ISPU validation firmware 1.1.1\n");
 			} else if (strcmp((char *)uart_buf, "name") == 0) {
 				char name[1024];
 
