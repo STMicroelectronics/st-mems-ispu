@@ -26,7 +26,7 @@ The *binary* folder contains the prebuilt firmware for the supported Nucleo boar
 
 The source project for each supported Nucleo board is also available in the dedicated folders. The projects can be built using either the Makefile (with the GNU Embedded Toolchain for ARM installed) or the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) project. The projects can be generated for other development enviroments with [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) using the provided *.ioc* files.
 
-The source code may also be used to port the firmware to a non-supported hardware setup. The firmware was generated using [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html). All custom code is contained in *Core/Inc/applontication.h* and *Core/Src/application.c* (the *application* function is called from *Core/Src/main.c* in the main loop), thus allowing for easy porting, without modifying much of *Core/Src/application.c*. Modifications might be necessary for code related to hardware-dependent resources, such as timers, interrupt pins, and communication interfaces.
+The source code may also be used to port the firmware to a non-supported hardware setup. The firmware was generated using [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html). All custom code is contained in *Core/Inc/application.h* and *Core/Src/application.c* (the *application* function is called from *Core/Src/main.c* in the main loop), thus allowing for easy porting, without modifying much of *Core/Src/application.c*. Modifications might be necessary for code related to hardware-dependent resources, such as timers, interrupt pins, and communication interfaces.
 
 ## Validation template and validation flow
 
