@@ -26,15 +26,15 @@ train:
 	python training/train.py $(USER_CONFIG)
 
 validate_host:
-	stedgeai validate --target ispu --mode host --model $(MODEL_PATH) --allocate-inputs --allocate-outputs --no-workspace \
+	stedgeai validate --target ispu --mode host --model $(MODEL_PATH) --no-workspace \
 		--output $(MODEL_DIR)/validation_output --valinput $(MODEL_DIR)/training_output/validation_data.npz
 
 validate_target:
-	stedgeai generate --target ispu --model $(MODEL_PATH) --allocate-inputs --allocate-outputs --no-workspace --output $(VALIDATION_TEMPLATE)
+	stedgeai generate --target ispu --model $(MODEL_PATH) --no-workspace --output $(VALIDATION_TEMPLATE)
 	make -C $(VALIDATION_TEMPLATE)/make
 	mkdir -p $(MODEL_DIR)/validation_output
 	stedgeai validate --target ispu --mode target --model $(MODEL_PATH) --ucf $(VALIDATION_TEMPLATE)/make/bin/ispu.ucf \
-		--allocate-inputs --allocate-outputs --no-workspace --output $(MODEL_DIR)/validation_output
+		--no-workspace --output $(MODEL_DIR)/validation_output --valinput $(MODEL_DIR)/training_output/validation_data.npz
 
 generate:
 ifneq ("$(wildcard $(MODEL_DEPLOY_DIR))","")
@@ -42,7 +42,7 @@ ifneq ("$(wildcard $(MODEL_DEPLOY_DIR))","")
 endif
 	$(CP) $(DEPLOY_DIR) $(MODEL_DEPLOY_DIR)
 	make -C $(MODEL_DEPLOY_DIR)/ispu/make clean
-	stedgeai generate --target ispu --model $(MODEL_PATH) --allocate-inputs --allocate-outputs --no-workspace --no-report --output $(MODEL_DEPLOY_DIR)/ispu
+	stedgeai generate --target ispu --model $(MODEL_PATH) --no-workspace --no-report --output $(MODEL_DEPLOY_DIR)/ispu
 	$(CP) $(MODEL_DIR)/training_output/ispu_wand_params.h $(MODEL_DEPLOY_DIR)/ispu/inc
 	$(CP) $(MODEL_DIR)/training_output/conf.txt $(MODEL_DEPLOY_DIR)/ispu
 	make -C $(MODEL_DEPLOY_DIR)/ispu/make
