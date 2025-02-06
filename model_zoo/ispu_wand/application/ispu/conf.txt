@@ -1,8 +1,8 @@
-acc_odr 52
+acc_odr 26
 acc_fs 8
 acc_mode high_performance
 
-ispu_irq_rate 52
+ispu_irq_rate 26
 ispu_int1 enable
 ispu_sleep_int2 enable
 ispu_latch disable

@@ -18,7 +18,7 @@ ifeq ($(OS),Windows_NT)
     NULL := $(shell mkdir -p 2> tmp)
     ifneq (,$(wildcard -p))
         MKDIR = mkdir
-        NULL := $(shell $(RMDIR) -p)
+        NULL := $(shell $(RMDIR) "./-p")
     endif
     NULL := $(shell $(RM) tmp)
 endif
@@ -29,6 +29,8 @@ LDFLAGS = -L../lib/ai -lNetworkRuntime_ISPU_GCC
 
 SRC = ../ispu_utils/crt0.S ../src/main.c ../src/network_data.c ../src/network.c ../src/network_utils.c ../src/iir2.c
 
+EXTRA_FILES= -s ../conf.txt -m ../meta.txt -sh ../shub.txt
+
 OUTDIR = bin
 EXPORTDIR = ../../output
 NAME = ispu
@@ -37,10 +39,10 @@ build: $(SRC) $(OUTDIR) $(EXPORTDIR) Makefile
 	$(CC) $(CFLAGS) -o $(OUTDIR)/$(NAME) $(SRC) $(LDFLAGS) -T ../ispu_utils/boot.ld $(INCS)
 	$(SIZE_REISC) $(OUTDIR)/$(NAME)
 	$(OBJ_COPY) -O srec $(OUTDIR)/$(NAME) $(OUTDIR)/$(NAME).srec
-	$(ISPU_GEN) -b -c -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
-	$(ISPU_GEN) -b -s ../conf.txt -d imu_22 -n ispu_conf $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).ucf
-	$(CP) $(OUTDIR)/$(NAME).ucf $(EXPORTDIR)/ispu_wand.ucf
+	$(ISPU_GEN) -c $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).h
+	$(ISPU_GEN) $(EXTRA_FILES) -d imu_22 -n ispu_conf -nd $(OUTDIR)/$(NAME).srec > $(OUTDIR)/$(NAME).json
 	$(CP) $(OUTDIR)/$(NAME).h $(EXPORTDIR)/ispu_wand.h
+	$(CP) $(OUTDIR)/$(NAME).json $(EXPORTDIR)/ispu_wand.json
 
 $(OUTDIR):
 	$(MKDIR) $(OUTDIR)

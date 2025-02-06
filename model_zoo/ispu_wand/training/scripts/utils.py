@@ -11,7 +11,7 @@ __all__ = [
     "get_sensitivity",
     "get_csv_header",
     "yaml_to_header",
-    "yaml_to_json",
+    "yaml_to_meta",
     "yaml_to_conf",
     "validate_user_config_yaml"
 ]
@@ -27,7 +27,7 @@ from schema import Schema, Use, And, Or, Optional
 _ISPU_WAND_PARAMS_H_FILENAME = "ispu_wand_params.h"
 _ISPU_WAND_PARAMS_H_GUARD = "ISPU_WAND_PARAMS_H"
 _LICENSE_C_TXT_FILENAME = "license_c.txt"
-_ISPU_WAND_JSON_FILENAME = "ispu_wand.json"
+_META_TXT_FILENAME = "meta.txt"
 _CONF_TXT_FILENAME = "conf.txt"
 
 # Sensor available configurations
@@ -126,28 +126,28 @@ def yaml_to_header(
         f.write(f"\n#endif //{_ISPU_WAND_PARAMS_H_GUARD}\n")
 
 
-def yaml_to_json(model_dir: str, user_config: dict) -> None:
-    """Produce output json file for ISPU output parsing.
+def yaml_to_meta(model_dir: str, user_config: dict) -> None:
+    """Produce output meta.txt file with metadata.
 
     Args:
         model_dir (str): Path to the model folder.
         user_config (dict): Dictionary with the user configurations.
     """
-    js = '{\n\t"output":\n\t[\n'
+    meta = f'description "ISPU wand ({user_config["general"]["name"]})"\n\n'
 
-    js += _get_output_json_entry("acc_x [mg]", "float") + ",\n"
-    js += _get_output_json_entry("acc_y [mg]", "float") + ",\n"
-    js += _get_output_json_entry("acc_z [mg]", "float") + ",\n"
-    js += _get_output_json_entry("go", "uint8_t") + ",\n"
+    meta += 'output "acc_x [mg]" float\n'
+    meta += 'output "acc_y [mg]" float\n'
+    meta += 'output "acc_z [mg]" float\n'
+    meta += 'output "go" uint8_t\n'
 
     for label, _ in sorted(user_config["labels"].items(), key=lambda el: el[1]):
-        js += _get_output_json_entry(label.upper(), "float") + ",\n"
+        meta += f'output "{label.upper()}" float\n'
 
-    js += _get_output_json_entry("pred_char", "char") + "\n"
-    js += "\t]\n}\n"
-    json_file = os.path.join(model_dir, _ISPU_WAND_JSON_FILENAME)
-    with open(json_file, "w", encoding="utf-8") as f:
-        f.write(js)
+    meta += 'output "pred_char" char\n\n'
+
+    meta_file = os.path.join(model_dir, _META_TXT_FILENAME)
+    with open(meta_file, "w", encoding="utf-8") as f:
+        f.write(meta)
 
 
 def yaml_to_conf(model_dir: str, user_config: dict) -> None:
@@ -170,7 +170,7 @@ def yaml_to_conf(model_dir: str, user_config: dict) -> None:
         f"ispu_sleep_int2 enable\n"
         f"ispu_latch disable\n\n"
         f"algo 0 enable\n"
-        f"algo_int1 0 enable\n"
+        f"algo_int1 0 enable\n\n"
     )
 
     conf_file = os.path.join(model_dir, _CONF_TXT_FILENAME)
@@ -188,24 +188,6 @@ def validate_user_config_yaml(config: Dict) -> Dict:
         Dict: Validated YAML object.
     """
     return _USER_CONFIG_SCHEMA.validate(config)
-
-
-def _get_output_json_entry(out_name: str, out_type: str) -> str:
-    """Get entry for output JSON.
-
-    Args:
-        out_name (str): Output register name.
-        out_type (str): Output register variable type.
-
-    Returns:
-        str: Output JSON entry.
-    """
-    return (
-        "\t\t{\n"
-        f'\t\t\t"name": "{out_name}",\n'
-        f'\t\t\t"type": "{out_type}"\n'
-        "\t\t}"
-    )
 
 
 def _is_positive(n: int) -> bool:

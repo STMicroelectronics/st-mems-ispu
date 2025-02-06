@@ -91,7 +91,7 @@ In order to train and deploy a new air-written letters recognition example follo
 - Launch `make validate_target MODEL_DIR=path/to/user_model_dir` to run the validation on the ISPU. This step is crucial to avoid potentially critical issues in the final application, since the validation on the target lets you:
    - Measure the inference time
    - See if there is any out-of-memory issue
-- Launch `make generate MODEL_DIR=path/to/user_model_dir`. With this service you generate the files necessary to deploy your use case on the ISPU. In the folder `application/output` of the specified model, you will find the `ispu_wand.ucf` and the relative `ispu_wand.json`, useful to test the model with [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html).
+- Launch `make generate MODEL_DIR=path/to/user_model_dir`. With this service you generate the files necessary to deploy your use case on the ISPU. In the folder `application/output` of the specified model, you will find the `ispu_wand.json`, useful to test the model with [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), and the `ispu_wand.h`, which can be used to integrate the model in a custom host firmware.
 
 ------
 

@@ -41,12 +41,11 @@ ifneq ("$(wildcard $(MODEL_DEPLOY_DIR))","")
 	$(RM) $(MODEL_DEPLOY_DIR)
 endif
 	$(CP) $(DEPLOY_DIR) $(MODEL_DEPLOY_DIR)
-	make -C $(MODEL_DEPLOY_DIR)/ispu/make clean
 	stedgeai generate --target ispu --model $(MODEL_PATH) --no-workspace --no-report --output $(MODEL_DEPLOY_DIR)/ispu
 	$(CP) $(MODEL_DIR)/training_output/ispu_wand_params.h $(MODEL_DEPLOY_DIR)/ispu/inc
 	$(CP) $(MODEL_DIR)/training_output/conf.txt $(MODEL_DEPLOY_DIR)/ispu
+	$(CP) $(MODEL_DIR)/training_output/meta.txt $(MODEL_DEPLOY_DIR)/ispu
 	make -C $(MODEL_DEPLOY_DIR)/ispu/make
-	$(CP) $(MODEL_DIR)/training_output/ispu_wand.json $(MODEL_DEPLOY_DIR)/output
 
 
 .PHONY: training validate_host validate_target generate

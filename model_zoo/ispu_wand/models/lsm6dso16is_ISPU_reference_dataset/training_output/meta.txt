@@ -1,0 +1,12 @@
+description "ISPU wand (lsm6dso16is_ISPU_reference_dataset)"
+
+output "acc_x [mg]" float
+output "acc_y [mg]" float
+output "acc_z [mg]" float
+output "go" uint8_t
+output "I" float
+output "S" float
+output "P" float
+output "U" float
+output "pred_char" char
+

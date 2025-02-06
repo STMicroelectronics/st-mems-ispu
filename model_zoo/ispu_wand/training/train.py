@@ -33,7 +33,7 @@ from scripts.utils import (
     get_sensitivity,
     get_csv_header,
     yaml_to_header,
-    yaml_to_json,
+    yaml_to_meta,
     yaml_to_conf,
     validate_user_config_yaml
 )
@@ -252,9 +252,9 @@ def main() -> None:
         user_config["preprocessing"]["full_scale_g"])
     user_config["labels"] = labels_dict
 
-    # Generate C header, output JSON file, and config file
+    # Generate C header, metadata file, and config file
     yaml_to_header(out_dir, user_config, iir2_a, iir2_b)
-    yaml_to_json(out_dir, user_config)
+    yaml_to_meta(out_dir, user_config)
     yaml_to_conf(out_dir, user_config)
 
 

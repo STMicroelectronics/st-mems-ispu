@@ -9,3 +9,4 @@ ispu_latch disable
 
 algo 0 enable
 algo_int1 0 enable
+

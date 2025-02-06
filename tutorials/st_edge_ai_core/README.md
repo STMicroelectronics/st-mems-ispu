@@ -499,9 +499,9 @@ The above metadata defines:
 - The probability, in float format, of the 4 classes being detected (raw outputs of the network) as the next outputs.
 - The label corresponding to the predicted class as a string of 10 characters as last output.
 
-For details on the syntax to use for this file refer to [README](../../examples/ism330is_lsm6dso16is/template/README.md) of the generic template for the LSM6DSO16IS device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
+For details on the syntax to use for this file refer to [README](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template/README.md) of the generic template for the LSM6DSO16IS device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
 
-For instructions on how to integrate a generic model in the template, refer to the [README](../../examples/ism330is_lsm6dso16is/template_stedgeai/README.md) of the template itself.
+For instructions on how to integrate a generic model in the template, refer to the [README](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai/README.md) of the template itself.
 
 ### Generate the sensor configuration
 
