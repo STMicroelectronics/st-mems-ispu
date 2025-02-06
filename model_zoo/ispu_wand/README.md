@@ -29,6 +29,8 @@ This is the minimal hardware setup required to reproduce all the steps for the p
 - [GNU Make](https://www.gnu.org/software/make)
 - [ISPU Toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html)
 - [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html)
+- [Arm GNU Toolchain for bare-metal target (arm-none-eabi)](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
+- [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html)
 
 All the tools above must be added to the system PATH. For the ISPU toolchain you can refer to the dedicated [README](https://github.com/STMicroelectronics/ispu-examples/blob/master/README.md) and for ST Edge AI Core, you can refer to the documentation in its installation folder.
 
@@ -37,6 +39,7 @@ All the tools above must be added to the system PATH. For the ISPU toolchain you
 - Nucleo custom firmware for MEMS Studio
    - Download the [X-CUBE-ISPU](https://www.st.com/en/embedded-software/x-cube-ispu.html) software package
    - In the *Projects* folder, get the *DataLogExtended* firmware for the specific hardware setup
+- [Nucleo firmware for running on ISPU](../../host_firmware/nucleo_ispu_test_header)
 
 ## Services
 
@@ -47,9 +50,10 @@ The different services and the corresponding operations are described in the tab
 | Service           | Operation                                                        |
 | ----------------- | ---------------------------------------------------------------- |
 | `train`           | Train a model based on the reference dataset or a new dataset    |
-| `validate_host`   | Evaluate a model accuracy on a PC |
-| `validate_target` | Evaluate a model accuracy and benchmark it on the ISPU |
-| `generate`        | Deploy a model on the ISPU                                       |
+| `validate_host`   | Evaluate a model accuracy on a PC                                |
+| `validate_target` | Evaluate a model accuracy and benchmark it on the ISPU           |
+| `generate`        | Generate a model for deployment on the ISPU                      |
+| `run`             | Run a model on the ISPU                                          |
 
 If no argument is specified when executing the services, the files for the pretrained model are used. You can refer to the [Workflow](#workflow) section below and to the training [README](./training/README.md) to know how to retrain the model with your custom data collection, how to measure its performance, and deploy it to the ISPU target.
 
@@ -92,6 +96,9 @@ In order to train and deploy a new air-written letters recognition example follo
    - Measure the inference time
    - See if there is any out-of-memory issue
 - Launch `make generate MODEL_DIR=path/to/user_model_dir`. With this service you generate the files necessary to deploy your use case on the ISPU. In the folder `application/output` of the specified model, you will find the `ispu_wand.json`, useful to test the model with [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), and the `ispu_wand.h`, which can be used to integrate the model in a custom host firmware.
+- Launch `make run MODEL_DIR=path/to/user_model_dir`. With this service you build the [ISPU test firmware](../../host_firmware/nucleo_ispu_test_header) with the specified model and flash it on the Nucleo board. The Nucleo can then be directly used to test the model. Refer to the firmware [README](../../host_firmware/nucleo_ispu_test_header/README.md) for details on how to use it.
+
+   By default, the firmware for Nucleo-F401RE is used. In order to use a different firmware, add the following parameter to the command: `RUN_FW=path/to/test_firmware`. Additionally, if you have multiple boards connected, you may have to specify the index of the ST-Link probe with `PROBE_INDEX=probe_idx`. Refer to the error message of the flash script for how to get the correct probe index.
 
 ------
 

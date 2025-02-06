@@ -1,3 +1,5 @@
+THIS_DIR = $(subst $() $(),\ ,$(subst /Makefile,,$(abspath $(lastword $(MAKEFILE_LIST)))))
+
 USER_CONFIG = training/user_config.yaml
 OUTPUT_DIR = output
 
@@ -9,6 +11,8 @@ VALIDATE_DIR = $(MODEL_DIR)/validation_application
 
 DEPLOY_TEMPLATE = application
 DEPLOY_DIR = $(MODEL_DIR)/application
+
+RUN_FW = ../../host_firmware/nucleo_ispu_test_header/nucleo-f401re
 
 CP = cp -R
 RM = rm -rf
@@ -51,5 +55,13 @@ endif
 	$(CP) $(MODEL_DIR)/training_output/meta.txt $(DEPLOY_DIR)/ispu
 	make -C $(DEPLOY_DIR)/ispu/make
 
-.PHONY: training validate_host validate_target generate
+run:
+	make -C "$(RUN_FW)" ISPU_DIR="$(THIS_DIR)/$(DEPLOY_DIR)/ispu"
+ifeq ($(OS),Windows_NT)
+	$(RUN_FW)/flash.bat $(PROBE_INDEX)
+else
+	$(RUN_FW)/flash.sh $(PROBE_INDEX)
+endif
+
+.PHONY: training validate_host validate_target generate run
 
