@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file    core_private.h
   * @author  AST Embedded Analytics Research Platform
-  * @brief   private header file of common private core module defines
+  * @brief   private header file of common private core private module defines
   ******************************************************************************
   * @attention
   *
@@ -22,13 +22,14 @@
 #include "ai_datatypes_internal.h"
 #include "ai_math_helpers.h"
 
+#include "core_assert.h"
 #include "core_log.h"
 
 /*!
  * @defgroup core_private Core Library Private macros and datatypes
  * @brief Common macros, datatypes and routines for core private rounites
  * @details This module contains the definitons and implementations of some
- * internal routines and datatypes that are supposed to not be exposed as 
+ * internal routines and datatypes that are supposed to not be exposed as
  * public headers. So usually this file should be include only on .c files or
  * headers that are private as well
  */
@@ -188,7 +189,7 @@ do { \
   AI_FMT_OBJ(AI_ARRAY_OBJ(array_)->format)
 
 #define AI_ARRAY_OBJ_FMT_GET(array_) \
-  AI_FMT_GET(AI_FMT_OBJ(AI_ARRAY_OBJ(array_)->format))
+  AI_FMT_GET(AI_ARRAY_OBJ_FMT(array_))
 
 #define AI_ARRAY_OBJ_SIZE(array_) \
   (AI_ARRAY_OBJ(array_)->size)
@@ -269,11 +270,11 @@ ai_address_range core_address_range_init(
   const ai_handle start, const ai_handle end)
 {
   ai_address_range r;
-  
-  r.start = (start<end) ? start : end;
-  r.size  = (ai_size) ((start<end) 
+
+  r.start = (ai_ptr)((start<end) ? start : end);
+  r.size  = (ai_size) ((start<end)
     ? ((ai_uptr)end-(ai_uptr)start) : ((ai_uptr)start-(ai_uptr)end));
-  return r;  
+  return r;
 }
 
 AI_DECLARE_STATIC

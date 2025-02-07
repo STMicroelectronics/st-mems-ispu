@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_ml Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

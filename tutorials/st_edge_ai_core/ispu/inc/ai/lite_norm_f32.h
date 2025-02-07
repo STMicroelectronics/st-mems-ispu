@@ -29,7 +29,7 @@ enum ai_lite_norm_type_ {
 };
 
 /*!
- * @brief Forward function for a batch normalization (BN) layer with 
+ * @brief Forward function for a batch normalization (BN) layer with
  * signed float input, signed float output, and float parameters.
  * @ingroup lite_norm_f32
  * @param output The pointer to output buffer.
@@ -40,9 +40,9 @@ enum ai_lite_norm_type_ {
  * @param n_channel_in The number of channel in the input tensor.
  */
 LITE_API_ENTRY
-void forward_lite_norm_if32of32( ai_float* output, 
+void forward_lite_norm_if32of32( ai_float* output,
                                  const ai_float* input,
-                                 const ai_u32 ai_lite_norm_type, 
+                                 const ai_u32 ai_lite_norm_type,
                                  const ai_float exponent,
                                  const ai_size n_axis,
                                  const ai_size n_axis_stride,

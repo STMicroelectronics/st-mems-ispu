@@ -22,7 +22,7 @@
 #include "ai_lite_interface.h"
 
 /*!
- * @brief Forward function for a batch normalization (BN) layer with 
+ * @brief Forward function for a batch normalization (BN) layer with
  * signed float input, signed float output, and float parameters.
  * @ingroup lite_bn_f32
  * @param output The pointer to output buffer.

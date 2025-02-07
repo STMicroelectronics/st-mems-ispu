@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers SoftMax Layer Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

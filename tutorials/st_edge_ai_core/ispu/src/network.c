@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    network.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    2024-07-15T17:30:34+0200
+  * @date    2025-02-07T13:38:23+0100
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2025 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -25,9 +25,9 @@
 #include "network_data.h"
 #include "stai_events.h"
 
-#include "lite_operators.h"
-
 #include "ai_lite_inspect.h"
+
+#include "lite_operators.h"
 /*****************************************************************************/
 #define STAI_INTERNAL_API_MAJOR               (1)
 #define STAI_INTERNAL_API_MINOR               (0)
@@ -113,6 +113,7 @@
 #define STAI_EVENT_NODE_STOP_CB
 
 #ifdef STAI_EVENT_NODE_START_CB
+#ifndef _STAI_NETWORK_EVENT_NODE_START_CB
   #define _STAI_NETWORK_EVENT_NODE_START_CB(_node_id, _buffers_size, ...) \
   if (net_ctx->_callback) { \
     const stai_event_node_start_stop _start_event = { \
@@ -124,12 +125,14 @@
     }; \
     net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_START, (const void*)&_start_event); \
   }
+#endif
 #else
   #define _STAI_NETWORK_EVENT_NODE_START_CB(_node_id, _buffers_size, ...) \
     do { /* _STAI_NETWORK_EVENT_NODE_START_CB() */ } while(0);
 #endif      /* STAI_EVENT_NODE_START_CB */
 
 #ifdef STAI_EVENT_NODE_STOP_CB
+#ifndef _STAI_NETWORK_EVENT_NODE_STOP_CB
   #define _STAI_NETWORK_EVENT_NODE_STOP_CB(_node_id, _buffers_size, ...) \
   if (net_ctx->_callback) { \
     const stai_event_node_start_stop _stop_event = { \
@@ -141,6 +144,7 @@
     }; \
     net_ctx->_callback(net_ctx->_callback_cookie, STAI_EVENT_NODE_STOP, (const void*)&_stop_event); \
   }
+#endif
 #else
   #define _STAI_NETWORK_EVENT_NODE_STOP_CB(_node_id, _buffers_size, ...) \
     do { /* _STAI_NETWORK_EVENT_NODE_STOP_CB() */ } while(0);
@@ -149,7 +153,7 @@
 
 /*****************************************************************************/
 #define _STAI_NETWORK_MODEL_SIGNATURE     "0x97a8c5a35de42c0ce016549bd648a454"
-#define _STAI_NETWORK_DATETIME            "2024-07-15T17:30:34+0200"
+#define _STAI_NETWORK_DATETIME            "2025-02-07T13:38:23+0100"
 #define _STAI_NETWORK_COMPILE_DATETIME    __DATE__ " " __TIME__
 
 #define _STAI_CONTEXT_ALIGNMENT        (STAI_NETWORK_CONTEXT_ALIGNMENT)
@@ -168,8 +172,8 @@ static const stai_network_info g_network_info = {
   .c_model_name = STAI_NETWORK_MODEL_NAME,
   .c_model_datetime = _STAI_NETWORK_DATETIME,
   .c_model_signature = 0x0,
-  .runtime_version = STAI_INIT_VERSION(9, 1, 0),
-  .tool_version = STAI_INIT_VERSION(1, 0, 0),
+  .runtime_version = STAI_INIT_VERSION(10, 0, 0),
+  .tool_version = STAI_INIT_VERSION(2, 0, 0),
   .api_version = STAI_INIT_VERSION(1, 0, 0),
   .n_macc = STAI_NETWORK_MACC_NUM,
   .n_nodes = STAI_NETWORK_NODES_NUM,
@@ -205,7 +209,7 @@ static const stai_network_info g_network_info = {
       STAI_NETWORK_ACTIVATION_1_FLAGS,
       STAI_FORMAT_U8,
       STAI_NETWORK_ACTIVATION_1_SIZE_BYTES,
-      STAI_DECLARE_ARRAY(int32_t, 1, 1664),
+      STAI_DECLARE_ARRAY(int32_t, 1, 1780),
       STAI_EMPTY_ARRAY(),
       STAI_EMPTY_ARRAY()),
     },
@@ -358,21 +362,21 @@ AI_ARRAY_OBJ_DECLARE(
 /* Tensor #0 */
 AI_TENSOR_OBJ_DECLARE(
   activation_output, AI_STATIC,
-  12, 0x0,
+  2, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 52), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &activation_output_array, NULL)
 
 /* Tensor #1 */
 AI_TENSOR_OBJ_DECLARE(
   max_pooling1d_output, AI_STATIC,
-  13, 0x0,
+  19, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 26), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &max_pooling1d_output_array, NULL)
 
 /* Tensor #2 */
 AI_TENSOR_OBJ_DECLARE(
   activation_1_output, AI_STATIC,
-  15, 0x0,
+  0, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 26), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &activation_1_output_array, NULL)
 
@@ -386,14 +390,14 @@ AI_TENSOR_OBJ_DECLARE(
 /* Tensor #4 */
 AI_TENSOR_OBJ_DECLARE(
   activation_2_output, AI_STATIC,
-  18, 0x0,
+  1, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 13), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &activation_2_output_array, NULL)
 
 /* Tensor #5 */
 AI_TENSOR_OBJ_DECLARE(
   max_pooling1d_2_output, AI_STATIC,
-  19, 0x0,
+  17, 0x0,
   AI_SHAPE_INIT(4, 1, 8, 1, 6), AI_STRIDE_INIT(4, 4, 4, 32, 32),
   1, &max_pooling1d_2_output_array, NULL)
 
@@ -457,30 +461,30 @@ AI_LAYER_OBJ_DECLARE(
 /**  Hybrid layers declarations section  *************************************/
 void forward_lite_max_pooling1d(_stai_network_context* net_ctx)
 {
-  activation_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  activation_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
+  activation_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  activation_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
   _STAI_NETWORK_EVENT_NODE_START_CB(4, 1, { activation_output.data->data});
   forward_mp(&max_pooling1d_layer);
   _STAI_NETWORK_EVENT_NODE_STOP_CB(4, 1, { max_pooling1d_output.data->data});
 }
 void forward_lite_max_pooling1d_1(_stai_network_context* net_ctx)
 {
-  activation_1_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  activation_1_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_1_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 832));
-  max_pooling1d_1_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 832));
+  activation_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  activation_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_1_output_array.data = AI_PTR(net_ctx->_activations[0] + 832);
+  max_pooling1d_1_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 832);
   _STAI_NETWORK_EVENT_NODE_START_CB(8, 1, { activation_1_output.data->data});
   forward_mp(&max_pooling1d_1_layer);
   _STAI_NETWORK_EVENT_NODE_STOP_CB(8, 1, { max_pooling1d_1_output.data->data});
 }
 void forward_lite_max_pooling1d_2(_stai_network_context* net_ctx)
 {
-  activation_2_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 416));
-  activation_2_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 416));
-  max_pooling1d_2_output_array.data = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
-  max_pooling1d_2_output_array.data_start = AI_PTR((ai_ptr)(net_ctx->_activations[0] + 0));
+  activation_2_output_array.data = AI_PTR(net_ctx->_activations[0] + 416);
+  activation_2_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 416);
+  max_pooling1d_2_output_array.data = AI_PTR(net_ctx->_activations[0] + 0);
+  max_pooling1d_2_output_array.data_start = AI_PTR(net_ctx->_activations[0] + 0);
   _STAI_NETWORK_EVENT_NODE_START_CB(12, 1, { activation_2_output.data->data});
   forward_mp(&max_pooling1d_2_layer);
   _STAI_NETWORK_EVENT_NODE_STOP_CB(12, 1, { max_pooling1d_2_output.data->data});
@@ -677,12 +681,10 @@ stai_return_code stai_network_run(
       ai_handle t_out_0_ptr_handle = (ai_handle)(net_ctx->_outputs[0] + 0);
     const ai_handle t_in_0_ptr_const_handle = (ai_handle)(net_ctx->_activations[0] + 192);
     const ai_i32 t_in_0_shape_ch_prod_const_s32 = 4;
-    const ai_u32 t_in_0_shape_ch_const_u32 = 4;
-    const ai_u32 t_out_0_shape_ch_const_u32 = 4;
   
   _STAI_NETWORK_EVENT_NODE_START_CB(16, 1, {(stai_ptr) t_in_0_ptr_const_handle});
     
-  forward_lite_nl_softmax_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_prod_const_s32, t_in_0_shape_ch_const_u32, t_in_0_shape_ch_const_u32, t_out_0_shape_ch_const_u32);
+  forward_lite_nl_softmax_if32of32(t_out_0_ptr_handle, t_in_0_ptr_const_handle, t_in_0_shape_ch_prod_const_s32, 1, 4);
     
   _STAI_NETWORK_EVENT_NODE_STOP_CB(16, 1, {(stai_ptr) t_out_0_ptr_handle});
   }
@@ -821,7 +823,11 @@ const uintptr_t _activations_alignment[] = STAI_NETWORK_ACTIVATIONS_ALIGNMENTS;
     _STAI_SET_ERROR(net_ctx, ((uintptr_t)activations[idx]) & (_activations_alignment[idx]-1),
                     STAI_ERROR_INVALID_BUFFER_ALIGNMENT, net_ctx->_return_code)
     net_ctx->_activations[idx] = activations[idx];
-  }_stai_network_check(net_ctx);
+  }
+  net_ctx->_inputs[0] = activations[0] + 1156;
+
+  net_ctx->_outputs[0] = activations[0] + 0;
+_stai_network_check(net_ctx);
   return net_ctx->_return_code;
 }
 

@@ -1,0 +1,11 @@
+description "Human activity recognition"
+
+output "Acc x [mg]" float
+output "Acc y [mg]" float
+output "Acc z [mg]" float
+output "Stationary" float
+output "Walking" float
+output "Running" float
+output "Cycling" float
+output "Prediction" char 10
+

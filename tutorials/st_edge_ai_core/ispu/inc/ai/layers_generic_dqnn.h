@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_generic_dqnn Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -36,7 +36,7 @@ AI_API_DECLARE_BEGIN
 /******************************************************************************/
 
 /*!
- * @brief Handles concat with binary input, binary output and 
+ * @brief Handles concat with binary input, binary output and
  *        binary weights
  * @ingroup layers_generic_dqnn
  * @param layer concat layer

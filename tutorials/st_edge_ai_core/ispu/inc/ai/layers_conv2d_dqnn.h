@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers_conv2d_dqnn Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -56,7 +56,7 @@ typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_conv2d_dqnn_ {
 /******************************************************************************/
 
 /*!
- * @brief Handles point wise convolution with binary input, binary output and 
+ * @brief Handles point wise convolution with binary input, binary output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -65,7 +65,7 @@ AI_INTERNAL_API
 void forward_pw_is1os1ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles point wise convolution with binary input, binary output and 
+ * @brief Handles point wise convolution with binary input, binary output and
  *        binary weights - Optimized thanks to Optim2 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -74,7 +74,7 @@ AI_INTERNAL_API
 void forward_pw_is1os1ws1_bn_optim2(ai_layer *pLayer);
 
 /*!
- * @brief Handles point wise convolution with binary input, 8-bits output and 
+ * @brief Handles point wise convolution with binary input, 8-bits output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -83,7 +83,7 @@ AI_INTERNAL_API
 void forward_pw_is1os8ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles point wise convolution with binary input, 8-bits output and 
+ * @brief Handles point wise convolution with binary input, 8-bits output and
  *        binary weights - Optimized thanks to Optim1 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -92,7 +92,7 @@ AI_INTERNAL_API
 void forward_pw_is1os8ws1_bn_optim1(ai_layer *pLayer);
 
 /*!
- * @brief Handles point-wise convolution with binary input, float32 output 
+ * @brief Handles point-wise convolution with binary input, float32 output
  *        and binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -101,7 +101,7 @@ AI_INTERNAL_API
 void forward_pw_is1of32ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles point-wise convolution with binary input, float32 output 
+ * @brief Handles point-wise convolution with binary input, float32 output
  *        and binary weights - Optimized thanks to Optim1 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -110,7 +110,7 @@ AI_INTERNAL_API
 void forward_pw_is1of32ws1_bn_optim1(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
+ * @brief Handles 2D convolution with binary input, binary output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -119,7 +119,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
+ * @brief Handles 2D convolution with binary input, binary output and
  *        binary weights - Optimized thanks to Optim2 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -128,7 +128,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn_optim2(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, 8-bits output and 
+ * @brief Handles 2D convolution with binary input, 8-bits output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -137,7 +137,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os8ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, 8-bits output and 
+ * @brief Handles 2D convolution with binary input, 8-bits output and
  *        binary weights - Optimized thanks to Optim1 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -146,7 +146,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os8ws1_bn_optim1(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
+ * @brief Handles 2D convolution with binary input, binary output and
  *        binary weights - with 0 padding (QKeras like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -155,8 +155,8 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn_pad0(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
- *        binary weights - with 0 padding (QKeras like) - Optimized thanks to 
+ * @brief Handles 2D convolution with binary input, binary output and
+ *        binary weights - with 0 padding (QKeras like) - Optimized thanks to
  *        Optim0 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -165,7 +165,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn_pad0_optim0(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, 8-bits output and 
+ * @brief Handles 2D convolution with binary input, 8-bits output and
  *        binary weights - with 0 padding (QKeras like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -174,7 +174,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os8ws1_bn_pad0(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
+ * @brief Handles 2D convolution with binary input, binary output and
  *        binary weights - with +1/-1 padding (Larq like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -183,8 +183,8 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn_pad1(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, binary output and 
- *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks 
+ * @brief Handles 2D convolution with binary input, binary output and
+ *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks
  *        to Optim2 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -193,7 +193,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os1ws1_bn_pad1_optim2(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, 8-bits output and 
+ * @brief Handles 2D convolution with binary input, 8-bits output and
  *        binary weights - with +1/-1 padding (Larq like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -202,8 +202,8 @@ AI_INTERNAL_API
 void forward_conv2d_is1os8ws1_bn_pad1(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with binary input, 8-bits output and 
- *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks 
+ * @brief Handles 2D convolution with binary input, 8-bits output and
+ *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks
  *        to Optim1 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -212,7 +212,7 @@ AI_INTERNAL_API
 void forward_conv2d_is1os8ws1_bn_pad1_optim1(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 8-bits quantized Input and weights and 
+ * @brief Handles 2D convolution with 8-bits quantized Input and weights and
  *        binary output
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -221,7 +221,7 @@ AI_INTERNAL_API
 void forward_conv2d_is8os1ws8(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 8-bits quantized Input and weights and 
+ * @brief Handles 2D convolution with 8-bits quantized Input and weights and
  *        binary output - Optimized thanks to Optim2 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -230,7 +230,7 @@ AI_INTERNAL_API
 void forward_conv2d_is8os1ws8_optim2(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 8-bits quantized Input and weights and 
+ * @brief Handles 2D convolution with 8-bits quantized Input and weights and
  *        binary output - quantized with DoReFa SotA quantizer
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -239,7 +239,7 @@ AI_INTERNAL_API
 void forward_conv2d_dorefa_is8os1ws8(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 16-bits quantized input, binary weights 
+ * @brief Handles 2D convolution with 16-bits quantized input, binary weights
           and binary output
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -248,7 +248,7 @@ AI_INTERNAL_API
 void forward_conv2d_is16os1ws1_bn_fxp(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 16-bits quantized input, binary weights 
+ * @brief Handles 2D convolution with 16-bits quantized input, binary weights
           and 16-bits quantized output
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -257,7 +257,7 @@ AI_INTERNAL_API
 void forward_conv2d_is16os16ws1_fxp(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
+ * @brief Handles depth-wise convolution with binary input, binary output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -266,7 +266,7 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
+ * @brief Handles depth-wise convolution with binary input, binary output and
  *        binary weights - Optimized thanks to Optim3 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -275,7 +275,7 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn_optim3(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
+ * @brief Handles depth-wise convolution with binary input, binary output and
  *        binary weights - with 0 padding (QKeras like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -284,8 +284,8 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn_pad0(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
- *        binary weights - with 0 padding (QKeras like) - Optimized thanks to 
+ * @brief Handles depth-wise convolution with binary input, binary output and
+ *        binary weights - with 0 padding (QKeras like) - Optimized thanks to
  *        Optim3 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -294,7 +294,7 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn_pad0_optim3(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
+ * @brief Handles depth-wise convolution with binary input, binary output and
  *        binary weights - with +1/-1 padding (Larq like)
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -303,8 +303,8 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn_pad1(ai_layer *pLayer);
 
 /*!
- * @brief Handles depth-wise convolution with binary input, binary output and 
- *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks to 
+ * @brief Handles depth-wise convolution with binary input, binary output and
+ *        binary weights - with +1/-1 padding (Larq like) - Optimized thanks to
  *        Optim3 assumptions
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -313,7 +313,7 @@ AI_INTERNAL_API
 void forward_dw_is1os1ws1_bn_pad1_optim3(ai_layer *pLayer);
 
 /*!
- * @brief Handles 2D convolution with 8-bits quantized Input and output and 
+ * @brief Handles 2D convolution with 8-bits quantized Input and output and
  *        binary weights
  * @ingroup layers_conv2d_dqnn
  * @param layer conv2d_dqnn layer
@@ -449,7 +449,7 @@ void forward_pw_is8os8ws8_sssa_ch(const ai_i8 *pData_in,
                                   // st_nn_context_t context);
 
 /*!
- * @brief Computes the activations of a depth-wise integer quantized convolution 
+ * @brief Computes the activations of a depth-wise integer quantized convolution
           for SSSA per channel quantized scheme
  * @ingroup layers_conv2d
  * @param layer the convolutional (conv) layer

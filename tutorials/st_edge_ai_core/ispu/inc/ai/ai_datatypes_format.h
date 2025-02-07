@@ -51,12 +51,12 @@
  * MSB                                                                       LSB
  * 31             25       24       23      21      17        14       7       0
  * /---------------------------------------------------------------------------/
- * / ATTR. FLAGS   |  FLOAT |  SIGN  |  LDIV |  TYPE |  PMASK  |  BITS | FBITS /
+ * / ATTR. FLAGS   |COMPLEX |  SIGN  |  LDIV |  TYPE |  PMASK  |  BITS | FBITS /
  * /---------------------------------------------------------------------------/
  * Where:
  * - FLAGS: is the reserved bits to store additional format attributes (e.g.
  *   I/O / STATIC flags. etc.)
- * - FLOAT: 1 bit mark the format as floating point type
+ * - COMPLEX: 1 bit mark the format as complex type
  * - SIGN : 1 bit mark the format as signed type
  * - LDIV : 2 bits is a log2 value that is used to compute elements size
  *      with some special format such as the compressed ones. It is a shift
@@ -65,8 +65,8 @@
  *      @ref AI_FMT_FLOAT (float types)
  *      @ref AI_FMT_Q (fixed-point types in Qm.n format)
  *      @ref AI_FMT_BOOL (boolean type)
- *      @ref AI_FMT_LUT4 (compressed lookup 16 formats)
- *      @ref AI_FMT_LUT8 (compressed lookup 256 formats)
+ *      @ref AI_FMT_LUT_FLOAT (compressed float lookup formats)
+ *      @ref AI_FMT_LUT_Q (compressed Qmn lookup formats)
  * - PMASK 3 bits padding mask used to set the optional dimension for padding
  *      to handle special aligned formats/ E.g. a 1 bit format
  *      Usually this is set to 0x0
@@ -90,8 +90,8 @@
  */
 
 /* 1 bit field to identify floating point values*/
-#define _FMT_FLOAT_MASK       (0x1)
-#define _FMT_FLOAT_BITS       (24)
+#define _FMT_COMPLEX_MASK       (0x1)
+#define _FMT_COMPLEX_BITS       (24)
 
 /*! 1 bit sign info */
 #define _FMT_SIGN_MASK        (0x1)
@@ -135,7 +135,6 @@
 #define AI_FMT_FLAG_IS_IO             (0x1<<27)
 #define AI_FMT_FLAG_VISITED           (0x1<<26)
 
-
 /******************************************************************************/
 /*!
  * Format "Class" type : this identify the family of the format:
@@ -145,8 +144,8 @@
 #define AI_FMT_FLOAT                  (0x1)
 #define AI_FMT_Q                      (0x2)
 #define AI_FMT_BOOL                   (0x3)
-#define AI_FMT_LUT4                   (0x4)
-#define AI_FMT_LUT8                   (0x8)
+#define AI_FMT_LUT_Q                  (0x4)
+#define AI_FMT_LUT_FLOAT              (0x8)
 
 #define AI_FMT_QMASK \
   ( (_FMT_FBITS_MASK<<_FMT_FBITS_BITS) | \
@@ -177,8 +176,8 @@
 #define _FMT_SET(val, mask, bits)   AI_FMT_OBJ(((val)&(mask))<<(bits))
 #define _FMT_GET(fmt, mask, bits)   ((AI_FMT_OBJ(fmt)>>(bits))&(mask))
 
-#define AI_FMT_SET_FLOAT(val)    _FMT_SET(val, _FMT_FLOAT_MASK, _FMT_FLOAT_BITS)
-#define AI_FMT_GET_FLOAT(fmt)    _FMT_GET(fmt, _FMT_FLOAT_MASK, _FMT_FLOAT_BITS)
+#define AI_FMT_SET_COMPLEX(val)  _FMT_SET(val, _FMT_COMPLEX_MASK, _FMT_COMPLEX_BITS)
+#define AI_FMT_GET_COMPLEX(fmt)  _FMT_GET(fmt, _FMT_COMPLEX_MASK, _FMT_COMPLEX_BITS)
 #define AI_FMT_SET_SIGN(val)     _FMT_SET(val, _FMT_SIGN_MASK, _FMT_SIGN_BITS)
 #define AI_FMT_GET_SIGN(fmt)     _FMT_GET(fmt, _FMT_SIGN_MASK, _FMT_SIGN_BITS)
 #define AI_FMT_SET_PMASK(val)    _FMT_SET(val, _FMT_PMASK_MASK, _FMT_PMASK_BITS)
@@ -187,6 +186,7 @@
 #define AI_FMT_GET_TYPE(fmt)     _FMT_GET(fmt, _FMT_TYPE_MASK, _FMT_TYPE_BITS)
 #define AI_FMT_SET_LDIV(val)     _FMT_SET(val, _FMT_LDIV_MASK, _FMT_LDIV_BITS)
 #define AI_FMT_GET_LDIV(fmt)     _FMT_GET(fmt, _FMT_LDIV_MASK, _FMT_LDIV_BITS)
+
 
 #define AI_FMT_SET_BITS(val) \
   _FMT_SET((val) + _FMT_BITS_BIAS, _FMT_BITS_MASK, _FMT_BITS_BITS)
@@ -290,6 +290,36 @@ AI_DEPRECATED
   ai_array_get_elems_from_size(fmt_, size_)
 
 
+/* Compile sanity checks for formats field consistency */
+#if (AI_FMT_MASK != AI_BUFFER_FMT_MASK)
+#error "AI_FMT_MASK != AI_BUFFER_FMT_MASK"
+#endif
+#if (AI_FMT_NONE != AI_BUFFER_FMT_TYPE_NONE)
+#error "AI_FMT_NONE != AI_BUFFER_FMT_TYPE_NONE"
+#endif
+#if (AI_FMT_FLOAT != AI_BUFFER_FMT_TYPE_FLOAT)
+#error "AI_FMT_FLOAT != AI_BUFFER_FMT_TYPE_FLOAT"
+#endif
+#if (AI_FMT_Q != AI_BUFFER_FMT_TYPE_Q)
+#error "AI_FMT_Q != AI_BUFFER_FMT_TYPE_Q"
+#endif
+#if (AI_FMT_BOOL != AI_BUFFER_FMT_TYPE_BOOL)
+#error "AI_FMT_BOOL != AI_BUFFER_FMT_TYPE_BOOL"
+#endif
+#if (AI_FMT_FLAG_CONST != AI_BUFFER_FMT_FLAG_CONST)
+#error "AI_FMT_FLAG_CONST != AI_BUFFER_FMT_FLAG_CONST"
+#endif
+#if (AI_FMT_FLAG_STATIC != AI_BUFFER_FMT_FLAG_STATIC)
+#error "AI_FMT_FLAG_STATIC != AI_BUFFER_FMT_FLAG_STATIC"
+#endif
+#if (AI_FMT_FLAG_IS_IO != AI_BUFFER_FMT_FLAG_IS_IO)
+#error "AI_FMT_FLAG_IS_IO != AI_BUFFER_FMT_FLAG_IS_IO"
+#endif
+#if (AI_FMT_FLAG_STATIC != AI_BUFFER_FMT_FLAG_PERSISTENT)
+#error "AI_FMT_FLAG_STATIC != AI_BUFFER_FMT_FLAG_PERSISTENT"
+#endif
+
+
 AI_API_DECLARE_BEGIN
 
 /*!
@@ -305,9 +335,9 @@ typedef int32_t ai_array_format;
  * @brief Generic Data Format Specifier (32bits packed info)
  */
 typedef enum {
-#define FMT_ENTRY(exp_, name_, type_id_, sign_bit_, float_bit_, \
+#define FMT_ENTRY(exp_, name_, type_id_, sign_bit_, complex_bit_, \
   pmask_, bits_, fbits_, ldiv_bits_) \
-    AI_ARRAY_FMT_ENTRY(name_) = (AI_FMT_SET_FLOAT(float_bit_) | \
+    AI_ARRAY_FMT_ENTRY(name_) = (AI_FMT_SET_COMPLEX(complex_bit_) | \
                                  AI_FMT_SET_SIGN(sign_bit_) | \
                                  AI_FMT_SET_BITS(bits_) | \
                                  AI_FMT_SET_FBITS(fbits_) | \

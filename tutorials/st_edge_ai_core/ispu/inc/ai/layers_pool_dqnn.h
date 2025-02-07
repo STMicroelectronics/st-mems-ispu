@@ -24,7 +24,7 @@
 
 /*!
  * @defgroup layers_pool_dqnn Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 

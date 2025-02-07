@@ -24,7 +24,7 @@ STAI_API_DECLARE_BEGIN
 
 /*****************************************************************************/
 /** STAI event IDs definition
- * This is the list of stai supported events that could be triggered by network 
+ * This is the list of stai supported events that could be triggered by network
  * callback. Each event has an associated datastruct that provides the payload
  * for a give event. All supported payloads are defined int the @ref stai_event union.
  * New events could be defined by:

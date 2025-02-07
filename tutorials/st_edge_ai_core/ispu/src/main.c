@@ -43,7 +43,7 @@ static int8_t prediction;
 
 void __attribute__ ((signal)) algo_00_init(void)
 {
-	(void)stai_runtime_init(); // initialize the runtime library
+	(void)stai_runtime_init();
 	(void)stai_network_init(net); // initialize the network context
 
 	init_network_buffers(net, input_buffers, output_buffers);

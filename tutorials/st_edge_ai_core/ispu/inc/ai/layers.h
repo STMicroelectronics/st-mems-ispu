@@ -50,6 +50,7 @@
 #include "layers_upsample.h"
 #include "layers_resize.h"
 #include "layers_argminmax.h"
+#include "layers_wrappers.h"
 #include "ai_math_helpers.h"
 
 

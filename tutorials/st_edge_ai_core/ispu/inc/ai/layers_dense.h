@@ -23,7 +23,7 @@
 
 /*!
  * @defgroup layers Normalization Layers Definitions
- * @brief definition 
+ * @brief definition
  *
  */
 
@@ -36,6 +36,68 @@ AI_API_DECLARE_BEGIN
  */
 AI_INTERNAL_API
 void forward_dense_fixed(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer.
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSSA per layer quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_SSSA(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSSA per channel quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_SSSA_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSUA per layer quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_SSUA(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSUA per channel quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_SSUA_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for UAUA per layer quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_UAUA(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for UAUA per channel quantized scheme
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_integer_UAUA_ch(ai_layer *pLayer);
 
 AI_API_DECLARE_END
 

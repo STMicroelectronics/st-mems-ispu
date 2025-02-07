@@ -25,7 +25,7 @@
 #define STAI_API_VERSION_MINOR        (0)
 #define STAI_API_VERSION_MICRO        (0)
 
-#define STAI_TOOLS_VERSION_MAJOR      (1)
+#define STAI_TOOLS_VERSION_MAJOR      (2)
 #define STAI_TOOLS_VERSION_MINOR      (0)
 #define STAI_TOOLS_VERSION_MICRO      (0)
 
@@ -197,8 +197,8 @@ typedef enum {
 typedef enum {
   STAI_FORMAT_NONE              = 0x00000040,
 
-  STAI_FORMAT_FLOAT32           = 0x01821040,
-  STAI_FORMAT_FLOAT64           = 0x01822040,
+  STAI_FORMAT_FLOAT32           = 0x00821040,
+  STAI_FORMAT_FLOAT64           = 0x00822040,
 
   STAI_FORMAT_U1                = 0x000400c0,
   STAI_FORMAT_U8                = 0x00040440,
@@ -215,11 +215,11 @@ typedef enum {
   STAI_FORMAT_Q                 = 0x00840040,
   STAI_FORMAT_Q7                = 0x00840447,
   STAI_FORMAT_Q15               = 0x0084084f,
-  
+
   STAI_FORMAT_UQ                = 0x00040040,
   STAI_FORMAT_UQ7               = 0x00040447,
   STAI_FORMAT_UQ15              = 0x0004084f,
-  
+
   STAI_FORMAT_BOOL              = 0x00060440,
 } stai_format;
 
@@ -426,11 +426,11 @@ typedef struct {
 
 typedef int32_t stai_event_type;
 
-/** 
+/**
  * This is the generic network event callback signature
  * @param cb_cookie is the opaque handler provided by caller (i.e. the application)
  * @param event_type is the unique event type identifier
- * @param event is the the opaque handler to event payload struct (Optional, may be NULL) 
+ * @param event is the the opaque handler to event payload struct (Optional, may be NULL)
  **/
 typedef void (*stai_event_cb)(
   void* cb_cookie,

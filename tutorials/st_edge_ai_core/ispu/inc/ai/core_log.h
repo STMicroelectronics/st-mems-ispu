@@ -23,15 +23,15 @@
 
 /*!
  * @defgroup core_log Logger core routines wrapper interface
- * @brief Common macros, datatypes and routines of ai logger module 
- * @details This header defines the wrapping macros interfaces to handle the 
+ * @brief Common macros, datatypes and routines of ai logger module
+ * @details This header defines the wrapping macros interfaces to handle the
  * global logger module. These macro are defined when the macro HAS_LOG is
  * defined, otherwise they are all set to NOP routines and no logger code is
  * compiled at all. When the macro HAS_LOG is defined, only the log messages
- * having an enum id >= the value of the macro are compiled. Thus to include in 
+ * having an enum id >= the value of the macro are compiled. Thus to include in
  * compilation only log messages up to the error level the value of HAS_LOG must
  * be equal the the enum value of LOG_ERROR macro (i.e. 3). a value of 6 means
- * to include all log messages up to the lower LOG_TRACE level. 
+ * to include all log messages up to the lower LOG_TRACE level.
  */
 
 #if defined HAS_LOG && (HAS_LOG>=0)

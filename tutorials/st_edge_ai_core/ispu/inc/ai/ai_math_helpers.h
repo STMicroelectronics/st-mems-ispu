@@ -22,7 +22,7 @@
 //#if defined(HAS_X86) || defined(__CC_ARM) || defined(CM4) || defined(CM7)
 #define _AI_CONV_2D_LOOP_UNROLLING_OPTIM
 //#endif
-    
+
 #define STM32_DOT_INLINE_OPTIM
 
 /* Modes for element wise integer optimized implementation */
@@ -44,16 +44,16 @@ void __ai_math_dot_array(
         const ai_float* data1,
         ai_size data_size)
 {
-  register ai_float sum = 0.0f;   /* Temporary result storage */
+  ai_register ai_float sum = 0.0f;   /* Temporary result storage */
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
 #if defined(_AI_CONV_2D_LOOP_UNROLLING_OPTIM)
-  /* First part of the processing with loop unrolling.  Compute 16 outputs at a time.    
+  /* First part of the processing with loop unrolling.  Compute 16 outputs at a time.
    ** a second loop below computes the remaining 1 to 15 samples. */
   while (data_size >= 16u) {
-    register ai_vec4_float ch_in_f = AI_VEC4_FLOAT(data1);
-    register ai_vec4_float weights_in_f = AI_VEC4_FLOAT(data0);
+    ai_register ai_vec4_float ch_in_f = AI_VEC4_FLOAT(data1);
+    ai_register ai_vec4_float weights_in_f = AI_VEC4_FLOAT(data0);
     sum += weights_in_f.a1 * ch_in_f.a1;
     sum += weights_in_f.a2 * ch_in_f.a2;
     sum += weights_in_f.a3 * ch_in_f.a3;
@@ -78,7 +78,7 @@ void __ai_math_dot_array(
     sum += weights_in_f.a4 * ch_in_f.a4;
     data1 += 4;
     data0 += 4;
-    
+
     ch_in_f = AI_VEC4_FLOAT(data1);
     weights_in_f = AI_VEC4_FLOAT(data0);
     sum += weights_in_f.a1 * ch_in_f.a1;
@@ -90,7 +90,7 @@ void __ai_math_dot_array(
     data_size -= 16u;
   }
 
-  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.    
+  /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
   while (data_size >= 4u) {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
@@ -102,7 +102,7 @@ void __ai_math_dot_array(
 
     /* Decrement the loop counter */
     data_size -= 4u;
-  }  
+  }
 #endif
   while (data_size > 0u) {
     /* C = A[0]* B[0] + A[1]* B[1] + A[2]* B[2] + .....+ A[blockSize-1]* B[blockSize-1] */
@@ -121,7 +121,7 @@ void __ai_math_dot_array(
 #undef AI_MATH_DOT_ARRAY
 #define AI_MATH_DOT_ARRAY(dst, src0, src1, size) \
   { __ai_math_dot_array(dst, src0, src1, size); }
-            
+
 #else /* STM32_DOT_INLINE_OPTIM */
 
 #undef AI_MATH_DOT_ARRAY
@@ -288,10 +288,10 @@ AI_INTERFACE_ENTRY void ai_div_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_div_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_div_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_div_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_div_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_div_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_div_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_div_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
@@ -350,10 +350,10 @@ AI_INTERFACE_ENTRY void ai_max_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_max_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_max_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_max_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_max_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_max_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_max_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_max_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
@@ -373,10 +373,10 @@ AI_INTERFACE_ENTRY void ai_min_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_min_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_min_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_min_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_min_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_min_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_min_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_min_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
@@ -396,10 +396,10 @@ AI_INTERFACE_ENTRY void ai_mul_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_mul_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_mul_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_mul_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_mul_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_mul_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_mul_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_mul_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
@@ -422,10 +422,10 @@ AI_INTERFACE_ENTRY void ai_sub_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_sub_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_sub_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_sub_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_sub_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_sub_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_sub_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_sub_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 
@@ -445,10 +445,10 @@ AI_INTERFACE_ENTRY void ai_sum_u16(ai_handle out, const ai_handle a, const ai_ha
 AI_INTERFACE_ENTRY void ai_sum_buffer_u16(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
 AI_INTERFACE_ENTRY void ai_sum_u8(ai_handle out, const ai_handle a, const ai_handle b);
 AI_INTERFACE_ENTRY void ai_sum_buffer_u8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop);
-AI_INTERFACE_ENTRY void ai_sum_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_sum_buffer_INT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                            const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                            const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
-AI_INTERFACE_ENTRY void ai_sum_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop, 
+AI_INTERFACE_ENTRY void ai_sum_buffer_UINT8(ai_handle out, const ai_handle a, const ai_handle b, const ai_size loop,
                                             const ai_handle pScale1, const ai_handle pZp1, const ai_handle pScale2, const ai_handle pZp2,
                                             const ai_handle pScaleout, const ai_handle pZpout, const ai_i32 scalar_op);
 

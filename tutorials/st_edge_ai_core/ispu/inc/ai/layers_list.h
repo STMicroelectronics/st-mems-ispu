@@ -118,28 +118,33 @@ LAYER_ENTRY(ZIPMAP, LAYER_ID(38), zipmap, forward_zipmap, NULL, NULL)
 /*!< Where layer */
 LAYER_ENTRY(WHERE, LAYER_ID(39), where, forward_where, NULL, NULL)
 /*!< LinearClassifier layer */
-LAYER_ENTRY(LINEARCLASSIFIER, LAYER_ID(42), linearclassifier, forward_linearclassifier, NULL, NULL)
+LAYER_ENTRY(LINEARCLASSIFIER, LAYER_ID(40), linearclassifier, forward_linearclassifier, NULL, NULL)
 /*!< TreeEnsembleClassifier layer */
-LAYER_ENTRY(TREE_ENSEMBLE_CLASSIFIER, LAYER_ID(43), tree_ensemble_classifier, forward_tree_ensemble_classifier, NULL, NULL)
+LAYER_ENTRY(TREE_ENSEMBLE_CLASSIFIER, LAYER_ID(41), tree_ensemble_classifier, forward_tree_ensemble_classifier, NULL, NULL)
 /*!< TopK layer */
-LAYER_ENTRY(TOPK, LAYER_ID(45), topK, forward_topK, NULL, NULL)
+LAYER_ENTRY(TOPK, LAYER_ID(42), topK, forward_topK, NULL, NULL)
 /*!< ReduceLogSumExp layer */
-LAYER_ENTRY(REDUCE_LOG_SUM_EXP, LAYER_ID(51), reduce_log_sum_exp, forward_reduce_log_sum_exp, NULL, NULL)
+LAYER_ENTRY(REDUCE_LOG_SUM_EXP, LAYER_ID(43), reduce_log_sum_exp, forward_reduce_log_sum_exp, NULL, NULL)
 /*!< ReduceL1 layer */
-LAYER_ENTRY(REDUCE_L1, LAYER_ID(52), reduce_l1, forward_reduce_l1, NULL, NULL)
+LAYER_ENTRY(REDUCE_L1, LAYER_ID(44), reduce_l1, forward_reduce_l1, NULL, NULL)
 /*!< Runtime Lite Graph Wrapper layer */
-LAYER_ENTRY(LITE_GRAPH, LAYER_ID(63), lite_graph, NULL, NULL, NULL)
+LAYER_ENTRY(LITE_GRAPH, LAYER_ID(45), lite_graph, NULL, NULL, NULL)
 /*!< TreeEnsembleRegressor layer */
-LAYER_ENTRY(TREE_ENSEMBLE_REGRESSOR, LAYER_ID(66), tree_ensemble_regressor, forward_tree_ensemble_regressor, NULL, NULL)
-
+LAYER_ENTRY(TREE_ENSEMBLE_REGRESSOR, LAYER_ID(46), tree_ensemble_regressor, forward_tree_ensemble_regressor, NULL, NULL)
+/*!< GatherND layer */
+LAYER_ENTRY(GATHER_ND, LAYER_ID(67), gather_nd, forward_gather_nd, NULL, NULL)
+/*!< MATMUL layer */
+LAYER_ENTRY(MATMUL, LAYER_ID(68), matmul, forward_dmatmul, NULL, NULL)
 /*!< Deeply Quantized Dense Layers */
-LAYER_ENTRY(CONV2D_DQNN, LAYER_ID(40), conv2d_dqnn, forward_pw_is1os1ws1_bn, NULL, NULL)
-LAYER_ENTRY(POOL_DQNN, LAYER_ID(41), pool_dqnn, forward_maxpool_is1os1, NULL, NULL)
+LAYER_ENTRY(CONV2D_DQNN, LAYER_ID(48), conv2d_dqnn, forward_pw_is1os1ws1_bn, NULL, NULL)
+LAYER_ENTRY(POOL_DQNN, LAYER_ID(49), pool_dqnn, forward_maxpool_is1os1, NULL, NULL)
 
-LAYER_ENTRY(DENSE_DQNN, LAYER_ID(44), dense_dqnn, forward_dense_is1os1ws1, NULL, NULL)
+LAYER_ENTRY(DENSE_DQNN, LAYER_ID(50), dense_dqnn, forward_dense_is1os1ws1, NULL, NULL)
 /*!< Reverse layer */
-LAYER_ENTRY(REVERSE, LAYER_ID(50), reverse, forward_reverse, NULL, NULL)
+LAYER_ENTRY(REVERSE, LAYER_ID(51), reverse, forward_reverse, NULL, NULL)
 
+/*!< TFLite wrapper */
+LAYER_ENTRY(TFLITE_WRAPPER, LAYER_ID(52), tflite_wrapper, NULL, NULL, NULL)
 
 /*****************************************************************************/
 /*!< Base Stateful Layer type */

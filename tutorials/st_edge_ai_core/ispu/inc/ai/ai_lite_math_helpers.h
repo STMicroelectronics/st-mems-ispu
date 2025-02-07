@@ -18,6 +18,8 @@
   ******************************************************************************
   */
 #include <math.h>
+#include <limits.h>
+#include <stdint.h>
 
 #include "ai_platform.h"
 #include "ai_platform_interface.h"
@@ -163,6 +165,32 @@
 #define AI_MATH_SOFT_SIGN(x) \
   ((x) / (1.0f + AI_ABS(x)))
 
+/*!
+ * @brief Round float x to the nearest integer (breaking +- 0.5 ties to the nearest even integer)
+ */
+static inline ai_i32 ai_round_f2i_t2e(ai_float x)
+{
+    x += x >= 0.0f ? 0.5f : -0.5f;
+    ai_i32 i32_x = (ai_i32)x;
+
+    if (((ai_float)i32_x == x) && ((i32_x & 0x1) != 0)) {
+        ai_i32 to_nearest_even = i32_x < 0 ? 1 : -1;
+        i32_x += to_nearest_even;
+    }
+    return i32_x;
+}
+
+static inline ai_u32 ai_round_f2u_t2e(ai_float x)
+{
+    x += 0.5f;
+    ai_u32 u32_x = (ai_u32)x;
+
+    if (((ai_float)u32_x) == x && ((u32_x & 0x1) != 0)) {
+        u32_x -= 1;
+    }
+    return u32_x;
+}
+
 
 AI_API_DECLARE_BEGIN
 
@@ -240,8 +268,5 @@ uint32_t st_mat_gemm_f32(const ai_matrix_f32* pSrcA,
  */
 AI_INTERFACE_ENTRY
 float ai_math_sqrt(const float x);
-
-
-AI_API_DECLARE_END
 
 #endif /*AI_LITE_MATH_HELPERS_H*/
