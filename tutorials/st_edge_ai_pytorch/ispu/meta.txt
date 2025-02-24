@@ -1,0 +1,16 @@
+description "Human activity recognition"
+
+output "Acc [mg]" float 3
+output "Mean [mg]" float 3
+output "Var [mg^2]" float 3
+output "MCR" uint8_t 3
+output "Stationary" float
+output "Walking" float
+output "Running" float
+output "Cycling" float
+output "Prediction" uint8_t
+	0="stationary"
+	1="walking"
+	2="running"
+	3="cycling"
+
