@@ -2,7 +2,7 @@
   *******************************************************************************
   * @file    motion_vs.h
   * @author  MEMS Application Team
-  * @version V1.0.0
+  * @version V1.3.0
   * @brief   Header for motion_vs module
   *******************************************************************************
   * @attention
@@ -40,23 +40,17 @@ extern "C"
 /* Exported types ----------------------------------------------------------- */
 enum
 {
-  MVS_AXIS_X = 0,
-  MVS_AXIS_Y = 1,
-  MVS_AXIS_Z = 2
-};
-
-enum
-{
   MVS_BW_2_1000_HZ = 0,
   MVS_BW_10_1000_HZ = 1,
   MVS_BW_2_100_HZ = 2,
-  MVS_BW_10_100_HZ = 3
+  MVS_BW_10_100_HZ = 3,
+  MVS_BW_USER_DEFINED = 4
 };
 
 typedef struct
 {
-  uint8_t axis;                /* Axis selection (x, y, or z) */
-  uint8_t bw;                  /* Bandpass filter bandwidth (2-1000 Hz, 10-1000 Hz, 2-100 Hz, 10-100 Hz) */
+  uint8_t bw;                  /* Bandpass filter bandwidth
+                                  (2-1000 Hz, 10-1000 Hz, 2-100 Hz, 10-100 Hz, user defined) */
   uint8_t hp_en;               /* Additional hp filter (0: disable, 1: enable) */
   uint16_t period;             /* Period [# samples] */
   uint16_t rms_update_period;  /* Velocity RMS update period [# samples] */
@@ -64,7 +58,15 @@ typedef struct
 
 typedef struct
 {
-  float acc[3];  /* Accelerometer sensor output [mm / s^2] */
+  float b[3][3];  /* Numerator coefficients */
+  float a[3][3];  /* Denominator coefficients */
+  float gain;     /* Gain */
+} MVS_filt_t;
+
+typedef struct
+{
+  float acc;     /* Accelerometer sensor output [mm / s^2] */
+  float offset;  /* Accelerometer sensor offset [mm / s^2] */
   float dtime;   /* Delta-time value [s] */
 } MVS_input_t;
 
@@ -95,7 +97,15 @@ typedef struct
  * @param  conf pointer to the structure containing the configuration to set
  * @retval none
  */
-void MotionVS_initialize(MVS_conf_t *conf);
+void MotionVS_initialize(const MVS_conf_t *conf);
+
+/**
+ * @brief   Set the MotionVS user defined filter configuration.
+ * @details It must be called after MotionVS_initialize, which resets the user defined filter configuration.
+ * @param   filt pointer to the structure containing the filter configuration
+ * @retval  none
+ */
+void MotionVS_set_filter(const MVS_filt_t *filt);
 
 /**
  * @brief  Run vibration severity algorithm.
@@ -103,7 +113,7 @@ void MotionVS_initialize(MVS_conf_t *conf);
  * @param  data_out pointer to the structure containing the output data
  * @retval none
  */
-void MotionVS_update(MVS_output_t *data_out, MVS_input_t *data_in);
+void MotionVS_update(MVS_output_t *data_out, const MVS_input_t *data_in);
 
 /**
   * @brief  Get the library version.

@@ -33,14 +33,13 @@ void __attribute__ ((signal)) algo_00_init(void)
 {
 	uint32_t dt = ((uint32_t)cast_uint16_t(ISPU_DTIME_1) << 16) | cast_uint16_t(ISPU_DTIME_0);
 	(void)memcpy((void *)&dtime, (void *)&dt, sizeof(float));
-	dtime *= 0.03125f;
+	dtime *= 0.015625f;
 
 	MVS_conf_t conf = {
-		.axis = MVS_AXIS_Z,
 		.bw = MVS_BW_2_1000_HZ,
 		.hp_en = 0,
-		.period = 1666,
-		.rms_update_period = 119
+		.period = 3333,
+		.rms_update_period = 101
 	};
 
 	MotionVS_initialize(&conf);
@@ -52,18 +51,15 @@ void __attribute__ ((signal)) algo_00(void)
 	MVS_output_t out;
 	(void)memset(&out, 0, sizeof(out));
 
-	in.acc[0] = 0.0f;
-	in.acc[1] = 0.0f;
-	in.acc[2] = (float)cast_sint16_t(ISPU_ARAW_Z) * ACC_SENS;
+	in.acc = (float)cast_sint16_t(ISPU_ARAW_Z) * ACC_SENS;
 	in.dtime = dtime;
 
 	MotionVS_update(&out, &in);
 
-	cast_float(ISPU_DOUT_00) = in.acc[2];
+	cast_float(ISPU_DOUT_00) = in.acc;
 	cast_float(ISPU_DOUT_02) = out.acc_filt;
 	cast_float(ISPU_DOUT_04) = out.vel;
 	cast_float(ISPU_DOUT_06) = out.vel_rms;
-
 	int_status = int_status | 0x1u;
 }
 
