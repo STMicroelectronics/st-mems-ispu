@@ -47,7 +47,40 @@ The toolchain must be extracted from the downloaded archive to any folder on the
 
   * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *reisc-gcc* command should be found if the user tries to run it).
 
-Once the toolchain is installed, in order to build a project, the user must enter the *ispu/make* directory inside the project and run `make`. Enjoy.
+Once the toolchain is installed, in order to build a project, the user must enter the *ispu/make* directory inside the project and run `make`.
+
+Note that on macOS an error like the following may be returned when first trying to use the toolchain:
+
+```shell
+Library not loaded: /usr/local/opt/gettext/lib/libintl.8.dylib
+```
+
+In this case, the "gettext" package must be installed to obtain the missing library. If using an Intel-based Mac (x86_64 architecture), install [Homebrew](https://brew.sh):
+
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+and then use the following command to install the "gettext" package:
+
+```shell
+brew install gettext
+```
+
+If using an Apple silicon-based Mac (ARM architecture), the x86_64 version of the "gettext" package must be installed. Install [Homebrew](https://brew.sh) for x86_64:
+
+```shell
+arch -x86_64 zsh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+and then use the following command to install the "gettext" package for x86_64:
+
+```shell
+arch -x86_64 /usr/local/bin/brew install gettext
+```
+
+After a correct installation of the "gettext" package, the error will disappear and the toolchain will be usable to build ISPU projects.
 
 ## 4 - Eclipse
 
@@ -63,7 +96,7 @@ The URL to use is:
 * On Linux: [https://sw-center.st.com/mems/ispu/ispu_repository_linux](https://sw-center.st.com/mems/ispu/ispu_repository_linux)
 * On macOS: [https://sw-center.st.com/mems/ispu/ispu_repository_mac](https://sw-center.st.com/mems/ispu/ispu_repository_mac)
 
-Once the plugins are installed, in order to build a project, the user must go to "File", click on "Import...". Under "General", select "Existing Project into Workspace", click on the "Next" button, click on the "Browse" button, select the folder containing the project (*ispu/eclipse* directory), make sure that the "Copy projects into workspace" is **not** selected (otherwise Eclipse will not be able to locate the source files), and click on the "Finish" button. The project is now imported and can be built. Enjoy.
+Once the plugins are installed, in order to build a project, the user must go to "File", click on "Import...". Under "General", select "Existing Project into Workspace", click on the "Next" button, click on the "Browse" button, select the folder containing the project (*ispu/eclipse* directory), make sure that the "Copy projects into workspace" is **not** selected (otherwise Eclipse will not be able to locate the source files), and click on the "Finish" button. The project is now imported and can be built.
 
 ------
 
