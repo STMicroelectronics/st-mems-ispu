@@ -1,9 +1,9 @@
 [
 	{
-		"name": "./ispu_wand/models/lsm6dso16is_ISPU_reference_dataset/training_output/cnn_8x8x8.h5",
+		"name": "./air_written_letter_recognition/models/lsm6dso16is_ISPU_reference_dataset/training_output/cnn_8x8x8.h5",
 		"description": "CNN1D for air writing recognition that detects the letters I, S, P, and U",
-		"usecase": "ispu_wand",
-		"readme": "./ispu_wand/models/lsm6dso16is_ISPU_reference_dataset/README.md",
+		"usecase": "air_written_letter_recognition",
+		"readme": "./air_written_letter_recognition/models/lsm6dso16is_ISPU_reference_dataset/README.md",
 		"visible": true,
 		"dataset_used": "lsm6dso16is_ISPU_reference_dataset"
 	}

@@ -1,4 +1,4 @@
-# ISPU wand
+# ISPU wand: air-written letter recognition
 
 This is a complete and fully customizable example of an air-written letter recognition deep-learning model running on the ISPU core embedded in ST's MEMS sensors.
 
