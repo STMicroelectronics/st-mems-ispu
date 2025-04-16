@@ -2,7 +2,7 @@
 
 This is a complete and fully customizable example of an air-written letter recognition deep-learning model running on the ISPU core embedded in ST's MEMS sensors.
 
-A pretrained model for recognizing the letters I, S, P, and U is available at [models/lsm6dso16is_ISPU_reference_dataset](./models/lsm6dso16is_ISPU_reference_dataset). For details on this model, refer to the dedicated [README](./models/lsm6dso16is_ISPU_reference_dataset/README.md).
+A pretrained model for recognizing the letters I, S, P, and U is available at [models/lsm6dso16is_ISPU_reference_dataset](./models/lsm6dso16is_ISPU_reference_dataset). For details on this model, refer to the dedicated [README](./models/lsm6dso16is_ISPU_reference_dataset/README.md). A video providing details about this model and showing it in action is available on STMicroelectronics YouTube channel at [https://youtu.be/TethPESRvIQ](https://youtu.be/TethPESRvIQ).
 
 New models can be trained, validated, and prepared for deployment with the services exposed as make targets in the *Makefile* of this folder.
 
