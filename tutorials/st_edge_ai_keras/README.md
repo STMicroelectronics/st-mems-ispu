@@ -1,6 +1,6 @@
-# ST Edge AI Core for ISPU tutorial
+# ST Edge AI for ISPU tutorial using Keras
 
-This tutorial demonstrates the complete flow for deploying a trained neural network inside a sensor embedding the ISPU using [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html).
+This tutorial demonstrates the complete flow for deploying a neural network trained with Keras inside a sensor embedding the ISPU using [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html).
 
 The use case consists of a human activity recognition (HAR) using accelerometer data to train a small neural network (NN) to recognize four activities: stationary, walking, running, and cycling.
 
@@ -42,7 +42,7 @@ For the first step of this tutorial, the Nucleo board (with the expansion board 
 
     ![MEMS Studio connect](images/mems_studio_connect.jpg)
 
-4. Go to the `Sensor Evaluation` section and select the `Quick Setup` page to configure the sensor (`Accelerometer Full Scale`: 16 g; `Accelerometer Output Data Rate`: 26 Hz), then press the `▶` button in the top left corner to start streaming data from the sensor.
+4. Go to the `Sensor Evaluation` section and select the `Quick Setup` page to configure the sensor (`Accelerometer Full Scale`: 8 g; `Accelerometer Output Data Rate`: 26 Hz), then press the `▶` button in the top left corner to start streaming data from the sensor.
 
     ![MEMS Studio setup](images/mems_studio_setup.jpg)
 
@@ -313,7 +313,7 @@ In the evaluation report, three rows of results are reported, their meaning is t
 
 In this case, the converted model performance is practically the same as the original model (for more details on validation metrics refer to the "Evaluation metrics" article of the documentation available within the ST Edge AI Core installation folder).
 
-## ST Edge AI Core integration in MEMS Studio
+## ST Edge AI integration in MEMS Studio
 
 To accomodate users that prefer to use a graphical interface over the command line, ST Edge AI Core has been integrated in MEMS Studio.
 
@@ -358,27 +358,24 @@ Then, for the actual integration, the `main.c` template must be modified to do t
 2. Once the buffer is full, run the model inference to obtain the prediction.
 3. Write the model prediction in the ISPU output registers.
 
-### Add definitions and state variables
+### Add definitions and global variables
 
-The integration template is agnostic of the specific application, therefore, as a first step, all relevant information, such as sensor settings, must be added:
+The integration template is agnostic of the specific application, therefore, as a first step, all relevant information, such as the accelerometer sensitivity, must be added.
 
 ```c
-#define ACC_ODR 26 // [Hz]
-#define ACC_FS 8 // [g]
-#define ACC_SENS 0.244 // [mg/LSB]
+#define ACC_SENS 0.244f // [mg/LSB]
 ```
 
-Next, variables to implement the application logic are needed. In this case: an array of label strings, the number of samples currently stored inside the input buffer, and the model prediction value:
+Next, the variables to implement the application logic are needed. In this case: an array of label strings, and the number of samples currently stored inside the input buffer.
 
 ```c
 static const char *labels[] = { "stationary", "walking", "running", "cycling" };
 static uint8_t win_cnt;
-static int8_t prediction;
 ```
 
 ### Initialize algorithm state
 
-To ensure correct functioning, the initialization logic must be placed inside the `algo_00_init` function:
+To ensure correct functioning, the initialization logic must be placed inside the `algo_00_init` function.
 
 ```c
 void __attribute__ ((signal)) algo_00_init(void)
@@ -390,11 +387,10 @@ void __attribute__ ((signal)) algo_00_init(void)
 
 	// initialize state variables
 	win_cnt = 0;
-	prediction = 0;
 }
 ```
 
-Most notably, here `stai_runtime_init`, `stai_network_init`, and `init_network_buffers` functions initialize the runtime library, the context of the network, and internal buffer pointers respectively.
+Compared to the template, the initialization of the `win_cnt` variable was added.
 
 ### Fill model input buffer
 
@@ -404,7 +400,7 @@ After initialization, all the logic of the application, including running the mo
 void __attribute__ ((signal)) algo_00(void)
 {
 	// ispu output registers base address
-	uint32_t addr = ISPU_DOUT_00;
+	void *out_addr = (void *)ISPU_DOUT_00;
 
 	// reinterpret input buffer as a multi-dimensional array of shape {1,52,3}
 	float (*input)[STAI_NETWORK_IN_1_HEIGHT][STAI_NETWORK_IN_1_CHANNEL] =
@@ -415,8 +411,8 @@ void __attribute__ ((signal)) algo_00(void)
 		(float (*)[STAI_NETWORK_OUT_1_CHANNEL])output_buffers[0];
 ```
 
-Here we declare three important variables:
-- `addr`: address of the first unused ISPU output register used to share results with the host microcontroller or microprocessor.
+Here we declare three variables:
+- `out_addr`: address of the first ISPU output register, used as a starting address to write values to the output registers and thus share them with the host microcontroller or microprocessor.
 - `input`: pointer to the model input buffer where new accelerometer samples will be stored.
 - `output`: pointer to the model output buffer where new model predictions will be stored.
 
@@ -431,15 +427,15 @@ Here new accelerometer data is converted from LSB to mg unit (this is important 
 
 ```c
 	// write accelerometer data to output registers
-	for (uint8_t i = 0; i < STAI_NETWORK_IN_1_CHANNEL; i++, addr += sizeof(float))
-		cast_float(addr) = input[0][win_cnt][i];
+	for (uint8_t i = 0; i < STAI_NETWORK_IN_1_CHANNEL; i++, out_addr += sizeof(float))
+		cast_float(out_addr) = input[0][win_cnt][i];
 ```
 
-Additionally, we can write accelerometer data to the ISPU output registers for debugging purposes.
+Additionally, the accelerometer data is written to the ISPU output registers for debugging purposes.
 
 ### Run model inference
 
-After incrementing the window counter, if the number of samples in the input buffer equals the window length, the model inference can be run:
+After incrementing the samples counter, if the number of samples has reached the window length, the model inference can be run.
 
 ```c
 	// increment count and check if input buffer is ready
@@ -450,6 +446,7 @@ After incrementing the window counter, if the number of samples in the input buf
 		stai_network_run(net, STAI_MODE_SYNC);
 
 		// prediction corresponds to the output with the highest probability
+		uint8_t prediction = 0;
 		float max_prob = -1.0f;
 		for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++) {
 			if (output[0][i] > max_prob) {
@@ -462,19 +459,16 @@ After incrementing the window counter, if the number of samples in the input buf
 
 The function `stai_network_run` will do all the work by forwarding the input buffer through all layers of the network and updating the output buffer.
 
-To get the actual prediction from the softmax output layer, some logic must be implemented to obtain the index of the output value associated with the highest probability value.
+To get the actual prediction from the softmax output layer, some logic must be implemented to obtain the index of the output value associated with the highest probability.
 
 ```c
 	// write prediction results to output registers
-	for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++, addr += sizeof(float))
-		cast_float(addr) = output[0][i];
-	strcpy((char *)addr, labels[prediction]);
-
-	// interrupt generation
-	int_status = int_status | 0x1u;
+	for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++, out_addr += sizeof(float))
+		cast_float(out_addr) = output[0][i];
+	strcpy((char *)out_addr, labels[prediction]);
 ```
 
-Finally, the predictions probabilities and predicted class label can be written to the ISPU output registers before triggering an interrupt; the host microcontroller or microprocessor receiving the interrupt will then retrieve this data and act accordingly.
+Finally, the prediction probabilities and predicted class label can be written to the ISPU output registers.
 
 ### Metadata
 
@@ -519,7 +513,7 @@ For convenience, a reference ISPU project integrating the HAR model is already p
 
 ## Testing in real-time
 
-MEMS Studio can be used to upload and test the sensor configuration (.json) containing the ISPU program:
+MEMS Studio can then be used to upload and test the sensor configuration (.json) containing the ISPU program:
 
 1. Make sure the Nucleo board has been flashed using the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS4A1/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware (the same firmware used for data logging).
 

@@ -23,9 +23,7 @@
 #include "network.h"
 #include "network_utils.h"
 
-#define ACC_ODR 26 // [Hz]
-#define ACC_FS 8 // [g]
-#define ACC_SENS 0.244 // [mg/LSB]
+#define ACC_SENS 0.244f // [mg/LSB]
 
 void __attribute__ ((signal)) algo_00_init(void);
 void __attribute__ ((signal)) algo_00(void);
@@ -39,7 +37,6 @@ static volatile uint32_t int_status;
 
 static const char *labels[] = { "stationary", "walking", "running", "cycling" };
 static uint8_t win_cnt;
-static int8_t prediction;
 
 void __attribute__ ((signal)) algo_00_init(void)
 {
@@ -50,13 +47,12 @@ void __attribute__ ((signal)) algo_00_init(void)
 
 	// initialize state variables
 	win_cnt = 0;
-	prediction = 0;
 }
 
 void __attribute__ ((signal)) algo_00(void)
 {
 	// ispu output registers base address
-	uint32_t addr = ISPU_DOUT_00;
+	void *out_addr = (void *)ISPU_DOUT_00;
 
 	// reinterpret input buffer as a multi-dimensional array of shape {1,52,3}
 	float (*input)[STAI_NETWORK_IN_1_HEIGHT][STAI_NETWORK_IN_1_CHANNEL] =
@@ -72,8 +68,8 @@ void __attribute__ ((signal)) algo_00(void)
 	input[0][win_cnt][2] = cast_sint16_t(ISPU_ARAW_Z) * ACC_SENS;
 
 	// write accelerometer data to output registers
-	for (uint8_t i = 0; i < STAI_NETWORK_IN_1_CHANNEL; i++, addr += sizeof(float))
-		cast_float(addr) = input[0][win_cnt][i];
+	for (uint8_t i = 0; i < STAI_NETWORK_IN_1_CHANNEL; i++, out_addr += sizeof(float))
+		cast_float(out_addr) = input[0][win_cnt][i];
 
 	// increment count and check if input buffer is ready
 	if (++win_cnt == STAI_NETWORK_IN_1_HEIGHT) {
@@ -83,6 +79,7 @@ void __attribute__ ((signal)) algo_00(void)
 		stai_network_run(net, STAI_MODE_SYNC);
 
 		// prediction corresponds to the output with the highest probability
+		uint8_t prediction = 0;
 		float max_prob = -1.0f;
 		for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++) {
 			if (output[0][i] > max_prob) {
@@ -90,12 +87,12 @@ void __attribute__ ((signal)) algo_00(void)
 				prediction = i;
 			}
 		}
-	}
 
-	// write prediction results to output registers
-	for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++, addr += sizeof(float))
-		cast_float(addr) = output[0][i];
-	strcpy((char *)addr, labels[prediction]);
+		// write prediction results to output registers
+		for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++, out_addr += sizeof(float))
+			cast_float(out_addr) = output[0][i];
+		strcpy((char *)out_addr, labels[prediction]);
+	}
 
 	// interrupt generation
 	int_status = int_status | 0x1u;
