@@ -135,14 +135,14 @@ Here is the summary from the `st_ai_output/network_analyze_report.txt` report:
 ```
 Exec/report summary (analyze)
 ----------------------------------------------------------------------------------------------
-model file         :   /st/st-mems-ispu/tutorials/st_edge_ai_core/output_ipynb/cnn_8x8x8.h5
+model file         :   /st/st-mems-ispu/tutorials/st_edge_ai_keras/output_ipynb/cnn_8x8x8.h5
 type               :   keras
 c_name             :   network
 options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai
 optimization       :   balanced
 target/series      :   ispu
 workspace dir      :   /tmp/stedgeai_workspace
-output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_core/st_ai_output
+output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_keras/st_ai_output
 model_fmt          :   float
 model_name         :   cnn_8x8x8
 model_hash         :   0x97a8c5a35de42c0ce016549bd648a454
@@ -183,14 +183,14 @@ Here is the summary from the `st_ai_output/network_analyze_report.txt` report:
 ```
 Exec/report summary (analyze)
 ---------------------------------------------------------------------------------------------------
-model file         :   /st/st-mems-ispu/tutorials/st_edge_ai_core/output_ipynb/qcnn_8x8x8.tflite
+model file         :   /st/st-mems-ispu/tutorials/st_edge_ai_keras/output_ipynb/qcnn_8x8x8.tflite
 type               :   tflite
 c_name             :   network
 options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai
 optimization       :   balanced
 target/series      :   ispu
 workspace dir      :   /tmp/stedgeai_workspace
-output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_core/st_ai_output
+output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_keras/st_ai_output
 model_fmt          :   ss/sa per channel
 model_name         :   qcnn_8x8x8
 model_hash         :   0x2f13331f63620603b46a920e27d68f54
@@ -537,7 +537,7 @@ Alternatively, the [ISPU test firmware](../../host_firmware/nucleo_ispu_test_hea
 
 For detailed instructions on all the ways to build and flash the firmware, refer to its [README](../../host_firmware/nucleo_ispu_test_header/README.md). If the Arm GNU Toolchain is installed and added to the PATH, the firmware can be built as follows:
 ```powershell
-make -C ../../host_firmware/nucleo_ispu_test_header/nucleo-f401re ISPU_DIR=../../../tutorials/st_edge_ai_core/ispu_integration
+make -C ../../host_firmware/nucleo_ispu_test_header/nucleo-f401re ISPU_DIR=../../../tutorials/st_edge_ai_keras/ispu_integration
 ```
 
 In order to flash the firmware, the flash scripts included in the firmware folder can be used, or the built binary can be copied to the Nucleo board mass storage as usual.
