@@ -120,14 +120,14 @@ The *ispu* folder contains:
   For all the details on the syntax for this file, refer to the **METADATA** section of the help of the `ispu_gen` tool, which can be displayed by running `ispu_gen -h -d imu_22` from the command line or can be found going to "Help", "Help Contents", and navigating to "ISPU Tools Documentation", "ispu_gen" if using an Eclipse-based IDE.
 * ***shub.txt***: file containing the sensor hub configuration to add to the output files. This can be used to configure an external sensor attached via sensor hub and to configure the sensor hub to read data from the external sensor, so that it can be processed by the ISPU.
 
-  Here below is the sensor hub file for the example of fitness activity. In this case, two write operations are used to turn on the external pressure sensor in low-noise mode at 25 Hz, with block data update enabled. A read operation is then configured to read the 3 bytes of pressure data, which will be performed at the specified rate of 26 Hz.
+  Here below is the sensor hub file for the example of fitness activity. In this case, two write operations are used to turn on the external pressure sensor at 25 Hz, with an averaging setting of 32 and block data update enabled. A read operation is then configured to read the 3 bytes of pressure data, which will be performed at the specified rate of 26 Hz.
 
   ```
   shub_odr 26
 
-  # LPS22HH
-  w 0xBA 0x10 0x32 # pressure @ 25 Hz, block data update
-  w 0xBA 0x11 0x12 # low-noise mode
+  # LPS22DF
+  w 0xBA 0x10 0x23 # pressure @ 25 Hz, averaging 32
+  w 0xBA 0x11 0x08 # block data update
   r 0xBA 0x28 3 # pressure data
   ```
 

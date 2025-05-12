@@ -1500,10 +1500,10 @@ text-align: center;
 <p>This ISPU example implements the fall detection solution based on the
 fusion of the accelerometer and pressure sensor data.</p>
 <p>The accelerometer is configured in low-power mode at 104 Hz.</p>
-<p>The pressure sensor (LPS22HH) is connected through the sensor-hub
-interface and it is configured in low-current mode at 10 Hz. The
-sensor-hub configuration for this sensor is defined in the
-<em>ispu/shub.txt</em> file.</p>
+<p>The pressure sensor (LPS22DF) is connected through the sensor-hub
+interface and it is configured at 10 Hz with an averaging setting of 8
+and a low-pass filter of ODR/9 bandwidth. The sensor-hub configuration
+for this sensor is defined in the <em>ispu/shub.txt</em> file.</p>
 <p>The MotionFD library is provided as binary in the <em>ispu/lib</em>
 folder.</p>
 <p>The outputs are as follows:</p>

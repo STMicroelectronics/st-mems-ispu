@@ -4,7 +4,7 @@ This ISPU example implements the standing vs sitting at desk solution based on t
 
 The accelerometer is configured in low-power mode at 26 Hz.
 
-The pressure sensor (LPS22HH) is connected through the sensor-hub interface and it is configured in low-noise mode at 25 Hz. The sensor-hub configuration for this sensor is defined in the *ispu/shub.txt* file.
+The pressure sensor (LPS22DF) is connected through the sensor-hub interface and it is configured at 25 Hz with an averaging setting of 32. The sensor-hub configuration for this sensor is defined in the *ispu/shub.txt* file.
 
 The MotionSD library is provided as binary in the *ispu/lib* folder.
 

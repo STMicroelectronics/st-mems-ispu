@@ -6856,20 +6856,20 @@ static const struct mems_conf_op ispu_conf_conf_0[] = {
 	// Sensor hub configuration
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x10, .data = 0x40 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x01, .data = 0x40 },
-	// > device 0xBA, write 0x10 = 0x32
+	// > device 0xBA, write 0x10 = 0x23
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x15, .data = 0xBA },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x16, .data = 0x10 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x17, .data = 0x00 },
-	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x21, .data = 0x32 },
+	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x21, .data = 0x23 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x14, .data = 0x44 },
 	{ .type = MEMS_CONF_OP_TYPE_DELAY, .address = 0, .data = 20 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x14, .data = 0x00 },
 	// <
-	// > device 0xBA, write 0x11 = 0x12
+	// > device 0xBA, write 0x11 = 0x08
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x15, .data = 0xBA },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x16, .data = 0x11 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x17, .data = 0x00 },
-	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x21, .data = 0x12 },
+	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x21, .data = 0x08 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x14, .data = 0x44 },
 	{ .type = MEMS_CONF_OP_TYPE_DELAY, .address = 0, .data = 20 },
 	{ .type = MEMS_CONF_OP_TYPE_WRITE, .address = 0x14, .data = 0x00 },

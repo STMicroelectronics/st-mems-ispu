@@ -1730,15 +1730,15 @@ the sensor hub to read data from the external sensor, so that it can be
 processed by the ISPU.</p>
 <p>Here below is the sensor hub file for the example of fitness
 activity. In this case, two write operations are used to turn on the
-external pressure sensor in low-noise mode at 25 Hz, with block data
-update enabled. A read operation is then configured to read the 3 bytes
-of pressure data, which will be performed at the specified rate of 26
-Hz.</p>
+external pressure sensor at 25 Hz, with an averaging setting of 32 and
+block data update enabled. A read operation is then configured to read
+the 3 bytes of pressure data, which will be performed at the specified
+rate of 26 Hz.</p>
 <pre><code>shub_odr 26
 
-# LPS22HH
-w 0xBA 0x10 0x32 # pressure @ 25 Hz, block data update
-w 0xBA 0x11 0x12 # low-noise mode
+# LPS22DF
+w 0xBA 0x10 0x23 # pressure @ 25 Hz, averaging 32
+w 0xBA 0x11 0x08 # block data update
 r 0xBA 0x28 3 # pressure data</code></pre>
 <p>For the syntax to use for this file, refer to the <strong>SENSOR
 HUB</strong> section of the help of the <code>ispu_gen</code> tool,
