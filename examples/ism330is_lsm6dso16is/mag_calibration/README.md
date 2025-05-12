@@ -4,7 +4,7 @@ This ISPU example implements the magnetometer calibration.
 
 The accelerometer is configured in high-performance mode at 52 Hz.
 
-The magnetometer (LIS2MDL) is connected through the sensor-hub interface and it is configured in high-performance mode at 50 Hz. The sensor-hub configuration to apply is provided in the *output* folder as a separate file and must be loaded before the example main configuration.
+The magnetometer (LIS2MDL) is connected through the sensor-hub interface and it is configured in high-performance mode at 50 Hz. The sensor-hub configuration for this sensor is defined in the *ispu/shub.txt* file.
 
 The MotionMC library is provided as binary in the *ispu/lib* folder.
 

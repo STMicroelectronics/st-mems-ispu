@@ -4,7 +4,7 @@ This ISPU example implements the sensor fusion of the accelerometer, gyroscope a
 
 The accelerometer and gyroscope are configured in high-performance mode at 104 Hz.
 
-The magnetometer (LIS2MDL) is connected through the sensor-hub interface and it is configured in high-performance mode at 100 Hz. The sensor-hub configuration to apply is provided in the *output* folder as a separate file and must be loaded before the example main configuration.
+The magnetometer (LIS2MDL) is connected through the sensor-hub interface and it is configured in high-performance mode at 100 Hz. The sensor-hub configuration for this sensor is defined in the *ispu/shub.txt* file.
 
 The MotionFX and MotionMC libraries are provided as binaries in the *ispu/lib* folder.
 
