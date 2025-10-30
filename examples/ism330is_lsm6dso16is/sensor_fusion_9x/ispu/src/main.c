@@ -49,7 +49,7 @@ void __attribute__ ((signal)) algo_00_init(void)
 		MotionFX_deinitialize(mfx_9x);
 	}
 	mfx_9x = MotionFX_initialize(MFX_9X);
-	MotionFX_set_orientation(mfx_9x, "enu", "enu", "esu");
+	MotionFX_set_orientation(mfx_9x, "enu", "enu", "neu");
 	MotionFX_enable_gbias(mfx_9x, MFX_ENGINE_ENABLE);
 }
 

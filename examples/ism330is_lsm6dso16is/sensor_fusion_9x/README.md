@@ -27,7 +27,7 @@ The magnetometer calibration procedure requires rotating the device for acquirin
 
 The accelerometer and gyroscope are mounted in ENU orientation.
 
-The magnetometer is mounted in ESU orientation.
+The magnetometer is mounted in NEU orientation.
 
 
 ## 3 - Interrupts
