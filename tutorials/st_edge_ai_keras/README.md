@@ -24,7 +24,7 @@ For reproducing all the steps in this tutorial project, the following hardware a
 - [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html): tool to easily convert pretrained AI models for integration into ST products, which must be added to the system PATH (for detailed steps refer to the "Setting environment" article of the documentation available within the ST Edge AI Core installation folder).
 - [GNU Make](https://www.gnu.org/software/make): command line build tool, which must be added to the system PATH.
 - [MEMS Studio](https://www.st.com/en/development-tools/MEMS-Studio.html): desktop software solution to develop and test solutions for MEMS sensors.
-- [X-CUBE-ISPU](https://www.st.com/en/embedded-software/x-cube-ispu.html): expansion package for ISPU development containing documentation, examples, and STM32 firmware for enabling communication with MEMS Studio.
+- [X-CUBE-MEMS1](https://www.st.com/en/embedded-software/x-cube-mems1.html): STM32Cube expansion package containing firmware for enabling communication with MEMS Studio.
 - [Python](https://www.python.org): Python programming language interpreter, necessary to create and train the neural network model (required Python packages are listed in `requirements.txt`). A version of Python ≤ 3.11 is required.
 - [Jupyter Notebook](https://jupyter.org/install): interactive computing platform accessible from the web browser to run Python code.
 
@@ -36,7 +36,7 @@ For the first step of this tutorial, the Nucleo board (with the expansion board 
 
     ![Nucleo setup](images/nucleo_setup.png)
 
-2. Flash the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS4A1/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware from the X-CUBE-ISPU package to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage).
+2. Flash the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage).
 
 3. Open MEMS Studio, under `Connect`, select `Serial` as `Communication type` and the serial port the board is connected to as `Communication port`, and then press `Connect`. Then, if not already showing, select `LSM6DSO16IS` under the `Accelerometer sensor` dropdown menu and press `Select`.
 
@@ -515,7 +515,7 @@ For convenience, a reference ISPU project integrating the HAR model is already p
 
 MEMS Studio can then be used to upload and test the sensor configuration (.json) containing the ISPU program:
 
-1. Make sure the Nucleo board has been flashed using the [LSM6DSO16IS_DataLogExtended.bin](https://github.com/STMicroelectronics/x-cube-ispu/blob/main/Projects/NUCLEO-F401RE/Examples/IKS4A1/LSM6DSO16IS_DataLogExtended/Binary/LSM6DSO16IS_DataLogExtended.bin) firmware (the same firmware used for data logging).
+1. Make sure the Nucleo board has been flashed using the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package (the same firmware used for data logging).
 
 2. Connect the board, go to the `Sensor Evaluation` section, and then select the `Quick Setup` page.
 

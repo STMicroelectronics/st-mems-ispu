@@ -2,7 +2,7 @@
 
 This folder contains various firmware for boards hosting sensors embedding the ISPU.
 
-Please also check the [X-CUBE-ISPU](https://www.st.com/en/embedded-software/x-cube-ispu.html) software package for additional firmware provided as an expansion for STM32Cube.
+Please also check the [X-CUBE-MEMS1](https://www.st.com/en/embedded-software/x-cube-mems1.html) software package for additional firmware provided as an expansion for STM32Cube.
 
 ------
 

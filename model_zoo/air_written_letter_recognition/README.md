@@ -37,7 +37,7 @@ All the tools above must be added to the system PATH. For the ISPU toolchain you
 - [Nucleo firmware for ISPU validation on target](../../host_firmware/nucleo_ispu_stedgeai_validate)
 - [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html)
 - Nucleo custom firmware for MEMS Studio
-   - Download the [X-CUBE-ISPU](https://www.st.com/en/embedded-software/x-cube-ispu.html) software package
+   - Download the [X-CUBE-MEMS1](https://www.st.com/en/embedded-software/x-cube-mems1.html) software package
    - In the *Projects* folder, get the *DataLogExtended* firmware for the specific hardware setup
 - [Nucleo firmware for running on ISPU](../../host_firmware/nucleo_ispu_test_header)
 
