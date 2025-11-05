@@ -1,12 +1,12 @@
-## 1 - Introduction
+# Examples
 
-This software package provides template and example projects as well as libraries for MEMS devices embedding the ISPU (intelligent sensor processing unit).
+This folder contains template and example projects as well as libraries for MEMS devices embedding the ISPU (intelligent sensor processing unit).
 
 Each project can be built using the command line (make) or any Eclipse-based IDE, including STM32CubeIDE, provided that the ISPU plugins are installed.
 
 Prebuilt files containing the ready-to-use device configuration are available in the *output* folder of each example project. For the examples related to STMicroelectronics libraries, the library in binary format is also available to be integrated in other projects based on user needs.
 
-## 2 - Build and deploy flow
+## Build and deploy flow
 
 The figure below illustrates the flow to build and deploy a program on the ISPU. The steps in light blue, which make up the build process, are automatically performed by make or by the Eclipse-based IDE, but are here explained for clarity of the process.
 
@@ -20,7 +20,7 @@ The figure below illustrates the flow to build and deploy a program on the ISPU.
 
 For how to write the C code and the other input files, please refer to the template for the device of interest and its readme file. For how to setup your development environment and build a project with the command line or an Eclipse-based IDE, continue reading this readme file.
 
-## 3 - Command line
+## Command line
 
 In order to build a project using the command line, the ISPU toolchain must be installed on the system. Besides the toolchain, the `make` build tool must be installed.
 
@@ -82,7 +82,7 @@ arch -x86_64 /usr/local/bin/brew install gettext
 
 After a correct installation of the "gettext" package, the error will disappear and the toolchain will be usable to build ISPU projects.
 
-## 4 - Eclipse
+## Eclipse
 
 In order to build a project using an Eclipse-based IDE, the ISPU plugins must be installed in the IDE that the user desires to use.
 
