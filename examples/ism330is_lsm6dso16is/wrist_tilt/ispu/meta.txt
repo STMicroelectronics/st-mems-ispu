@@ -1,0 +1,8 @@
+description "Wrist tilt detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Wrist up" uint8_t
+output "Wrist down" uint8_t
+

@@ -1,0 +1,12 @@
+description "Sensor fusion 9-axis"
+
+output "Quat x" float
+output "Quat y" float
+output "Quat z" float
+output "Quat w" float
+output "Mag accuracy" uint8_t
+	0="uncalibrated"
+	1="poor"
+	2="good"
+	3="best"
+

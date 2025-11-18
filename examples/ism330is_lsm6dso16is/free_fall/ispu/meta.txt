@@ -1,0 +1,7 @@
+description "Free fall detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Free-fall" uint8_t
+

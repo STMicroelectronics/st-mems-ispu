@@ -1,0 +1,10 @@
+description "8-bit cyclic redundancy check"
+
+output "Acc x [LSB]" int16_t
+output "Acc y [LSB]" int16_t
+output "Acc z [LSB]" int16_t
+output "Gyr x [LSB]" int16_t
+output "Gyr y [LSB]" int16_t
+output "Gyr z [LSB]" int16_t
+output "CRC8" uint8_t
+

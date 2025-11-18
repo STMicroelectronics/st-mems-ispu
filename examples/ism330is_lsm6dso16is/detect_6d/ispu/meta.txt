@@ -1,0 +1,14 @@
+description "6D detection"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "D6D" uint8_t
+	0="unknown"
+	1="x down"
+	2="x up"
+	3="y down"
+	4="y up"
+	5="z down"
+	6="z up"
+

@@ -1,0 +1,9 @@
+description "Second order IIR filter"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Acc filt x [g]" float
+output "Acc filt y [g]" float
+output "Acc filt z [g]" float
+

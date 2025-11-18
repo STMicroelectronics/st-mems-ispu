@@ -1,0 +1,16 @@
+acc_odr 104
+acc_fs 8
+acc_mode high_performance
+
+gyr_odr 104
+gyr_fs 2000
+gyr_mode high_performance
+
+ispu_irq_rate 104
+ispu_int1 enable
+ispu_sleep_int2 enable
+ispu_latch disable
+
+algo 0 enable
+algo_int1 0 enable
+

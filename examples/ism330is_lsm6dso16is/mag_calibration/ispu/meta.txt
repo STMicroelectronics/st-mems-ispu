@@ -1,0 +1,14 @@
+description "Magnetometer calibration"
+
+output "Mag x [uT/50]" float
+output "Mag y [uT/50]" float
+output "Mag z [uT/50]" float
+output "HI-bias x [uT/50]" float
+output "HI-bias y [uT/50]" float
+output "HI-bias z [uT/50]" float
+output "Mag accuracy" uint8_t
+	0="uncalibrated"
+	1="poor"
+	2="good"
+	3="best"
+

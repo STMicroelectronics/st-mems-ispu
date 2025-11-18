@@ -1,0 +1,7 @@
+description "Vibration severity"
+
+output "Acc [mm / s^2]" float
+output "Acc BP [mm / s^2]" float
+output "Vel [mm / s]" float
+output "Vel RMS [mm / s]" float
+

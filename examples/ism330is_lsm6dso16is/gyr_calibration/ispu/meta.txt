@@ -1,0 +1,9 @@
+description "Gyroscope calibration"
+
+output "Gyr cal x [dps]" float
+output "Gyr cal y [dps]" float
+output "Gyr cal z [dps]" float
+output "Bias x [dps]" float
+output "Bias y [dps]" float
+output "Bias z [dps]" float
+

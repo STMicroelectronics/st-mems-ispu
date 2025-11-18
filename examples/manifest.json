@@ -1,0 +1,520 @@
+{
+	"devices": [
+		{
+			"name": "ISM330IS",
+			"examples": [
+				{
+					"name": "Accelerometer calibration",
+					"path": "./ism330is_lsm6dso16is/acc_calibration",
+					"readme": "./ism330is_lsm6dso16is/acc_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/acc_calibration/output/acc_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/acc_calibration/output/acc_calibration.h"
+					]
+				},
+				{
+					"name": "Activity recognition for wrist",
+					"path": "./ism330is_lsm6dso16is/activity_wrist",
+					"readme": "./ism330is_lsm6dso16is/activity_wrist/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/activity_wrist/output/activity_wrist.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/activity_wrist/output/activity_wrist.h"
+					]
+				},
+				{
+					"name": "32-bit cyclic redundancy check",
+					"path": "./ism330is_lsm6dso16is/crc32",
+					"readme": "./ism330is_lsm6dso16is/crc32/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/crc32/output/crc32.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/crc32/output/crc32.h"
+					]
+				},
+				{
+					"name": "8-bit cyclic redundancy check",
+					"path": "./ism330is_lsm6dso16is/crc8",
+					"readme": "./ism330is_lsm6dso16is/crc8/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/crc8/output/crc8.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/crc8/output/crc8.h"
+					]
+				},
+				{
+					"name": "6D detection",
+					"path": "./ism330is_lsm6dso16is/detect_6d",
+					"readme": "./ism330is_lsm6dso16is/detect_6d/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/detect_6d/output/detect_6d.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/detect_6d/output/detect_6d.h"
+					]
+				},
+				{
+					"name": "Fall detection",
+					"path": "./ism330is_lsm6dso16is/fall_detection",
+					"readme": "./ism330is_lsm6dso16is/fall_detection/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/fall_detection/output/fall_detection.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/fall_detection/output/fall_detection.h"
+					]
+				},
+				{
+					"name": "Second order IIR filter",
+					"path": "./ism330is_lsm6dso16is/filter",
+					"readme": "./ism330is_lsm6dso16is/filter/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/filter/output/filter.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/filter/output/filter.h"
+					]
+				},
+				{
+					"name": "Fitness activity",
+					"path": "./ism330is_lsm6dso16is/fitness_activity",
+					"readme": "./ism330is_lsm6dso16is/fitness_activity/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/fitness_activity/output/fitness_activity.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/fitness_activity/output/fitness_activity.h"
+					]
+				},
+				{
+					"name": "Free fall detection",
+					"path": "./ism330is_lsm6dso16is/free_fall",
+					"readme": "./ism330is_lsm6dso16is/free_fall/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/free_fall/output/free_fall.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/free_fall/output/free_fall.h"
+					]
+				},
+				{
+					"name": "Gyroscope calibration",
+					"path": "./ism330is_lsm6dso16is/gyr_calibration",
+					"readme": "./ism330is_lsm6dso16is/gyr_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/gyr_calibration/output/gyr_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/gyr_calibration/output/gyr_calibration.h"
+					]
+				},
+				{
+					"name": "Inclinometer",
+					"path": "./ism330is_lsm6dso16is/inclinometer",
+					"readme": "./ism330is_lsm6dso16is/inclinometer/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/inclinometer/output/inclinometer.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/inclinometer/output/inclinometer.h"
+					]
+				},
+				{
+					"name": "Magnetometer calibration",
+					"path": "./ism330is_lsm6dso16is/mag_calibration",
+					"readme": "./ism330is_lsm6dso16is/mag_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/mag_calibration/output/mag_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/mag_calibration/output/mag_calibration.h"
+					]
+				},
+				{
+					"name": "Norm",
+					"path": "./ism330is_lsm6dso16is/norm",
+					"readme": "./ism330is_lsm6dso16is/norm/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/norm/output/norm.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/norm/output/norm.h"
+					]
+				},
+				{
+					"name": "Pedometer",
+					"path": "./ism330is_lsm6dso16is/pedometer",
+					"readme": "./ism330is_lsm6dso16is/pedometer/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/pedometer/output/pedometer.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/pedometer/output/pedometer.h"
+					]
+				},
+				{
+					"name": "Printf",
+					"path": "./ism330is_lsm6dso16is/printf",
+					"readme": "./ism330is_lsm6dso16is/printf/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/printf/output/printf.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/printf/output/printf.h"
+					]
+				},
+				{
+					"name": "Sliding discrete Fourier transform",
+					"path": "./ism330is_lsm6dso16is/sdft",
+					"readme": "./ism330is_lsm6dso16is/sdft/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sdft/output/sdft.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sdft/output/sdft.h"
+					]
+				},
+				{
+					"name": "Sensor fusion 6-axis",
+					"path": "./ism330is_lsm6dso16is/sensor_fusion_6x",
+					"readme": "./ism330is_lsm6dso16is/sensor_fusion_6x/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_6x/output/sensor_fusion_6x.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_6x/output/sensor_fusion_6x.h"
+					]
+				},
+				{
+					"name": "Sensor fusion 9-axis",
+					"path": "./ism330is_lsm6dso16is/sensor_fusion_9x",
+					"readme": "./ism330is_lsm6dso16is/sensor_fusion_9x/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_9x/output/sensor_fusion_9x.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_9x/output/sensor_fusion_9x.h"
+					]
+				},
+				{
+					"name": "Standing vs sitting at desk",
+					"path": "./ism330is_lsm6dso16is/standing_vs_sitting",
+					"readme": "./ism330is_lsm6dso16is/standing_vs_sitting/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/standing_vs_sitting/output/standing_vs_sitting.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/standing_vs_sitting/output/standing_vs_sitting.h"
+					]
+				},
+				{
+					"name": "Tap detection",
+					"path": "./ism330is_lsm6dso16is/tap_detection",
+					"readme": "./ism330is_lsm6dso16is/tap_detection/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/tap_detection/output/tap_detection.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/tap_detection/output/tap_detection.h"
+					]
+				},
+				{
+					"name": "Vibration severity",
+					"path": "./ism330is_lsm6dso16is/vibration_severity",
+					"readme": "./ism330is_lsm6dso16is/vibration_severity/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/vibration_severity/output/vibration_severity.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/vibration_severity/output/vibration_severity.h"
+					]
+				},
+				{
+					"name": "Wake-up detection",
+					"path": "./ism330is_lsm6dso16is/wake_up",
+					"readme": "./ism330is_lsm6dso16is/wake_up/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/wake_up/output/wake_up.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/wake_up/output/wake_up.h"
+					]
+				},
+				{
+					"name": "Wrist tilt detection",
+					"path": "./ism330is_lsm6dso16is/wrist_tilt",
+					"readme": "./ism330is_lsm6dso16is/wrist_tilt/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/wrist_tilt/output/wrist_tilt.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/wrist_tilt/output/wrist_tilt.h"
+					]
+				}
+			]
+		},
+		{
+			"name": "LSM6DSO16IS",
+			"examples": [
+				{
+					"name": "Accelerometer calibration",
+					"path": "./ism330is_lsm6dso16is/acc_calibration",
+					"readme": "./ism330is_lsm6dso16is/acc_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/acc_calibration/output/acc_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/acc_calibration/output/acc_calibration.h"
+					]
+				},
+				{
+					"name": "Activity recognition for wrist",
+					"path": "./ism330is_lsm6dso16is/activity_wrist",
+					"readme": "./ism330is_lsm6dso16is/activity_wrist/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/activity_wrist/output/activity_wrist.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/activity_wrist/output/activity_wrist.h"
+					]
+				},
+				{
+					"name": "32-bit cyclic redundancy check",
+					"path": "./ism330is_lsm6dso16is/crc32",
+					"readme": "./ism330is_lsm6dso16is/crc32/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/crc32/output/crc32.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/crc32/output/crc32.h"
+					]
+				},
+				{
+					"name": "8-bit cyclic redundancy check",
+					"path": "./ism330is_lsm6dso16is/crc8",
+					"readme": "./ism330is_lsm6dso16is/crc8/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/crc8/output/crc8.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/crc8/output/crc8.h"
+					]
+				},
+				{
+					"name": "6D detection",
+					"path": "./ism330is_lsm6dso16is/detect_6d",
+					"readme": "./ism330is_lsm6dso16is/detect_6d/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/detect_6d/output/detect_6d.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/detect_6d/output/detect_6d.h"
+					]
+				},
+				{
+					"name": "Fall detection",
+					"path": "./ism330is_lsm6dso16is/fall_detection",
+					"readme": "./ism330is_lsm6dso16is/fall_detection/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/fall_detection/output/fall_detection.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/fall_detection/output/fall_detection.h"
+					]
+				},
+				{
+					"name": "Second order IIR filter",
+					"path": "./ism330is_lsm6dso16is/filter",
+					"readme": "./ism330is_lsm6dso16is/filter/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/filter/output/filter.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/filter/output/filter.h"
+					]
+				},
+				{
+					"name": "Fitness activity",
+					"path": "./ism330is_lsm6dso16is/fitness_activity",
+					"readme": "./ism330is_lsm6dso16is/fitness_activity/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/fitness_activity/output/fitness_activity.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/fitness_activity/output/fitness_activity.h"
+					]
+				},
+				{
+					"name": "Free fall detection",
+					"path": "./ism330is_lsm6dso16is/free_fall",
+					"readme": "./ism330is_lsm6dso16is/free_fall/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/free_fall/output/free_fall.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/free_fall/output/free_fall.h"
+					]
+				},
+				{
+					"name": "Gyroscope calibration",
+					"path": "./ism330is_lsm6dso16is/gyr_calibration",
+					"readme": "./ism330is_lsm6dso16is/gyr_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/gyr_calibration/output/gyr_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/gyr_calibration/output/gyr_calibration.h"
+					]
+				},
+				{
+					"name": "Inclinometer",
+					"path": "./ism330is_lsm6dso16is/inclinometer",
+					"readme": "./ism330is_lsm6dso16is/inclinometer/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/inclinometer/output/inclinometer.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/inclinometer/output/inclinometer.h"
+					]
+				},
+				{
+					"name": "Magnetometer calibration",
+					"path": "./ism330is_lsm6dso16is/mag_calibration",
+					"readme": "./ism330is_lsm6dso16is/mag_calibration/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/mag_calibration/output/mag_calibration.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/mag_calibration/output/mag_calibration.h"
+					]
+				},
+				{
+					"name": "Norm",
+					"path": "./ism330is_lsm6dso16is/norm",
+					"readme": "./ism330is_lsm6dso16is/norm/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/norm/output/norm.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/norm/output/norm.h"
+					]
+				},
+				{
+					"name": "Pedometer",
+					"path": "./ism330is_lsm6dso16is/pedometer",
+					"readme": "./ism330is_lsm6dso16is/pedometer/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/pedometer/output/pedometer.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/pedometer/output/pedometer.h"
+					]
+				},
+				{
+					"name": "Printf",
+					"path": "./ism330is_lsm6dso16is/printf",
+					"readme": "./ism330is_lsm6dso16is/printf/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/printf/output/printf.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/printf/output/printf.h"
+					]
+				},
+				{
+					"name": "Sliding discrete Fourier transform",
+					"path": "./ism330is_lsm6dso16is/sdft",
+					"readme": "./ism330is_lsm6dso16is/sdft/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sdft/output/sdft.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sdft/output/sdft.h"
+					]
+				},
+				{
+					"name": "Sensor fusion 6-axis",
+					"path": "./ism330is_lsm6dso16is/sensor_fusion_6x",
+					"readme": "./ism330is_lsm6dso16is/sensor_fusion_6x/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_6x/output/sensor_fusion_6x.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_6x/output/sensor_fusion_6x.h"
+					]
+				},
+				{
+					"name": "Sensor fusion 9-axis",
+					"path": "./ism330is_lsm6dso16is/sensor_fusion_9x",
+					"readme": "./ism330is_lsm6dso16is/sensor_fusion_9x/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_9x/output/sensor_fusion_9x.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/sensor_fusion_9x/output/sensor_fusion_9x.h"
+					]
+				},
+				{
+					"name": "Standing vs sitting at desk",
+					"path": "./ism330is_lsm6dso16is/standing_vs_sitting",
+					"readme": "./ism330is_lsm6dso16is/standing_vs_sitting/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/standing_vs_sitting/output/standing_vs_sitting.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/standing_vs_sitting/output/standing_vs_sitting.h"
+					]
+				},
+				{
+					"name": "Tap detection",
+					"path": "./ism330is_lsm6dso16is/tap_detection",
+					"readme": "./ism330is_lsm6dso16is/tap_detection/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/tap_detection/output/tap_detection.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/tap_detection/output/tap_detection.h"
+					]
+				},
+				{
+					"name": "Vibration severity",
+					"path": "./ism330is_lsm6dso16is/vibration_severity",
+					"readme": "./ism330is_lsm6dso16is/vibration_severity/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/vibration_severity/output/vibration_severity.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/vibration_severity/output/vibration_severity.h"
+					]
+				},
+				{
+					"name": "Wake-up detection",
+					"path": "./ism330is_lsm6dso16is/wake_up",
+					"readme": "./ism330is_lsm6dso16is/wake_up/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/wake_up/output/wake_up.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/wake_up/output/wake_up.h"
+					]
+				},
+				{
+					"name": "Wrist tilt detection",
+					"path": "./ism330is_lsm6dso16is/wrist_tilt",
+					"readme": "./ism330is_lsm6dso16is/wrist_tilt/README.md",
+					"json_configurations": [
+						"./ism330is_lsm6dso16is/wrist_tilt/output/wrist_tilt.json"
+					],
+					"c_header_file_configurations": [
+						"./ism330is_lsm6dso16is/wrist_tilt/output/wrist_tilt.h"
+					]
+				}
+			]
+		}
+	]
+}

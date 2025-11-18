@@ -1,0 +1,17 @@
+description "Accelerometer calibration"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Bias x [g]" float
+output "Bias y [g]" float
+output "Bias z [g]" float
+output "Scale x" float
+output "Scale y" float
+output "Scale z" float
+output "Acc accuracy" uint8_t
+	0="unknown"
+	1="poor"
+	2="ok"
+	3="good"
+

@@ -1,0 +1,5 @@
+description "Sliding discrete Fourier transform"
+
+output "sample" float
+output "DFT_mag" float 14
+

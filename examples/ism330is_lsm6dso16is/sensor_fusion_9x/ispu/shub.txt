@@ -1,0 +1,7 @@
+shub_odr  104
+
+w 0x3C 0x60 0x8C # mag @ 100 Hz, high-resolution mode, temperature compensation
+w 0x3C 0x61 0x02 # offset cancellation
+w 0x3C 0x62 0x10 # block data update
+r 0x3C 0x68 6 # mag data
+

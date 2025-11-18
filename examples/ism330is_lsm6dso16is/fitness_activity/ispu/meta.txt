@@ -1,0 +1,16 @@
+description "Fitness activity"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Gyr x [dps]" float
+output "Gyr y [dps]" float
+output "Gyr z [dps]" float
+output "Prs [hPa]" float
+output "Biceps curls [#]" uint16_t
+output "Squats [#]" uint16_t
+output "Push-ups [#]" uint16_t
+output "Lateral raises [#]" uint16_t
+output "Overhead presses [#]" uint16_t
+output "Jumping jacks [#]" uint16_t
+

@@ -1,0 +1,13 @@
+acc_odr 6667
+acc_fs 2
+acc_mode high_performance
+
+ispu_irq_rate 6667
+ispu_int1 enable
+ispu_sleep_int2 enable
+ispu_latch disable
+ispu_clock 10
+
+algo 0 enable
+algo_int1 0 enable
+
