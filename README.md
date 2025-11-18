@@ -20,17 +20,17 @@ For more information, please explore the page on ST's website dedicated to the [
 
 This repository is structured as follows:
 
-- An [examples](https://github.com/STMicroelectronics/ispu-examples) folder, containing templates and example projects as well as libraries to start programming with the ISPU, together with prebuilt files ready to be used with the sensors. Additionally, it contains instructions on how to set up the development environment.
+- An [examples](./examples/) folder, containing templates and example projects as well as libraries to start programming with the ISPU, together with prebuilt files ready to be used with the sensors. Additionally, it contains instructions on how to set up the development environment.
 - A [host_firmware](./host_firmware/) folder, containing various firmware for boards hosting sensors embedding the ISPU.
 - A [model_zoo](./model_zoo/) folder, containing a collection of artificial intelligence models optimized for the ISPU, that can be used as is or can be modified and retrained to fit the needs of the user.
 - A [tutorials](./tutorials/) folder, containing tutorials describing how to create example solutions using different ST hardware kits and software tools.
 
 Here is where to find the resources helpful when using [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html), [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html)'s ISPU Model Converter, and the [ST Edge AI Developer Cloud](https://www.st.com/en/development-tools/stedgeai-dc.html):
 
- - Templates for integration into the final application (*template_stedgeai*), available in the [examples](https://github.com/STMicroelectronics/ispu-examples) folder and organized by device. A guide on how to use them to deploy an artificial intelligence model on the ISPU is included.
- - Templates for validation on target hardware (*template_stedgeai_validate*), available in the [examples](https://github.com/STMicroelectronics/ispu-examples) folder and organized by device. A guide on how to perform validation on target is included.
+ - Templates for integration into the final application (*template_stedgeai*), available in the [examples](./examples/) folder and organized by device. A guide on how to use them to deploy an artificial intelligence model on the ISPU is included.
+ - Templates for validation on target hardware (*template_stedgeai_validate*), available in the [examples](./examples/) folder and organized by device. A guide on how to perform validation on target is included.
  - Host board firmware for validation on target hardware, available in the [host_firmware](./host_firmware/) folder. A guide on how to prepare the board for validation is included.
- - Tutorial for developing an application using ST Edge AI Core, available in the [tutorials/st_edge_ai_core](./tutorials/st_edge_ai_core/) folder. It covers all steps starting from the data collection and finishing with the test of the final application.
+ - Tutorials for developing an application using ST Edge AI Core, available in the [tutorials](./tutorials/) folder. They cover all steps starting from the data collection and finishing with the test of the final application.
  - Model zoo for retraining and deploying ready-to-use models with simple automated procedures, available in the [model_zoo](./model_zoo/) folder. A guide is included for each model of the zoo.
 
  For more help with [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html), please refer to the HTML documentation distributed with the tool, available in its installation folder.

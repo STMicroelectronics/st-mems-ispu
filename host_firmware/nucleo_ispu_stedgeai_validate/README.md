@@ -30,7 +30,7 @@ The source code may also be used to port the firmware to a non-supported hardwar
 
 ## Validation template and validation flow
 
-In order to perform the validation on target, a template to integrate the converted model and communicate with the Nucleo validation firmware is needed. The template for the specific sensors can be found in the [examples](https://github.com/STMicroelectronics/ispu-examples) folder of this repository.
+In order to perform the validation on target, a template to integrate the converted model and communicate with the Nucleo validation firmware is needed. The template for the specific sensors can be found in the [examples](../../examples/) folder of this repository.
 
 For more information on all the steps required to perform the validation on target, refer to the readme file of the validation template.
 

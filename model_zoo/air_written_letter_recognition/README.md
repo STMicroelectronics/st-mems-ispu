@@ -32,7 +32,7 @@ This is the minimal hardware setup required to reproduce all the steps for the p
 - [Arm GNU Toolchain for bare-metal target (arm-none-eabi)](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain)
 - [STM32CubeProgrammer](https://www.st.com/en/development-tools/stm32cubeprog.html)
 
-All the tools above must be added to the system PATH. For the ISPU toolchain you can refer to the dedicated [README](https://github.com/STMicroelectronics/ispu-examples/blob/master/README.md) and for ST Edge AI Core, you can refer to the documentation in its installation folder.
+All the tools above must be added to the system PATH. For the ISPU toolchain you can refer to the dedicated [README](../../examples/README.md) and for ST Edge AI Core, you can refer to the documentation in its installation folder.
 
 - [Nucleo firmware for ISPU validation on target](../../host_firmware/nucleo_ispu_stedgeai_validate)
 - [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html)

@@ -20,7 +20,7 @@ For reproducing all the steps in this tutorial project, the following hardware a
 
 ### Software
 
-- [ISPU-Toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html): toolchain to build applications for sensors embedding the ISPU, which must be added to the system PATH (for detailed steps refer to the dedicated [README](https://github.com/STMicroelectronics/ispu-examples/README.md)).
+- [ISPU-Toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html): toolchain to build applications for sensors embedding the ISPU, which must be added to the system PATH (for detailed steps refer to the dedicated [README](../../examples/README.md)).
 - [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html): tool to easily convert pretrained AI models for integration into ST products, which must be added to the system PATH (for detailed steps refer to the "Setting environment" article of the documentation available within the ST Edge AI Core installation folder).
 - [GNU Make](https://www.gnu.org/software/make): command line build tool, which must be added to the system PATH.
 - [MEMS Studio](https://www.st.com/en/development-tools/MEMS-Studio.html): desktop software solution to develop and test solutions for MEMS sensors.
@@ -249,7 +249,7 @@ To evaluate the model performance and the correctness of the conversion performe
 
 The command offers various functionalities but, in its basic form, by inputting the model with no extra arguments, the tool will generate random data to be used as input to both the original and converted model to check that predictions coincide; alternatively, the user can provide the input / output data directly to ensure more control over the frequencies of the predicted classes.
 
-Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target (LSM6DSO16IS) and obtain a measurement of its execution time. In order to do that, first of all, the Nucleo board must be flashed with the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin") firmware. Then, the generated C model must be copied inside the [template_stedgeai_validate](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai_validate) project that must be compiled to create a sensor configuration (.ucf) file:
+Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target (LSM6DSO16IS) and obtain a measurement of its execution time. In order to do that, first of all, the Nucleo board must be flashed with the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin") firmware. Then, the generated C model must be copied inside the [template_stedgeai_validate](../../examples/ism330is_lsm6dso16is/template_stedgeai_validate) project that must be compiled to create a sensor configuration (.ucf) file:
 
 1. First, copy the `template_stedgeai_validate` project available in the examples folder of this repository:
 
@@ -345,7 +345,7 @@ After opening MEMS Studio, go to the `Advanced Features` section and select the 
 
 After the validation phase, if the results are satisfactory, the next step is the integration inside the ISPU firmware and the implementation of the actual logic of the application.
 
-The first step is to copy the [template_stedgeai](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai) project and add the C code generated from the model:
+The first step is to copy the [template_stedgeai](../../examples/ism330is_lsm6dso16is/template_stedgeai) project and add the C code generated from the model:
 
 ```powershell
 cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai/ispu ispu_integration
@@ -493,9 +493,9 @@ The above metadata defines:
 - The probability, in float format, of the 4 classes being detected (raw outputs of the network) as the next outputs.
 - The label corresponding to the predicted class as a string of 10 characters as last output.
 
-For details on the syntax to use for this file refer to [README](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template/README.md) of the generic template for the LSM6DSO16IS device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
+For details on the syntax to use for this file refer to [README](../../examples/ism330is_lsm6dso16is/template/README.md) of the generic template for the LSM6DSO16IS device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
 
-For instructions on how to integrate a generic model in the template, refer to the [README](https://github.com/STMicroelectronics/ispu-examples/tree/master/ism330is_lsm6dso16is/template_stedgeai/README.md) of the template itself.
+For instructions on how to integrate a generic model in the template, refer to the [README](../../examples/ism330is_lsm6dso16is/template_stedgeai/README.md) of the template itself.
 
 ### Generate the sensor configuration
 
