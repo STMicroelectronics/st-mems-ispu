@@ -13,8 +13,8 @@ The figure below illustrates the flow to build and deploy a program on the ISPU.
 ![](./_media/build_deploy_ispu.png)
 
 1. The first step is to write the C code to implement the desired algorithms and data processing to run on the ISPU.
-2. The C code is then compiled and linked using `reisc-gcc` to obtain the program in a binary format (ELF).
-3. The program is then converted to the SREC format, which is needed for the next step, using `reisc-objcopy`.
+2. The C code is then compiled and linked using `stred-gcc` to obtain the program in a binary format (ELF).
+3. The program is then converted to the SREC format, which is needed for the next step, using `stred-objcopy`.
 4. The program is then input to the `ispu_gen` tool to generate both a JSON file and a C header file. These files are equivalent and contain the sequence of write operations required to load the program from the device serial interface. Optionally, additional files (*conf.txt*, *meta.txt*, and *shub.txt*) can be specified as input to the `ispu_gen` tool to add sensor configuration, sensor hub configuration, and metadata to the output files.
 5. The files obtained at the previous step can then be used by the firmware of an external MCU to load the ISPU program via the serial interface normally used to communicate with the sensor. The JSON file can be used to load a program at runtime (for example, using [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), which allows to quicky evaluate the solution), while the C header file can be used to embed it in the MCU firmware at build time.
 
@@ -35,7 +35,7 @@ The toolchain must be extracted from the downloaded archive to any folder on the
   * Click on the "New" button to add a new entry.
   * Click on the "Browse..." button, browse to the folder where the toolchain is installed, select the *bin* folder and click "OK".
   * Close all remaining windows by clicking "OK".
-  * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *reisc-gcc* command should be found if the user tries to run it).
+  * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *stred-gcc* command should be found if the user tries to run it).
 
 * On Linux and macOS:
 
@@ -45,7 +45,7 @@ The toolchain must be extracted from the downloaded archive to any folder on the
     export PATH=$PATH":/path/to/toolchain/bin"
     ```
 
-  * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *reisc-gcc* command should be found if the user tries to run it).
+  * Open a new terminal. The toolchain is now available to be called from the command line (for example, the *stred-gcc* command should be found if the user tries to run it).
 
 Once the toolchain is installed, in order to build a project, the user must enter the *ispu/make* directory inside the project and run `make`.
 
@@ -88,15 +88,26 @@ In order to build a project using an Eclipse-based IDE, the ISPU plugins must be
 
 If an Eclipse-based IDE is not already available, please download and install the "Eclipse IDE for Embedded C/C++ Developers" from [https://www.eclipse.org](https://www.eclipse.org).
 
-In order to install the plugins, from the main menu, go to "Help", click on "Install New Software...", click on "Add...", insert the URL corresponding to the operating system used in the "Location" field and click the "Add" button. Then, select all the items, click on the "Next" button, accept the license terms, and click on the "Finish" button. When prompted, restart the IDE to complete the installation.
+In order to install the plugins, from the main menu, go to "Help", click on "Install New Software...", click on "Add...", insert the URL for the ISPU repository ([https://sw-center.st.com/mems/ispu/ispu_repository](https://sw-center.st.com/mems/ispu/ispu_repository)) in the "Location" field and click the "Add" button.
 
-The URL to use is:
+![](./_media/eclipse_add_repository.jpg)
 
-* On Windows: [https://sw-center.st.com/mems/ispu/ispu_repository_win](https://sw-center.st.com/mems/ispu/ispu_repository_win)
-* On Linux: [https://sw-center.st.com/mems/ispu/ispu_repository_linux](https://sw-center.st.com/mems/ispu/ispu_repository_linux)
-* On macOS: [https://sw-center.st.com/mems/ispu/ispu_repository_mac](https://sw-center.st.com/mems/ispu/ispu_repository_mac)
+Before selecting the items to install, enable the option "Show only software applicable to target environment" to avoid installing items for other operating systems.
+
+![](./_media/eclipse_select_items.jpg)
+
+Then, select all the items, click on the "Next" button, accept the license terms, and click on the "Finish" button. When prompted, restart the IDE to complete the installation.
 
 Once the plugins are installed, in order to build a project, the user must go to "File", click on "Import...". Under "General", select "Existing Project into Workspace", click on the "Next" button, click on the "Browse" button, select the folder containing the project (*ispu/eclipse* directory), make sure that the "Copy projects into workspace" is **not** selected (otherwise Eclipse will not be able to locate the source files), and click on the "Finish" button. The project is now imported and can be built.
+
+**IMPORTANT NOTES** for users upgrading the plugins:
+* The repository URL used to be dependent on the operating system. The single repository indicated in the guide above ([https://sw-center.st.com/mems/ispu/ispu_repository](https://sw-center.st.com/mems/ispu/ispu_repository)) must now be used. The plugins in the old repositories will not be updated, but will remain available.
+* If upgrading from the plugins of the old repositories, the IDE might report an incompatibility between an old plugin and a new plugin. In this case, in the "Install Remediation Page", select the "Update my installation to be compatible with the items being installed" option, which will force the removal of the old plugin and the installation of the new one.
+
+  ![](./_media/eclipse_plugins_upgrade.jpg)
+* If coming from the plugins of the old repositories, it may be necessary to update existing projects. If the project does not build successfully, open the project "Properties", go to "C/C++ Build", "Settings", "Toolchains" and make sure that "Prefix" is set to "stred-" (was "reisc-" for the old version of the plugins). All templates and examples available in this repository have already been updated.
+
+  ![](./_media/eclipse_toolchain_prefix.jpg)
 
 ------
 

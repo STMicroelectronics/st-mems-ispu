@@ -2,7 +2,7 @@
   *******************************************************************************
   * @file    motion_fx.h
   * @author  MEMS Application Team
-  * @version V1.0.1
+  * @version V1.0.2
   * @brief   Header for motion_fx module
   *******************************************************************************
   * @attention
@@ -76,12 +76,15 @@ typedef struct
   float acc_var_max;            /* Linear acceleration var-based threshold [g] */
   float mag_var_max;            /* Magnetic anomaly var-based threshold [g] */
   float gb_alpha;               /* Gbias calibration low-pass filter [0 to 1] */
+  float gb_alpha_acc;           /* Gbias calibration coefficient to control accelerometer mean and variance
+                                   computation [0 to 1] */
   float gb_acc_max;             /* Gbias calibration acceleration norm-based threshold [g] */
   float gb_gyr_max;             /* Gbias calibration angular rate threshold [dps] */
   float gb_acc_var_max;         /* Gbias calibration acceleration var-based threshold [g] */
   float gb_gyr_var_max;         /* Gbias calibration angular rate var-based threshold [dps] */
   float gb_gyr_var_max_greedy;  /* Gbias calibration initial angular rate var-based threshold [dps] */
   float gb_time;                /* Gbias calibration time-based threshold [s] */
+  float gb_bt_time;             /* Gbias calibration backtracking time-based threshold [s] */
 } MFX_conf_t;
 
 /**

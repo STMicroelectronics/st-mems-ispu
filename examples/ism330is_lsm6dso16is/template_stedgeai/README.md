@@ -10,7 +10,7 @@ The *ispu* folder of the template may be copied by itself (no dependencies other
 The template project is structured so that ST Edge AI Core can automatically populate it with the necessary files in the right places. In order to achieve that, run the following command:
 
 ```shell
-stedgeai generate --target ispu --no-workspace --no-report -m <nn_model_file> --output <ispu_folder>
+stedgeai generate --target ispu --device imu_22 --no-workspace --no-report -m <nn_model_file> --output <ispu_folder>
 ```
 
 where `nn_model_file` is the file containing the model of the neural network to convert and `ispu_folder` is a copy of the *ispu* folder of the template. Of course, additional options can be added to the `generate` command above as needed.

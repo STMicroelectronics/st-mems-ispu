@@ -44,14 +44,10 @@ static const uint32_t activation_sizes[STAI_NETWORK_ACTIVATIONS_NUM] = STAI_NETW
 // save adresses for host
 static void set_addresses(void)
 {
-	static const char net_name[] = STAI_NETWORK_MODEL_NAME;
 	static const uint32_t weight_sizes[STAI_NETWORK_WEIGHTS_NUM] = STAI_NETWORK_WEIGHTS_SIZES;
 
 	// set after first 4 bytes used dinamically
 	uint32_t out_addr = ISPU_DOUT_00 + 4;
-
-	cast_uint32_t(out_addr) = (uint32_t)net_name;
-	out_addr += 4u;
 
 	cast_uint8_t(out_addr) = STAI_NETWORK_IN_NUM;
 	out_addr += 1u;
@@ -64,12 +60,6 @@ static void set_addresses(void)
 	out_addr += 4u;
 	cast_uint32_t(out_addr) = (uint32_t)output_sizes;
 	out_addr += 4u;
-
-	stai_network_info info;
-	(void)memset(&info, 0, sizeof(info));
-	(void)stai_network_get_info(net, &info);
-	cast_uint64_t(out_addr) = (uint64_t)info.n_macc;
-	out_addr += 8u;
 
 	cast_uint8_t(out_addr) = STAI_NETWORK_ACTIVATIONS_NUM;
 	out_addr += 1u;
@@ -182,15 +172,6 @@ static void init_network(void)
 	}
 	(void)stai_network_set_states(net, state_buffers, STAI_NETWORK_STATES_NUM);
 #endif
-}
-
-static void set_version(void)
-{
-	const uint8_t version[3] = { 1, 1, 0 };
-
-	cast_uint8_t(ISPU_DOUT_28 + 1) = version[0];
-	cast_uint8_t(ISPU_DOUT_28 + 2) = version[1];
-	cast_uint8_t(ISPU_DOUT_28 + 3) = version[2];
 }
 
 static void run_network(void)
@@ -308,13 +289,48 @@ static void send_versions(void)
 	signal_and_wait();
 }
 
+static void send_macc(void)
+{
+	stai_network_info info;
+	(void)memset(&info, 0, sizeof(info));
+	(void)stai_network_get_info(net, &info);
+
+	uint64_t macc = info.n_macc;
+
+	cast_uint32_t(ISPU_DOUT_00) = (uint32_t)(macc & 0xFFFFFFFF);
+	signal_and_wait();
+	cast_uint32_t(ISPU_DOUT_00) = (uint32_t)((macc >> 32) & 0xFFFFFFFF);
+	signal_and_wait();
+}
+
+static void send_name(void)
+{
+	static const char net_name[] = STAI_NETWORK_MODEL_NAME;
+
+	cast_uint32_t(ISPU_DOUT_00) = strlen(net_name);
+	signal_and_wait();
+	for (uint32_t i = 0; i < strlen(net_name); i += 4) {
+		strncpy((char *)ISPU_DOUT_00, &net_name[i], 4);
+		signal_and_wait();
+	}
+}
+
+static void send_version(void)
+{
+	const uint8_t version[3] = { 1, 2, 0 };
+
+	cast_uint8_t(ISPU_DOUT_00) = version[0];
+	cast_uint8_t(ISPU_DOUT_00 + 1) = version[1];
+	cast_uint8_t(ISPU_DOUT_00 + 2) = version[2];
+	signal_and_wait();
+}
+
 int main(void)
 {
 	cast_uint8_t(ISPU_INT_PIN) = 2u;
 
 	init_network();
 	set_addresses();
-	set_version();
 
 	// set boot done flag
 	uint8_t status = cast_uint8_t(ISPU_STATUS);
@@ -333,6 +349,9 @@ int main(void)
 		uint8_t info_out = cast_uint8_t(ISPU_IF2S_FLAG) & 0x04u;
 		uint8_t versions = cast_uint8_t(ISPU_IF2S_FLAG) & 0x08u;
 		uint8_t nodes = cast_uint8_t(ISPU_IF2S_FLAG) & 0x10u;
+		uint8_t macc = cast_uint8_t(ISPU_IF2S_FLAG) & 0x20u;
+		uint8_t name = cast_uint8_t(ISPU_IF2S_FLAG) & 0x40u;
+		uint8_t version = cast_uint8_t(ISPU_IF2S_FLAG) & 0x80u;
 
 		if (run != 0u) {
 			run_network();
@@ -352,6 +371,18 @@ int main(void)
 
 		if (nodes != 0u) {
 			send_nodes();
+		}
+
+		if (macc != 0u) {
+			send_macc();
+		}
+
+		if (name != 0u) {
+			send_name();
+		}
+
+		if (version != 0u) {
+			send_version();
 		}
 
 		cast_uint8_t(ISPU_IF2S_FLAG) = 0xFF; // reset flags

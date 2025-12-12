@@ -2,7 +2,7 @@
   *******************************************************************************
   * @file    motion_td.h
   * @author  MEMS Application Team
-  * @version V1.0.0
+  * @version V1.0.1
   * @brief   Header for motion_td module
   *******************************************************************************
   * @attention
@@ -52,22 +52,23 @@ typedef enum
 } MTD_output_t;
 
 typedef struct {
-  uint8_t axis;          /* Detection axis [0-2] */
-  float peak_ths;        /* Peak detection threshold [g] */
-  uint8_t pre_still_st;  /* Starting sample for pre-still [0-13] */
-  uint8_t pre_still_n;   /* Number of samples for pre-still [0-14] */
-  float pre_still_ths;   /* Pre-still threshold [g] */
-  uint8_t invert_t;      /* Max peak inversion time [#samples] */
-  uint8_t wait_t;        /* Wait time after peak(s) [#samples] */
-  uint8_t still_t;       /* Post-still time [#samples] */
-  float post_still_ths;  /* Post-still threshold [g] */
-  uint8_t rebound_t;     /* Rebound time [#samples] */
-  uint8_t single_en;     /* Single tap event [0: disabled, 1: enabled] */
-  uint8_t double_en;     /* Double tap event [0: disabled, 1: enabled] */
-  uint8_t triple_en;     /* Triple tap event [0: disabled, 1: enabled] */
-  uint16_t latency_t;    /* Latency time to detect consecutive tap events [#samples] */
-  uint8_t wait_latency;  /* Enable waiting the latency to determine whether the event
-                            is a single, double or triple tap [0: enabled, 1: disabled] */
+  uint8_t axis;              /* Detection axis [0-2] */
+  float peak_ths;            /* Peak detection threshold [g] */
+  uint8_t pre_still_st;      /* Starting sample for pre-still [0-13] */
+  uint8_t pre_still_n;       /* Number of samples for pre-still [0-14] */
+  float pre_still_ths;       /* Pre-still threshold [g] */
+  uint8_t invert_t;          /* Max peak inversion time [#samples] */
+  uint8_t wait_t;            /* Wait time after peak(s) [#samples] */
+  uint8_t still_t;           /* Post-still time [#samples] */
+  float post_still_ths;      /* Post-still threshold [g] */
+  uint8_t rebound_t;         /* Rebound time [#samples] */
+  uint8_t single_en;         /* Single tap event [0: disabled, 1: enabled] */
+  uint8_t double_en;         /* Double tap event [0: disabled, 1: enabled] */
+  uint8_t triple_en;         /* Triple tap event [0: disabled, 1: enabled] */
+  uint16_t latency_t;        /* Latency time to detect consecutive tap events [#samples] */
+  uint8_t wait_latency;      /* Enable waiting the latency to determine whether the event
+                                is a single, double or triple tap [0: disabled, 1: enabled] */
+  uint8_t reject_continuous; /* Reject continuous tap events [0: disabled, 1: enabled] */
 } MTD_conf_t;
 
 /**
