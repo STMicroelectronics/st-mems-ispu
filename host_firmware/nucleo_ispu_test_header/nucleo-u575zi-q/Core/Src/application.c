@@ -21,18 +21,53 @@
 #include "ispu.h"
 
 #include "i2c.h"
+#include "spi.h"
 #include "tim.h"
 #include "gpio.h"
 #include "usart.h"
 
 #define UART_BUF_SIZE 256
 
-static void read(uint8_t reg, uint8_t *val, uint16_t len);
+struct device {
+	char name[100];
+	uint8_t n_dev_names;
+	char dev_names[2][100];
+	uint8_t n_i2c_addr;
+	uint8_t i2c_addr[2];
+	uint8_t spi;
+	uint8_t who_am_i;
+	uint8_t ram_data;
+};
+
+static struct device *get_device(char *name);
+static void set_comm_mode(uint8_t mode);
+static void set_i2c_addr(uint8_t addr);
+static void read(uint8_t reg, uint8_t *val, uint32_t len);
 static void write(uint8_t reg, uint8_t val);
-static void write_mul(uint8_t reg, uint8_t *val, uint16_t len);
+static void write_mul(uint8_t reg, uint8_t *val, uint32_t len);
 uint8_t get_type_size(uint8_t type);
 
 static void interrupt_callback(uint16_t GPIO_Pin, uint8_t rising);
+
+struct device devices[] = {
+	{ // ISM330IS and LSM6DSO16IS
+		.name = "imu22",
+		.n_dev_names = 2,
+		.dev_names = { "ISM330IS", "LSM6DSO16IS" },
+		.n_i2c_addr = 2,
+		.i2c_addr = { 0xD4, 0xD6 },
+		.spi = 1,
+		.who_am_i = 0x22,
+		.ram_data = 0x0B
+	}
+};
+
+#define I2C 0
+#define SPI 1
+
+static struct device *dev;
+static uint8_t comm_mode;
+static uint8_t i2c_addr;
 
 static volatile char uart_char;
 static volatile uint8_t uart_received;
@@ -43,9 +78,9 @@ static volatile uint8_t enable_int;
 static volatile uint8_t algo_int;
 static volatile uint8_t sleep_int;
 
-static uint32_t exec_time, max_exec_time, min_exec_time;
-static uint64_t num_exec_time;
-static float avg_exec_time;
+static volatile uint32_t exec_time, max_exec_time, min_exec_time;
+static volatile uint64_t num_exec_time;
+static volatile float avg_exec_time;
 
 static uint16_t print_results;
 static uint16_t print_time;
@@ -54,46 +89,87 @@ void application(void)
 {
 	HAL_Delay(1000);
 
-	uint8_t who_am_i;
-	uint32_t start = HAL_GetTick();
-	do {
-		if (HAL_GetTick() - start > 1000) { // retry for 1.0 s
-			while (1) {
-				printf("Error: sensor not recognized (%02x)\n", who_am_i);
-				HAL_Delay(1000);
-			}
-		}
-		write(0x01, 0x00); // set default registers access
-		read(0x0F, &who_am_i, 1);
-	} while (who_am_i != 0x22);
-
-	// software reset
-	uint8_t tmp;
-	read(0x12, &tmp, 1);
-	write(0x12, tmp | 0x01);
-	do {
-		read(0x12, &tmp, 1);
-	} while ((tmp & 0x01) != 0);
-
-	print_results = 1;
-
-	uint8_t valid_sensors[ISPU_CONF_SENSORS_NUM];
+	int8_t sensors[ISPU_CONF_SENSORS_NUM];
 
 	for (uint32_t i = 0; i < ISPU_CONF_SENSORS_NUM; i++) {
 		// check sensor name(s) validity
 		uint32_t name_list_len = ispu_conf_name_lists[i].len;
 		const char *const *name_list = ispu_conf_name_lists[i].list;
 
-		valid_sensors[i] = 1;
+		sensors[i] = -1;
+
 		for (uint32_t j = 0; j < name_list_len; j++) {
-			if (strcmp(name_list[j], "ISM330IS") != 0 && strcmp(name_list[j], "LSM6DSO16IS") != 0) {
-				valid_sensors[i] = 0;
-				break;
+			for (uint8_t k = 0; k < sizeof(devices) / sizeof(devices[0]); k++) {
+				for (uint32_t l = 0; l < devices[k].n_dev_names; l++) {
+					if (strcasecmp(name_list[j], devices[k].dev_names[l]) == 0) {
+						sensors[i] = k;
+						goto name_search_end;
+					}
+				}
 			}
 		}
-		if (!valid_sensors[i])
-			continue;
 
+		name_search_end:
+
+		if (sensors[i] == -1) {
+			while (1) {
+				printf("Error: sensor ");
+				for (uint32_t j = 0; j < name_list_len; j++) {
+					if (j > 0)
+						printf(" / ");
+					printf("%s", name_list[j]);
+				}
+				printf(" unknown\n");
+
+				HAL_Delay(1000);
+			}
+		}
+
+		if (dev == NULL) {
+			dev = get_device(devices[sensors[i]].name);
+
+			if (dev == NULL) {
+				while (1) {
+					printf("Error: sensor ");
+					for (uint8_t j = 0; j < devices[sensors[i]].n_dev_names; j++) {
+						if (j > 0)
+							printf(" / ");
+						printf("%s", devices[sensors[i]].dev_names[j]);
+					}
+					printf(" not found\n");
+
+					HAL_Delay(1000);
+				}
+			}
+
+			// software reset
+			uint8_t tmp;
+			read(0x12, &tmp, 1);
+			write(0x12, tmp | 0x01);
+			do {
+				read(0x12, &tmp, 1);
+			} while ((tmp & 0x01) != 0);
+
+			HAL_Delay(2);
+
+			// IIS3DWB10IS
+			if (dev->who_am_i == 0x50) {
+				write(0x02, 0x0C); // pull-down disabled on INT pins + lower IO pins strength (for 3.3 V)
+				write(0x03, 0x00); // INT pins in push-pull mode
+			}
+		} else {
+			if (devices[sensors[i]].name != dev->name) {
+				while (1) {
+					printf("Error: cannot configure multiple sensors\n");
+					HAL_Delay(1000);
+				}
+			}
+		}
+	}
+
+	uint8_t outputs = 0;
+
+	for (uint32_t i = 0; i < ISPU_CONF_SENSORS_NUM; i++) {
 		// load configuration
 		uint32_t conf_len = ispu_conf_confs[i].len;
 		const struct mems_conf_op *conf = ispu_conf_confs[i].list;
@@ -111,13 +187,13 @@ void application(void)
 						else
 							ispu_page = 0;
 					}
-					uint8_t is_mem_write = ispu_page && conf[j].address == 0x0B;
+					uint8_t is_mem_write = ispu_page && conf[j].address == dev->ram_data;
 
 					if (is_mem_write) {
 						mem_buf[mem_i++] = conf[j].data;
 					} else {
 						if (mem_i > 0) {
-							write_mul(0x0B, mem_buf, mem_i);
+							write_mul(dev->ram_data, mem_buf, mem_i);
 							mem_i = 0;
 						}
 						write(conf[j].address, conf[j].data);
@@ -140,25 +216,30 @@ void application(void)
 		const struct mems_conf_output *output_list = ispu_conf_output_lists[i].list;
 
 		for (uint32_t j = 0; j < output_list_len; j++) {
+			if (outputs)
+				printf("\t");
+
+			outputs = 1;
+
 			// handle char arrays as len = 1 as they are strings
 			if (output_list[j].len == 1 || output_list[j].type == MEMS_CONF_OUTPUT_TYPE_CHAR) {
 				printf("%s", output_list[j].name);
 			} else {
 				for (uint32_t k = 0; k < output_list[j].len; k++) {
-					printf("%s[%lu]", output_list[j].name, k);
-					if (k < output_list[j].len  - 1)
+					if (k > 0)
 						printf("\t");
+					printf("%s[%lu]", output_list[j].name, k);
 				}
 			}
-			if (j < output_list_len - 1)
-				printf("\t");
-			else
-				printf("\n");
 		}
 	}
 
+	if (outputs)
+		printf("\n");
+
 	HAL_UART_Receive_IT(&huart1, (uint8_t *)&uart_char, 1);
 	enable_int = 1;
+	print_results = 1;
 
 	while (1) {
 		// handle commands received from uart
@@ -217,9 +298,11 @@ void application(void)
 			if (print_results) {
 				write(0x01, 0x80);
 
+				outputs = 0;
+
 				// read and print outputs
 				for (uint32_t i = 0; i < ISPU_CONF_SENSORS_NUM; i++) {
-					if (!valid_sensors[i])
+					if (sensors[i] == -1)
 						continue;
 
 					uint32_t output_list_len = ispu_conf_output_lists[i].len;
@@ -232,10 +315,18 @@ void application(void)
 
 						uint8_t value[8]; // max type size is 8 bytes
 
+						if (outputs)
+							printf("\t");
+
+						outputs = 1;
+
 						for (uint32_t k = 0; k < output_list[j].len; k++) {
 							read(out_addr, value, type_size);
 
 							uint8_t early_end = 0;
+
+							if (k > 0 && out_type != MEMS_CONF_OUTPUT_TYPE_CHAR)
+								printf("\t");
 
 							switch (out_type) {
 							case MEMS_CONF_OUTPUT_TYPE_UINT8_T:
@@ -291,17 +382,13 @@ void application(void)
 							if (early_end)
 								break;
 
-							if (k < output_list[j].len - 1 && out_type != MEMS_CONF_OUTPUT_TYPE_CHAR)
-								printf("\t");
-
 							out_addr += type_size;
 						}
-						if (j < output_list_len - 1)
-							printf("\t");
-						else
-							printf("\n");
 					}
 				}
+				if (outputs)
+					printf("\n");
+
 				write(0x01, 0x00);
 			}
 		}
@@ -315,19 +402,113 @@ void application(void)
 	}
 }
 
-static void read(uint8_t reg, uint8_t *val, uint16_t len)
+static struct device *get_device(char *name)
 {
-	HAL_I2C_Mem_Read(&hi2c1, 0xD4, reg, I2C_MEMADD_SIZE_8BIT, val, len, HAL_MAX_DELAY);
+	struct device *dev = NULL;
+
+	for (uint8_t i = 0; i < sizeof(devices) / sizeof(devices[0]); i++) {
+		dev = &devices[i];
+
+		if (strcmp(name, dev->name) != 0) {
+			dev = NULL;
+			continue;
+		}
+
+		uint8_t who_am_i = 0x00;
+
+		for (uint8_t j = 0; j < dev->n_i2c_addr; j++) {
+			set_comm_mode(I2C);
+			set_i2c_addr(dev->i2c_addr[j]);
+
+			uint32_t start = HAL_GetTick();
+			do {
+				if (HAL_GetTick() - start > 100)
+					break;
+				write(0x01, 0x00); // set default registers access
+				read(0x0F, &who_am_i, 1);
+			} while (who_am_i != dev->who_am_i);
+
+			if (who_am_i == dev->who_am_i)
+				break;
+		}
+
+		if (who_am_i == dev->who_am_i)
+			break;
+
+		if (dev->spi) {
+			set_comm_mode(SPI);
+
+			uint32_t start = HAL_GetTick();
+			do {
+				if (HAL_GetTick() - start > 100)
+					break;
+				write(0x01, 0x00); // set default registers access
+				read(0x0F, &who_am_i, 1);
+			} while (who_am_i != dev->who_am_i);
+		}
+
+		if (who_am_i == dev->who_am_i)
+			break;
+		else
+			dev = NULL;
+	}
+
+	return dev;
+}
+
+static void set_comm_mode(uint8_t mode)
+{
+	comm_mode = mode;
+}
+
+static void set_i2c_addr(uint8_t addr)
+{
+	i2c_addr = addr;
+}
+
+static void read(uint8_t reg, uint8_t *val, uint32_t len)
+{
+	if (comm_mode == I2C) {
+		HAL_I2C_Mem_Read(&hi2c1, i2c_addr, reg, I2C_MEMADD_SIZE_8BIT, val, len, HAL_MAX_DELAY);
+	} else if (comm_mode == SPI) {
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_RESET);
+
+		uint8_t data = reg | 0x80;
+		HAL_SPI_Transmit(&hspi1, &data, 1, HAL_MAX_DELAY);
+		HAL_SPI_Receive(&hspi1, val, len, HAL_MAX_DELAY);
+
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_SET);
+	}
 }
 
 static void write(uint8_t reg, uint8_t val)
 {
-	HAL_I2C_Mem_Write(&hi2c1, 0xD4, reg, I2C_MEMADD_SIZE_8BIT, &val, 1, HAL_MAX_DELAY);
+	if (comm_mode == I2C) {
+		HAL_I2C_Mem_Write(&hi2c1, i2c_addr, reg, I2C_MEMADD_SIZE_8BIT, &val, 1, HAL_MAX_DELAY);
+	} else if (comm_mode == SPI) {
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_RESET);
+
+		uint8_t data[2];
+		data[0] = reg;
+		data[1] = val;
+		HAL_SPI_Transmit(&hspi1, data, 2, HAL_MAX_DELAY);
+
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_SET);
+	}
 }
 
-static void write_mul(uint8_t reg, uint8_t *val, uint16_t len)
+static void write_mul(uint8_t reg, uint8_t *val, uint32_t len)
 {
-	HAL_I2C_Mem_Write(&hi2c1, 0xD4, reg, I2C_MEMADD_SIZE_8BIT, val, len, HAL_MAX_DELAY);
+	if (comm_mode == I2C) {
+		HAL_I2C_Mem_Write(&hi2c1, i2c_addr, reg, I2C_MEMADD_SIZE_8BIT, val, len, HAL_MAX_DELAY);
+	} else if (comm_mode == SPI) {
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_RESET);
+
+		HAL_SPI_Transmit(&hspi1, &reg, 1, HAL_MAX_DELAY);
+		HAL_SPI_Transmit(&hspi1, val, len, HAL_MAX_DELAY);
+
+		HAL_GPIO_WritePin(DIL24_CS_GPIO_Port, DIL24_CS_Pin, GPIO_PIN_SET);
+	}
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -368,10 +549,12 @@ static void interrupt_callback(uint16_t GPIO_Pin, uint8_t rising)
 	if (enable_int) {
 		switch (GPIO_Pin) {
 		case INT1_Pin:
+		case IKS5A1_DIL24_INT1_Pin:
 			algo_int = 1;
 			break;
 		case DIL24_INT2_Pin:
 		case IKS4A1_LSM6DSO16IS_INT2_Pin:
+		case IKS5A1_DIL24_INT2_Pin:
 			if (!rising) {
 				__HAL_TIM_SET_COUNTER(&htim5, 0);
 				HAL_TIM_Base_Start(&htim5);
