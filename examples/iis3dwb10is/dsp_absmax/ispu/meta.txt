@@ -1,0 +1,6 @@
+description "ISPU DSP absmax"
+
+output "Acc x absmax [g]" float
+output "Acc y absmax [g]" float
+output "Acc z absmax [g]" float
+

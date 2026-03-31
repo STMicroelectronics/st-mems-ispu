@@ -1,0 +1,6 @@
+description "ISPU DSP std"
+
+output "Acc x std [g]" float
+output "Acc y std [g]" float
+output "Acc z std [g]" float
+

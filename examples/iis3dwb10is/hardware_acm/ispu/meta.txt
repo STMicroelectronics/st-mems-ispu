@@ -1,0 +1,10 @@
+description "Hardware accumulate-and-multiply"
+
+output "Acc x curr [g]" float
+output "Acc y curr [g]" float
+output "Acc z curr [g]" float
+output "Acc x prev [g]" float
+output "Acc y prev [g]" float
+output "Acc z prev [g]" float
+output "Acc dot prod [g^2]" float
+

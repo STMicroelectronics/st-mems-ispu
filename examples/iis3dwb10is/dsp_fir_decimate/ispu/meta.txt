@@ -1,0 +1,9 @@
+description "ISPU DSP FIR decimate"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Decimated acc x [g]" float
+output "Decimated acc y [g]" float
+output "Decimated acc z [g]" float
+

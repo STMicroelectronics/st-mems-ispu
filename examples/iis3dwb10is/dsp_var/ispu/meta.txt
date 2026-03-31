@@ -1,0 +1,6 @@
+description "ISPU DSP var"
+
+output "Acc x var [g^2]" float
+output "Acc y var [g^2]" float
+output "Acc z var [g^2]" float
+

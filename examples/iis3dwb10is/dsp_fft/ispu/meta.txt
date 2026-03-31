@@ -1,0 +1,9 @@
+description "ISPU DSP FFT"
+
+output "Magnitude acc x [g]" float
+output "Magnitude acc y [g]" float
+output "Magnitude acc z [g]" float
+output "Frequency acc x [Hz]" float
+output "Frequency acc y [Hz]" float
+output "Frequency acc z [Hz]" float
+

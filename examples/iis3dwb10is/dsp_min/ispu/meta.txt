@@ -1,0 +1,6 @@
+description "ISPU DSP min"
+
+output "Acc x min [g]" float
+output "Acc y min [g]" float
+output "Acc z min [g]" float
+

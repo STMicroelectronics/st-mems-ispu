@@ -1,0 +1,13 @@
+acc_odr 40k
+acc_fs 50
+acc_mode continuous
+
+ispu_rate 40k
+ispu_int1 enable
+ispu_sleep_int2 enable
+ispu_latch disable
+ispu_bdu enable
+
+algo 0 enable
+ispu_flag_int1 0 enable
+

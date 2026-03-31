@@ -1,6 +1,253 @@
 {
 	"devices": [
 		{
+			"name": "IIS3DWB10IS",
+			"examples": [
+				{
+					"name": "ISPU DSP abs",
+					"path": "./iis3dwb10is/dsp_abs",
+					"readme": "./iis3dwb10is/dsp_abs/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_abs/output/dsp_abs.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_abs/output/dsp_abs.h"
+					]
+				},
+				{
+					"name": "ISPU DSP absmax",
+					"path": "./iis3dwb10is/dsp_absmax",
+					"readme": "./iis3dwb10is/dsp_absmax/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_absmax/output/dsp_absmax.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_absmax/output/dsp_absmax.h"
+					]
+				},
+				{
+					"name": "ISPU DSP absmin",
+					"path": "./iis3dwb10is/dsp_absmin",
+					"readme": "./iis3dwb10is/dsp_absmin/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_absmin/output/dsp_absmin.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_absmin/output/dsp_absmin.h"
+					]
+				},
+				{
+					"name": "ISPU DSP FFT",
+					"path": "./iis3dwb10is/dsp_fft",
+					"readme": "./iis3dwb10is/dsp_fft/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_fft/output/dsp_fft.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_fft/output/dsp_fft.h"
+					]
+				},
+				{
+					"name": "ISPU DSP FIR",
+					"path": "./iis3dwb10is/dsp_fir",
+					"readme": "./iis3dwb10is/dsp_fir/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_fir/output/dsp_fir.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_fir/output/dsp_fir.h"
+					]
+				},
+				{
+					"name": "ISPU DSP FIR decimate",
+					"path": "./iis3dwb10is/dsp_fir_decimate",
+					"readme": "./iis3dwb10is/dsp_fir_decimate/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_fir_decimate/output/dsp_fir_decimate.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_fir_decimate/output/dsp_fir_decimate.h"
+					]
+				},
+				{
+					"name": "ISPU DSP FIR decimate (opt)",
+					"path": "./iis3dwb10is/dsp_fir_decimate_opt",
+					"readme": "./iis3dwb10is/dsp_fir_decimate_opt/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_fir_decimate_opt/output/dsp_fir_decimate_opt.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_fir_decimate_opt/output/dsp_fir_decimate_opt.h"
+					]
+				},
+				{
+					"name": "ISPU DSP FIR (opt)",
+					"path": "./iis3dwb10is/dsp_fir_opt",
+					"readme": "./iis3dwb10is/dsp_fir_opt/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_fir_opt/output/dsp_fir_opt.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_fir_opt/output/dsp_fir_opt.h"
+					]
+				},
+				{
+					"name": "ISPU DSP IIR",
+					"path": "./iis3dwb10is/dsp_iir",
+					"readme": "./iis3dwb10is/dsp_iir/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_iir/output/dsp_iir.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_iir/output/dsp_iir.h"
+					]
+				},
+				{
+					"name": "ISPU DSP max",
+					"path": "./iis3dwb10is/dsp_max",
+					"readme": "./iis3dwb10is/dsp_max/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_max/output/dsp_max.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_max/output/dsp_max.h"
+					]
+				},
+				{
+					"name": "ISPU DSP mean",
+					"path": "./iis3dwb10is/dsp_mean",
+					"readme": "./iis3dwb10is/dsp_mean/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_mean/output/dsp_mean.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_mean/output/dsp_mean.h"
+					]
+				},
+				{
+					"name": "ISPU DSP min",
+					"path": "./iis3dwb10is/dsp_min",
+					"readme": "./iis3dwb10is/dsp_min/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_min/output/dsp_min.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_min/output/dsp_min.h"
+					]
+				},
+				{
+					"name": "ISPU DSP power",
+					"path": "./iis3dwb10is/dsp_power",
+					"readme": "./iis3dwb10is/dsp_power/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_power/output/dsp_power.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_power/output/dsp_power.h"
+					]
+				},
+				{
+					"name": "ISPU DSP RMS",
+					"path": "./iis3dwb10is/dsp_rms",
+					"readme": "./iis3dwb10is/dsp_rms/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_rms/output/dsp_rms.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_rms/output/dsp_rms.h"
+					]
+				},
+				{
+					"name": "ISPU DSP std",
+					"path": "./iis3dwb10is/dsp_std",
+					"readme": "./iis3dwb10is/dsp_std/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_std/output/dsp_std.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_std/output/dsp_std.h"
+					]
+				},
+				{
+					"name": "ISPU DSP var",
+					"path": "./iis3dwb10is/dsp_var",
+					"readme": "./iis3dwb10is/dsp_var/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/dsp_var/output/dsp_var.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/dsp_var/output/dsp_var.h"
+					]
+				},
+				{
+					"name": "",
+					"path": "./iis3dwb10is/fifo_write",
+					"readme": "./iis3dwb10is/fifo_write/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/fifo_write/output/fifo_write.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/fifo_write/output/fifo_write.h"
+					]
+				},
+				{
+					"name": "Hardware accumulate-and-multiply",
+					"path": "./iis3dwb10is/hardware_acm",
+					"readme": "./iis3dwb10is/hardware_acm/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/hardware_acm/output/hardware_acm.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/hardware_acm/output/hardware_acm.h"
+					]
+				},
+				{
+					"name": "Hardware circular buffer",
+					"path": "./iis3dwb10is/hardware_circ_buff",
+					"readme": "./iis3dwb10is/hardware_circ_buff/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/hardware_circ_buff/output/hardware_circ_buff.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/hardware_circ_buff/output/hardware_circ_buff.h"
+					]
+				},
+				{
+					"name": "Hardware square root",
+					"path": "./iis3dwb10is/hardware_sqrtf",
+					"readme": "./iis3dwb10is/hardware_sqrtf/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/hardware_sqrtf/output/hardware_sqrtf.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/hardware_sqrtf/output/hardware_sqrtf.h"
+					]
+				},
+				{
+					"name": "Hardware zero-overhead loop",
+					"path": "./iis3dwb10is/hardware_zol",
+					"readme": "./iis3dwb10is/hardware_zol/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/hardware_zol/output/hardware_zol.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/hardware_zol/output/hardware_zol.h"
+					]
+				},
+				{
+					"name": "Norm",
+					"path": "./iis3dwb10is/norm",
+					"readme": "./iis3dwb10is/norm/README.md",
+					"json_configurations": [
+						"./iis3dwb10is/norm/output/norm.json"
+					],
+					"c_header_file_configurations": [
+						"./iis3dwb10is/norm/output/norm.h"
+					]
+				}
+			]
+		},
+		{
 			"name": "ISM330IS",
 			"examples": [
 				{

@@ -1,0 +1,6 @@
+description "ISPU DSP power"
+
+output "Acc x power [g^2]" float
+output "Acc y power [g^2]" float
+output "Acc z power [g^2]" float
+

@@ -1,0 +1,6 @@
+description "ISPU DSP RMS"
+
+output "Acc x RMS [g]" float
+output "Acc y RMS [g]" float
+output "Acc z RMS [g]" float
+

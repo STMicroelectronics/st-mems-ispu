@@ -1,0 +1,6 @@
+description "ISPU DSP mean"
+
+output "Acc x mean [g]" float
+output "Acc y mean [g]" float
+output "Acc z mean [g]" float
+

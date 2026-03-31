@@ -1,0 +1,9 @@
+description "ISPU DSP IIR"
+
+output "Acc x [g]" float
+output "Acc y [g]" float
+output "Acc z [g]" float
+output "Filtered acc x [g]" float
+output "Filtered acc y [g]" float
+output "Filtered acc z [g]" float
+

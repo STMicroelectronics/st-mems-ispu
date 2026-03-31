@@ -1,0 +1,7 @@
+description "Hardware zero-overhead loop"
+
+output "Acc x [LSB]" int32_t
+output "Acc y [LSB]" int32_t
+output "Acc z [LSB]" int32_t
+output "Acc L1 norm [LSB]" float
+

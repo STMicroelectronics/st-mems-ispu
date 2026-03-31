@@ -1,0 +1,9 @@
+description "Hardware circular buffer"
+
+output "Acc x [LSB]" int32_t
+output "Acc y [LSB]" int32_t
+output "Acc z [LSB]" int32_t
+output "Acc x delayed [LSB]" int32_t
+output "Acc y delayed [LSB]" int32_t
+output "Acc z delayed [LSB]" int32_t
+

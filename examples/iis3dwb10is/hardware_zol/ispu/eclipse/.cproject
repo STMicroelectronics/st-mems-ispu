@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?fileVersion 4.0.0?><cproject storage_type_id="org.eclipse.cdt.core.XmlProjectDescriptionStorage">
+	<storageModule moduleId="org.eclipse.cdt.core.settings">
+		<cconfiguration id="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463">
+			<storageModule buildSystemId="org.eclipse.cdt.managedbuilder.core.configurationDataProvider" id="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463" moduleId="org.eclipse.cdt.core.settings" name="release">
+				<externalSettings/>
+				<extensions>
+					<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
+					<extension id="org.eclipse.cdt.core.GASErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GmakeErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GLDErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.CWDLocator" point="org.eclipse.cdt.core.ErrorParser"/>
+					<extension id="org.eclipse.cdt.core.GCCErrorParser" point="org.eclipse.cdt.core.ErrorParser"/>
+				</extensions>
+			</storageModule>
+			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="${cross_rm} -rf" description="" id="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463" name="release" optionalBuildProperties="org.eclipse.cdt.docker.launcher.containerbuild.property.dockerdpath=,org.eclipse.cdt.docker.launcher.containerbuild.property.selectedvolumes=,org.eclipse.cdt.docker.launcher.containerbuild.property.volumes=" parent="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release" postbuildStep="ispu_gen -c -s ../../conf.txt -m ../../meta.txt -d iis3dwb10is -n ispu_conf -nd ${ProjName}.srec &gt; ispu.h &amp;&amp; ispu_gen -s ../../conf.txt -m ../../meta.txt -d iis3dwb10is -n ispu_conf -nd ${ProjName}.srec &gt; ispu.json">
+					<folderInfo id="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463." name="/" resourcePath="">
+						<toolChain id="ilg.gnumcueclipse.managedbuild.cross.stred.toolchain.elf.release.1444762676" name="STRED Cross GCC" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.toolchain.elf.release">
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.createflash.524401388" name="Create flash image" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.createflash" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.createlisting.1244989057" name="Create extended listing" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.createlisting"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.printsize.73858859" name="Print size" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.addtools.printsize" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.level.1627965032" name="Optimization Level" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.level" value="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.level.most" valueType="enumerated"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.messagelength.544198012" name="Message length (-fmessage-length=0)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.messagelength" value="false" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.signedchar.1139971421" name="'char' is signed (-fsigned-char)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.signedchar" value="false" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.functionsections.1838657388" name="Function sections (-ffunction-sections)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.functionsections" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.datasections.104114308" name="Data sections (-fdata-sections)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.datasections" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.debugging.level.1653915859" name="Debug level" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.debugging.level" value="ilg.gnumcueclipse.managedbuild.cross.stred.option.debugging.level.none" valueType="enumerated"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.debugging.format.218405410" name="Debug format" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.debugging.format"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.toolchain.name.1737822993" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.toolchain.name" value="GNU MCU STRED GCC" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.prefix.1810267465" name="Prefix" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.prefix" value="stred-" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.suffix.675036170" name="Suffix" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.suffix" value="" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.c.706508641" name="C compiler" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.c" value="gcc" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.cpp.613163876" name="C++ compiler" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.cpp" value="g++" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.ar.1872063368" name="Archiver" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.ar" value="ar" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.objcopy.1740734553" name="Hex/Bin converter" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.objcopy" value="objcopy" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.objdump.1138598276" name="Listing generator" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.objdump" value="objdump" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.size.446475225" name="Size command" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.size" value="size" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.make.1386469959" name="Build command" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.make" value="make" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.rm.510522329" name="Remove command" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.command.rm" value="rm" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.target.isa.base.1514795098" name="Architecture" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.target.isa.base" value="ilg.gnumcueclipse.managedbuild.cross.stred.option.target.arch.stredlp" valueType="enumerated"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.target.other.318747248" name="Other target flags" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.target.other" value="-mfp32-format=alternative" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.lto.1614791662" name="Link-time optimizer (-flto)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.optimization.lto" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.allwarn.1990645305" name="Enable all common warnings (-Wall)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.allwarn" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.extrawarn.718383068" name="Enable extra warnings (-Wextra)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.extrawarn" value="true" valueType="boolean"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.other.601049363" name="Other warning flags" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.warnings.other" value="-Wdouble-promotion -fno-strict-aliasing" valueType="string"/>
+							<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.toolchain.id.1052930403" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.toolchain.id" value="2021938052" valueType="string"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="ilg.gnumcueclipse.managedbuild.cross.stred.targetPlatform.1991338185" isAbstract="false" osList="all" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.targetPlatform"/>
+							<builder buildPath="${workspace_loc:/ispu}/Release" id="ilg.gnumcueclipse.managedbuild.cross.stred.builder.1474462542" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.builder"/>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.assembler.479131828" name="GNU STRED Cross Assembler" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.assembler">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.usepreprocessor.1508716967" name="Use preprocessor" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.include.paths.373032809" name="Include paths (-I)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../ispu_utils&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../ispu_dsp/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../inc&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.defs.590106089" name="Defined symbols (-D)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.assembler.defs" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="FAST_FLOAT=0"/>
+									<listOptionValue builtIn="false" value="FAST_SQRTF=1"/>
+									<listOptionValue builtIn="false" value="FAST_DIVF=0"/>
+									<listOptionValue builtIn="false" value="FAST_FLOAT_CMP=0"/>
+								</option>
+								<inputType id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.assembler.input.683240510" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.assembler.input"/>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.1667247142" name="GNU STRED Cross C Compiler" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler">
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.compiler.include.paths.1591605792" name="Include paths (-I)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.compiler.include.paths" useByScannerDiscovery="true" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../ispu_utils&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../ispu_dsp/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../inc&quot;"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.compiler.defs.1312129987" name="Defined symbols (-D)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.compiler.defs" useByScannerDiscovery="true" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="FAST_FLOAT=0"/>
+									<listOptionValue builtIn="false" value="FAST_SQRTF=1"/>
+									<listOptionValue builtIn="false" value="FAST_DIVF=0"/>
+									<listOptionValue builtIn="false" value="FAST_FLOAT_CMP=0"/>
+								</option>
+								<inputType id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.input.531308970" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.input"/>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.cpp.compiler.867276335" name="GNU STRED Cross C++ Compiler" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.cpp.compiler"/>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.linker.1461613192" name="GNU STRED Cross C Linker" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.linker">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.gcsections.1249727717" name="Remove unused sections (-Xlinker --gc-sections)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.gcsections" value="true" valueType="boolean"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.scriptfile.972456949" name="Script files (-T)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.scriptfile" valueType="stringList">
+									<listOptionValue builtIn="false" value="../../ispu_utils/boot.ld"/>
+								</option>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.usenewlibnano.751239994" name="Use newlib-nano (--specs=nano.specs)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.usenewlibnano" value="true" valueType="boolean"/>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.libs.1548488837" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.libs" valueType="libs">
+									<listOptionValue builtIn="false" value="ispu_dsp"/>
+								</option>
+								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.paths.1277909878" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.paths" valueType="libPaths">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../ispu_dsp/lib&quot;"/>
+								</option>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.other.808751504" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.c.linker.other" value="-Wl,--sort-section=alignment" valueType="string"/>
+								<inputType id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.linker.input.1751133564" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.linker.input">
+									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
+									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
+								</inputType>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.cpp.linker.347975681" name="GNU STRED Cross C++ Linker" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.cpp.linker">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.cpp.linker.gcsections.608623314" name="Remove unused sections (-Xlinker --gc-sections)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.cpp.linker.gcsections" value="true" valueType="boolean"/>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.archiver.112357026" name="GNU STRED Cross Archiver" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.archiver"/>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.createflash.1425116028" name="GNU STRED Cross Create Flash Image" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.createflash">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createflash.choice.938961018" name="Output file format (-O)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createflash.choice" value="ilg.gnumcueclipse.managedbuild.cross.stred.option.createflash.choice.srec" valueType="enumerated"/>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.createlisting.646019244" name="GNU STRED Cross Create Listing" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.createlisting">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.source.1056614885" name="Display source (--source|-S)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.source" value="true" valueType="boolean"/>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.allheaders.1670579847" name="Display all headers (--all-headers|-x)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.allheaders" value="true" valueType="boolean"/>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.demangle.1479672515" name="Demangle names (--demangle|-C)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.demangle" value="true" valueType="boolean"/>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.linenumbers.2025070371" name="Display line numbers (--line-numbers|-l)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.linenumbers" value="true" valueType="boolean"/>
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.wide.1508626015" name="Wide lines (--wide|-w)" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.createlisting.wide" value="true" valueType="boolean"/>
+							</tool>
+							<tool id="ilg.gnumcueclipse.managedbuild.cross.stred.tool.printsize.2049816309" name="GNU STRED Cross Print Size" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.tool.printsize">
+								<option id="ilg.gnumcueclipse.managedbuild.cross.stred.option.printsize.format.867614685" name="Size format" superClass="ilg.gnumcueclipse.managedbuild.cross.stred.option.printsize.format"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+				</configuration>
+			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="ilg.gnumcueclipse.managedbuild.packs"/>
+		</cconfiguration>
+	</storageModule>
+	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
+		<project id="stred.ilg.gnumcueclipse.managedbuild.cross.stred.target.elf.1265680527" name="Executable" projectType="ilg.gnumcueclipse.managedbuild.cross.stred.target.elf"/>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.debug.1778537771;ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.debug.1778537771.;ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.1553236205;ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.input.1569051669">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463;ilg.gnumcueclipse.managedbuild.cross.stred.config.elf.release.766231463.;ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.1667247142;ilg.gnumcueclipse.managedbuild.cross.stred.tool.c.compiler.input.531308970">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+</cproject>

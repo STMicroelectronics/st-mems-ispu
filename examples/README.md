@@ -6,6 +6,8 @@ Each project can be built using the command line (make) or any Eclipse-based IDE
 
 Prebuilt files containing the ready-to-use device configuration are available in the *output* folder of each example project. For the examples related to STMicroelectronics libraries, the library in binary format is also available to be integrated in other projects based on user needs.
 
+The ISPU DSP library for IIS3DWB10S is included in all templates and examples, and is provided in both binary and source formats.
+
 ## Build and deploy flow
 
 The figure below illustrates the flow to build and deploy a program on the ISPU. The steps in light blue, which make up the build process, are automatically performed by make or by the Eclipse-based IDE, but are here explained for clarity of the process.
@@ -16,7 +18,7 @@ The figure below illustrates the flow to build and deploy a program on the ISPU.
 2. The C code is then compiled and linked using `stred-gcc` to obtain the program in a binary format (ELF).
 3. The program is then converted to the SREC format, which is needed for the next step, using `stred-objcopy`.
 4. The program is then input to the `ispu_gen` tool to generate both a JSON file and a C header file. These files are equivalent and contain the sequence of write operations required to load the program from the device serial interface. Optionally, additional files (*conf.txt*, *meta.txt*, and *shub.txt*) can be specified as input to the `ispu_gen` tool to add sensor configuration, sensor hub configuration, and metadata to the output files.
-5. The files obtained at the previous step can then be used by the firmware of an external MCU to load the ISPU program via the serial interface normally used to communicate with the sensor. The JSON file can be used to load a program at runtime (for example, using [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), which allows to quicky evaluate the solution), while the C header file can be used to embed it in the MCU firmware at build time.
+5. The files obtained at the previous step can then be used by the firmware of an external MCU to load the ISPU program via the serial interface normally used to communicate with the sensor. The JSON file can be used to load a program at runtime (for example, using [MEMS Studio](https://www.st.com/en/development-tools/mems-studio.html), which allows to quickly evaluate the solution), while the C header file can be used to embed it in the MCU firmware at build time.
 
 For how to write the C code and the other input files, please refer to the template for the device of interest and its readme file. For how to setup your development environment and build a project with the command line or an Eclipse-based IDE, continue reading this readme file.
 
