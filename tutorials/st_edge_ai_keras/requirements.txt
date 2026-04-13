@@ -1,9 +1,10 @@
 ipykernel
-keras<3
+keras>=3.0,<=3.12.0
+tensorflow
+ai-edge-litert
 matplotlib
 numpy
 pandas
 pyserial
 scikit_learn
 seaborn
-tensorflow

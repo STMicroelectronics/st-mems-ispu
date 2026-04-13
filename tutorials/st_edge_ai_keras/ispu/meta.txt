@@ -7,5 +7,9 @@ output "Stationary" float
 output "Walking" float
 output "Running" float
 output "Cycling" float
-output "Prediction" char 10
+output "Prediction" uint8_t
+	0="stationary"
+	1="walking"
+	2="running"
+	3="cycling"
 

@@ -17,7 +17,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <string.h>
 
 #include "stai.h"
 #include "network.h"
@@ -35,7 +34,6 @@ static stai_ptr output_buffers[STAI_NETWORK_OUT_NUM];
 
 static volatile uint32_t int_status;
 
-static const char *labels[] = { "stationary", "walking", "running", "cycling" };
 static uint8_t win_cnt;
 
 void __attribute__ ((signal)) algo_00_init(void)
@@ -91,7 +89,7 @@ void __attribute__ ((signal)) algo_00(void)
 		// write prediction results to output registers
 		for (uint8_t i = 0; i < STAI_NETWORK_OUT_1_CHANNEL; i++, out_addr += sizeof(float))
 			cast_float(out_addr) = output[0][i];
-		strcpy((char *)out_addr, labels[prediction]);
+		cast_uint8_t(out_addr) = prediction;
 	}
 
 	// interrupt generation
