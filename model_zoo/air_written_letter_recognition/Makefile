@@ -4,52 +4,51 @@ USER_CONFIG = training/user_config.yaml
 OUTPUT_DIR = output
 
 MODEL_DIR = models/lsm6dso16is_ISPU_reference_dataset
-MODEL_PATH = $(MODEL_DIR)/training_output/cnn_8x8x8.h5
-
-VALIDATE_TEMPLATE = ../../examples/ism330is_lsm6dso16is/template_stedgeai_validate/ispu
-VALIDATE_DIR = $(MODEL_DIR)/validation_application
+MODEL_PATH = $(MODEL_DIR)/training_output/cnn_8x8x8.keras
 
 DEPLOY_TEMPLATE = application
 DEPLOY_DIR = $(MODEL_DIR)/application
 
 RUN_FW = ../../host_firmware/nucleo_ispu_test_header/nucleo-f401re
 
-CP = cp -R
-RM = rm -rf
+CP = cp -r
+RMDIR = rm -rf
 
 ifeq ($(OS),Windows_NT)
-    ifeq (,$(shell where rm 2> tmp))
-		RM := powershell rm -rf
-	endif
-    ifeq (,$(shell where cp 2> tmp))
-		CP := powershell cp -R
-	endif
+    null =
+    space = $(null) $(null)
+    prep_path = $(subst $(1),$(space),$(subst $(space),?,$(subst \,/,$(PATH))))
+    find_in_path = $(strip $(wildcard $(addsuffix /$(1),$(call prep_path,$(2)))))
+
+    RM_LOC = $(call find_in_path,rm.exe,;)$(call find_in_path,rm.exe,:)
+    ifeq ($(RM_LOC),)
+        SHELL = cmd.exe
+        RMDIR = powershell rm -r -fo
+    endif
+    CP_LOC = $(call find_in_path,cp.exe,;)$(call find_in_path,cp.exe,:)
+    ifeq ($(CP_LOC),)
+        SHELL = cmd.exe
+        CP = powershell cp -r
+    endif
 endif
 
 train:
 	python training/train.py $(USER_CONFIG)
 
 validate_host:
-	stedgeai validate --target ispu --mode host -m $(MODEL_PATH) --no-workspace \
+	stedgeai validate --target ispu --device imu_22 --mode host -m $(MODEL_PATH) --no-workspace \
 		-o $(MODEL_DIR)/validation_output -vi $(MODEL_DIR)/training_output/validation_data.npz
 
 validate_target:
-ifneq ("$(wildcard $(VALIDATE_DIR))","")
-	$(RM) $(VALIDATE_DIR)
-endif
-	$(CP) $(VALIDATE_TEMPLATE) $(VALIDATE_DIR)
-	stedgeai generate --target ispu -m $(MODEL_PATH) --no-workspace -o $(VALIDATE_DIR)
-	make -C $(VALIDATE_DIR)/make
-	mkdir -p $(MODEL_DIR)/validation_output
-	stedgeai validate --target ispu --mode target -m $(MODEL_PATH) --ucf $(VALIDATE_DIR)/make/bin/ispu.ucf \
+	stedgeai validate --target ispu --device imu_22 --mode target -m $(MODEL_PATH) \
 		--no-workspace -o $(MODEL_DIR)/validation_output -vi $(MODEL_DIR)/training_output/validation_data.npz
 
 generate:
 ifneq ("$(wildcard $(DEPLOY_DIR))","")
-	$(RM) $(DEPLOY_DIR)
+	$(RMDIR) $(DEPLOY_DIR)
 endif
 	$(CP) $(DEPLOY_TEMPLATE) $(DEPLOY_DIR)
-	stedgeai generate --target ispu -m $(MODEL_PATH) --no-workspace --no-report -o $(DEPLOY_DIR)/ispu
+	stedgeai generate --target ispu --device imu_22 -m $(MODEL_PATH) --no-workspace --no-report -o $(DEPLOY_DIR)/ispu
 	$(CP) $(MODEL_DIR)/training_output/ispu_wand_params.h $(DEPLOY_DIR)/ispu/inc
 	$(CP) $(MODEL_DIR)/training_output/conf.txt $(DEPLOY_DIR)/ispu
 	$(CP) $(MODEL_DIR)/training_output/meta.txt $(DEPLOY_DIR)/ispu

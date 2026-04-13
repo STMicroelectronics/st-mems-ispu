@@ -33,7 +33,12 @@
   ai_shape_2d dilation;                 /*!< dilation value along axis of the filter */ \
   ai_shape    filter_pad;               /*!< filter pad 4d */ \
   ai_layer_format_type in_ch_format;    /*!< Input format  (Channel 1st vs Channel last */ \
-  ai_layer_format_type out_ch_format;   /*!< Output format (Channel 1st vs Channel last */
+  ai_layer_format_type out_ch_format;   /*!< Output format (Channel 1st vs Channel last */ \
+  ai_u16      hsp_bram_size;            /*!< hsp_bram_size                              */ 
+
+#define AI_LAYER_DENSE_FIELDS_DECLARE          \
+  AI_LAYER_COMMON_FIELDS_DECLARE \
+  ai_u16      hsp_bram_size;            /*!< hsp_bram_size                              */ 
 
 
 
@@ -50,7 +55,10 @@ AI_API_DECLARE_BEGIN
  * @ingroup layers_conv2d
  * @brief Dense (fully connected) layer
  */
-typedef ai_layer_base ai_layer_dense;
+typedef AI_ALIGNED_TYPE(struct, 4) ai_layer_dense_ {
+  AI_LAYER_DENSE_FIELDS_DECLARE
+} ai_layer_dense;
+
 
 /*!
  * @struct ai_layer_gemm
@@ -253,6 +261,14 @@ void forward_conv2d_is8os8ws8_sssa_ch(ai_layer *pLayer);
 AI_INTERNAL_API
 void forward_dw_sssa8_ch(ai_layer *pLayer);
 
+/*!
+ * @brief Computes the activations of a int8 quantized DW layer
+ *        for SSSA per channel quantized scheme Optimized for HSP
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_dw_hsp1_sssa8_ch(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
@@ -261,7 +277,16 @@ void forward_dw_sssa8_ch(ai_layer *pLayer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_dw_hsp_sssa8_ch(ai_layer *pLayer);
+void forward_dw_hsp2_sssa8_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a int8 quantized DW layer
+ *        for SSSA per channel quantized scheme Optimized for HSP
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_dw_hsp3_sssa8_ch(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized DW layer
@@ -326,7 +351,27 @@ void forward_pw_sssa8_ch(ai_layer *pLayer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_pw_hsp_sssa8_ch(ai_layer *pLayer);
+void forward_pw_hsp2_sssa8_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a int8 quantized PW layer
+ *        for SSSA per channel quantized scheme. Optimized for HSP
+ *        1Step version (nb input channel <= 4)
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_pw_hsp1_sssa8_ch(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a int8 quantized PW layer
+ *        for SSSA per channel quantized scheme. Optimized for HSP
+ *        3 Step variant
+ * @ingroup layers_conv2d
+ * @param layer the convolutional (conv) layer
+ */
+AI_INTERNAL_API
+void forward_pw_hsp3_sssa8_ch(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a int8 quantized dilated Conv2d layer
@@ -374,7 +419,13 @@ void forward_conv2d_sssa8_ch(ai_layer *pLayer);
  * @param layer the convolutional (conv) layer
  */
 AI_INTERNAL_API
-void forward_conv2d_hsp_sssa8_ch(ai_layer *pLayer);
+void forward_conv2d_hsp1_sssa8_ch(ai_layer *pLayer);
+
+AI_INTERNAL_API
+void forward_conv2d_hsp2_sssa8_ch(ai_layer *pLayer);
+
+AI_INTERNAL_API
+void forward_conv2d_hsp3_sssa8_ch(ai_layer *pLayer);
 
 
 /*!
@@ -637,7 +688,16 @@ void forward_dense_integer_SSSA(ai_layer *pLayer);
  * @param layer the dense layer
  */
 AI_INTERNAL_API
-void forward_dense_hsp_sssa8(ai_layer *pLayer);
+void forward_dense_hsp0_sssa8(ai_layer *pLayer);
+
+/*!
+ * @brief Computes the activations of a integer dense (fully connected) layer
+ *        for SSSA per layer quantized scheme Optimized for HSP, 1Step loop (out_ch)
+ * @ingroup layers_dense
+ * @param layer the dense layer
+ */
+AI_INTERNAL_API
+void forward_dense_hsp1_sssa8(ai_layer *pLayer);
 
 /*!
  * @brief Computes the activations of a integer dense (fully connected) layer

@@ -828,7 +828,18 @@ typedef struct ai_network_report_ {
   ai_u32                          n_nodes;
 
   ai_signature                    signature;
+
 } ai_network_report;
+
+/*!
+ * @enum ai_scatter_nd_reduction
+ * @ingroup ai_platform
+ * @brief reduction operation in scatter_nd layer
+ */
+typedef enum {
+  AI_SCATTER_ND_NONE = 0x0,
+  AI_SCATTER_ND_OPERATION
+} ai_scatter_nd_reduction;
 
 /*!
  * @enum ai_upsample_mode

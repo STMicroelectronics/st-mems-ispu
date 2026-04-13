@@ -19,12 +19,12 @@ New models can be trained, validated, and prepared for deployment with the servi
 This is the minimal hardware setup required to reproduce all the steps for the pretrained model, collect new datalogs, and apply all the available services to a new use case.
 
 - Nucleo board: [Nucleo-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html) or [Nucleo-U575ZI-Q](https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html)
-- Expansion board: [X-NUCLEO-IKS01A3](https://www.st.com/en/ecosystems/x-nucleo-iks01a3.html), [X-NUCLEO-IKS02A1](https://www.st.com/en/ecosystems/x-nucleo-iks02a1.html) or [X-NUCLEO-IKS4A1](https://www.st.com/en/ecosystems/x-nucleo-iks4a1.html)
-- Sensor adapter board (only for X-NUCLEO-IKS01A3 and X-NUCLEO-IKS02A1): [STEVAL-MKI229A](https://www.st.com/en/evaluation-tools/steval-mki229a.html), [STEVAL-MKI230KA](https://www.st.com/en/evaluation-tools/steval-mki230ka.html), [STEVAL-MKI233KA](https://www.st.com/en/evaluation-tools/steval-mki233ka.html)
+- Expansion board: [X-NUCLEO-IKS02A1](https://www.st.com/en/ecosystems/x-nucleo-iks02a1.html), [X-NUCLEO-IKS4A1](https://www.st.com/en/ecosystems/x-nucleo-iks4a1.html) or [X-NUCLEO-IKS5A1](https://www.st.com/en/evaluation-tools/x-nucleo-iks5a1.html)
+- Sensor adapter board (only for X-NUCLEO-IKS02A1): [STEVAL-MKI229A](https://www.st.com/en/evaluation-tools/steval-mki229a.html), [STEVAL-MKI230KA](https://www.st.com/en/evaluation-tools/steval-mki230ka.html), [STEVAL-MKI233KA](https://www.st.com/en/evaluation-tools/steval-mki233ka.html)
 
 ### Software requirements
 
-- [Python](https://www.python.org), required ≤ 3.11, tested with ≥ 3.9
+- [Python](https://www.python.org), required ≤ 3.12, tested with ≥ 3.9
 - Python libraries in [training/requirements.txt](./training/requirements.txt)
 - [GNU Make](https://www.gnu.org/software/make)
 - [ISPU Toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html)
@@ -83,7 +83,7 @@ In order to train and deploy a new air-written letters recognition example follo
 - Navigate with your terminal application to this folder.
 - Edit your training configuration in a YAML file as described in the training [README](./training/README.md).
 - Launch `make train USER_CONFIG=path/to/user_config.yaml`. A folder named `models/configuration_name` (where `configuration_name` is the *name* field under *general* section in the YAML file) will be created containing the following files:
-   - `cnn_8x8x8.h5`: trained model
+   - `cnn_8x8x8.keras`: trained model
    - `validation_data.npz`: test dataset that can be used to perform validation with `stedgeai`
    - `ispu_wand_defs.h`: macros to be used by the ISPU code
    - `ispu_wand.json`: json containing the description of the ISPU output format

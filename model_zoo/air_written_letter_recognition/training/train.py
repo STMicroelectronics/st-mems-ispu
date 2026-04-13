@@ -119,7 +119,9 @@ def main() -> None:
         df /= 1000.0
         df_orig = df.copy()
         # Apply bandpass filter
-        df.values[:] = lfilter(iir2_b, iir2_a, df, axis=0)
+        arr = df.to_numpy(dtype=np.float32, copy=True)
+        filtered = lfilter(iir2_b, iir2_a, arr, axis=0).astype(np.float32)
+        df.iloc[:, :] = filtered
         # Segment data into windows containing the gesture
         win_list, indexes = segment_gestures(
             df, win_ths, win_len, trig_len, reset_len, discard_len
@@ -197,7 +199,7 @@ def main() -> None:
     )
     model.summary()
 
-    model_path = str(checkpoint_model_dir / f"{model.name}.h5")
+    model_path = str(checkpoint_model_dir / f"{model.name}.keras")
     history = model.fit(
         X_train,
         y_train,
@@ -213,7 +215,6 @@ def main() -> None:
             ),
             ModelCheckpoint(
                 filepath=model_path,
-                patience=20,
                 monitor="val_loss",
                 save_best_only=True,
                 save_freq="epoch"
@@ -239,7 +240,7 @@ def main() -> None:
 
     print(f"\nPrediction accuracy: {acc:.02%}")
 
-    model.save(str(out_dir / f"{model.name}.h5"))
+    model.save(str(out_dir / f"{model.name}.keras"))
     model.load_weights(model_path)
     np.savez(
         os.path.join(out_dir, "validation_data.npz"),
