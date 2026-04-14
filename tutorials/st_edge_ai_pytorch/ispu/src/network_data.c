@@ -2,10 +2,10 @@
   ******************************************************************************
   * @file    network_data.c
   * @author  AST Embedded Analytics Research Platform
-  * @date    2025-03-05T14:42:09+0100
+  * @date    2026-04-14T09:29:40+0200
   * @brief   AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -117,3 +117,5 @@ const uint64_t g_network_weights_array[394] = {
   0xe7ba14c0ac2a0f2dU, 0x1aacd14a8199abbU, 0x1323bd28aa31ef33U, 0x1513ad0eae8b16baU,
   0x5100000004U, 0xfffffff3ffffff60U,
 };
+
+

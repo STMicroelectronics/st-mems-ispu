@@ -2,12 +2,12 @@
   ******************************************************************************
   * @file    network.h
   * @author  AST Embedded Analytics Research Platform
-  * @date    2025-03-05T14:42:09+0100
+  * @date    2026-04-14T09:29:40+0200
   * @brief   ST.AI Tool Automatic Code Generator for Embedded NN computing
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2025 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -28,12 +28,12 @@
 
 /*  Generated model name and signature  */
 #define STAI_NETWORK_MODEL_NAME                "network"
-#define STAI_NETWORK_MODEL_SIGNATURE           (0xff5c244449150cff)
+#define STAI_NETWORK_MODEL_SIGNATURE           (0x52ed8d9dafd0c97c)
 
 
 /*****************************************************************************/
 /*  Macros to declare network context size and required alignment  */
-#define STAI_NETWORK_CONTEXT_ALIGNMENT   (8)
+#define STAI_NETWORK_CONTEXT_ALIGNMENT   8
 #define STAI_NETWORK_CONTEXT_SIZE        (sizeof(_stai_network_context))
 
 /*  Macro to declare network flags  */
@@ -60,7 +60,7 @@
 #define STAI_NETWORK_IN_SIZES_BYTES \
   {36}
 
-#define STAI_NETWORK_IN_1_ALIGNMENT   (4)
+#define STAI_NETWORK_IN_1_ALIGNMENT   4
 #define STAI_NETWORK_IN_1_NAME        (NULL)
 #define STAI_NETWORK_IN_1_FLAGS       (STAI_FLAG_INPUTS|STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST|STAI_FLAG_HAS_BATCH)
 #define STAI_NETWORK_IN_1_FORMAT      (STAI_FORMAT_FLOAT32)
@@ -86,7 +86,7 @@
 #define STAI_NETWORK_OUT_SIZES_BYTES \
   {16}
 
-#define STAI_NETWORK_OUT_1_ALIGNMENT   (4)
+#define STAI_NETWORK_OUT_1_ALIGNMENT   4
 #define STAI_NETWORK_OUT_1_NAME        (NULL)
 #define STAI_NETWORK_OUT_1_FLAGS       (STAI_FLAG_OUTPUTS|STAI_FLAG_PREALLOCATED|STAI_FLAG_CHANNEL_LAST|STAI_FLAG_HAS_BATCH)
 #define STAI_NETWORK_OUT_1_FORMAT      (STAI_FORMAT_FLOAT32)
@@ -110,7 +110,7 @@
 #define STAI_NETWORK_ACTIVATION_1_FLAGS      (STAI_FLAG_ACTIVATIONS)
 #define STAI_NETWORK_ACTIVATION_1_SIZE       (224)
 #define STAI_NETWORK_ACTIVATION_1_SIZE_BYTES (224)
-#define STAI_NETWORK_ACTIVATION_1_ALIGNMENT  (4)
+#define STAI_NETWORK_ACTIVATION_1_ALIGNMENT  4
 /*  Macros to declare weights buffers characteristics  */
 
 #define STAI_NETWORK_WEIGHTS_NUM                  (1)
@@ -135,7 +135,7 @@
 #define STAI_NETWORK_STATES_NUM               (0)
 
 #define STAI_NETWORK_STATE_1_FLAGS            (0x0)
-#define STAI_NETWORK_STATE_1_ALIGNMENT        (4)
+#define STAI_NETWORK_STATE_1_ALIGNMENT        4
 #define STAI_NETWORK_STATE_1_SIZE             (0)
 #define STAI_NETWORK_STATE_1_SIZE_BYTES       (0)
 /*****************************************************************************/
@@ -448,3 +448,4 @@ stai_return_code stai_network_set_callback(
 STAI_API_DECLARE_END
 
 #endif    /* STAI_NETWORK_H */
+

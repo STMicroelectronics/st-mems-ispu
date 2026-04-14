@@ -10,11 +10,11 @@ For reproducing all the steps in this tutorial project, the following hardware a
 
 ### Hardware
 
-- [NUCLEO-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html): STM32 Nucleo board supported by ST tools and software packages.
+- [NUCLEO-F401RE](https://www.st.com/en/evaluation-tools/nucleo-f401re.html): STM32 Nucleo board supported by ST tools and software packages. Alternatively, [NUCLEO-U575ZI-Q](https://www.st.com/en/evaluation-tools/nucleo-u575zi-q.html) can be used.
 
     ![NUCLEO-F401RE](images/nucleo-f401re.png)
 
-- [X-NUCLEO-IKS4A1](https://www.st.com/en/ecosystems/x-nucleo-iks4a1.html): motion MEMS and environmental sensors expansion board, which must be connected to the NUCLEO-F401RE through the Arduino UNO V3 connector.
+- [X-NUCLEO-IKS4A1](https://www.st.com/en/ecosystems/x-nucleo-iks4a1.html): motion MEMS and environmental sensors expansion board, which must be connected to the NUCLEO-F401RE through the Arduino UNO V3 connector. Alternatively, [X-NUCLEO-IKS5A1](https://www.st.com/en/evaluation-tools/x-nucleo-iks5a1.html) can be used.
 
     ![X-NUCLEO-IKS4A1](images/x-nucleo-iks4a1.png)
 
@@ -23,7 +23,7 @@ For reproducing all the steps in this tutorial project, the following hardware a
 - [ISPU-Toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html): toolchain to build applications for sensors embedding the ISPU, which must be added to the system PATH (for detailed steps refer to the dedicated [README](../../examples/README.md)).
 - [ST Edge AI Core](https://www.st.com/en/development-tools/stedgeai-core.html): tool to easily convert pretrained AI models for integration into ST products, which must be added to the system PATH (for detailed steps refer to the "Setting environment" article of the documentation available within the ST Edge AI Core installation folder).
 - [GNU Make](https://www.gnu.org/software/make): command line build tool, which must be added to the system PATH.
-- [MEMS Studio](https://www.st.com/en/development-tools/MEMS-Studio.html): desktop software solution to develop and test solutions for MEMS sensors.
+- [MEMS Studio](https://www.st.com/en/development-tools/MEMS-Studio.html): desktop software to develop and test solutions for MEMS sensors.
 - [X-CUBE-MEMS1](https://www.st.com/en/embedded-software/x-cube-mems1.html): STM32Cube expansion package containing firmware for enabling communication with MEMS Studio.
 - [Python](https://www.python.org): Python programming language interpreter, necessary to create and train the neural network model (required Python packages are listed in `requirements.txt`). A version of Python ≤ 3.11 is required.
 - [Jupyter Notebook](https://jupyter.org/install): interactive computing platform accessible from the web browser to run Python code.
@@ -32,13 +32,13 @@ For reproducing all the steps in this tutorial project, the following hardware a
 
 For the first step of this tutorial, the Nucleo board (with the expansion board and adapter board mounted on top) and MEMS Studio can be used to collect multiple data logs for each of the activities.
 
-1. Mount the X-NUCLEO-IKS4A1 expansion board on top of the NUCLEO-F401RE board and connect it to a USB port of your computer. Do not plug any sensor adapter board in the DIL24 socket if it hosts a sensor with the same I2C address as the LSM6DSO16IS sensor already available on the expansion board, as a clash of addresses does not allow the firmware to work correctly.
+1. Mount the X-NUCLEO-IKS4A1 (or X-NUCLEO-IKS5A1) expansion board on top of the NUCLEO-F401RE (or NUCLEO-U575ZI-Q) board and connect it to a USB port of your PC. Do not plug any sensor adapter board in the DIL24 socket if it hosts a sensor with the same I2C address as the LSM6DSO16IS (or ISM330IS) sensor already available on the expansion board, as a clash of addresses does not allow the firmware to work correctly.
 
     ![Nucleo setup](images/nucleo_setup.png)
 
-2. Flash the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage).
+2. Flash the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package (or look for the equivalent folder for the boards being used) to enable communication between MEMS Studio and the sensor (this can be achieved simply by copying the *.bin* file to the board mass storage). The firmware can also be directly flashed from MEMS Studio, using the dedicated `Firmware Programming` section.
 
-3. Open MEMS Studio, under `Connect`, select `Serial` as `Communication type` and the serial port the board is connected to as `Communication port`, and then press `Connect`. Then, if not already showing, select `LSM6DSO16IS` under the `Accelerometer sensor` dropdown menu and press `Select`.
+3. Open MEMS Studio, under `Connect`, select `Serial` as `Communication type` and the serial port the board is connected to as `Communication port`, and then press `Connect`. Then, if not already showing, select `LSM6DSO16IS` (or `ISM330IS`) under the `Accelerometer sensor` dropdown menu and press `Select`.
 
     ![MEMS Studio connect](images/mems_studio_connect.jpg)
 
@@ -65,7 +65,7 @@ These logs were derived from a public HAR dataset (Reiss, Attila. (2012). PAMAP2
 - Resample data from 100 Hz to 26 Hz using Fourier method.
 - Segment CSV logs into multiple logs of 1 minute each.
 - Balance dataset by keeping the same number of logs for each class.
-- Convert logs to the MEMS Studio CSV format.
+- Convert logs to MEMS Studio's CSV format.
 
 In addition to the data from the PAMAP2 dataset, a log with the device stationary in different orientations has been collected to make the model more robust.
 
@@ -131,7 +131,7 @@ To assist in deciding which model is more suited for ISPU integration, the `anal
 By running the following command the original float model can be analyzed:
 
 ```powershell
-stedgeai analyze --target ispu --model output_ipynb/dense_64x32.onnx --no-workspace
+stedgeai analyze --target ispu --device imu_22 --model output_ipynb/dense_64x32.onnx --no-workspace
 ```
 
 Here is the summary from the `st_ai_output/network_analyze_report.txt` report:
@@ -145,6 +145,7 @@ c_name             :   network
 options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai
 optimization       :   balanced
 target/series      :   ispu
+device             :   imu_22
 workspace dir      :   /tmp/stedgeai_workspace
 output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_pytorch/st_ai_output
 model_fmt          :   float
@@ -159,7 +160,7 @@ weights (ro)       :   11,408 B (11.14 KiB) (1 segment)
 activations (rw)   :   384 B (384 B) (1 segment) *
 ram (total)        :   384 B (384 B) = 384 + 0 + 0
 -----------------------------------------------------------------------------------------------------
-(*) 'input'/'output' buffers can be used from the activations buffer
+(*) 'input'/'output' buffers are allocated in the activations buffer
 ```
 
 If the ISPU-Toolchain is detected on the system PATH, ST Edge AI Core will use it to estimate the memory footprint of the converted model taking into accout also its code size:
@@ -169,9 +170,9 @@ If the ISPU-Toolchain is detected on the system PATH, ST Edge AI Core will use i
   ----------------------------------------------------------
                Code RAM (ro)      %*   Data RAM (rw)      %
   ----------------------------------------------------------
-  RT total             7,344   39.2%               8   2.0%
+  RT total             6,925   37.8%               8   2.0%
   ----------------------------------------------------------
-  TOTAL               18,752                     392
+  TOTAL               18,333                     392
   ----------------------------------------------------------
   *  rt/total
 ```
@@ -179,7 +180,7 @@ If the ISPU-Toolchain is detected on the system PATH, ST Edge AI Core will use i
 Alternatively, for the quantized model, run the following command:
 
 ```powershell
-stedgeai analyze --target ispu --model output_ipynb/qdense_64x32.onnx --no-workspace --input-data-type float32
+stedgeai analyze --target ispu --device imu_22 --model output_ipynb/qdense_64x32.onnx --no-workspace --input-data-type float32
 ```
 
 The `--input-data-type float32` option must be specified in order to have the converted model accept the inputs in float format and apply the quantization internally.
@@ -195,6 +196,7 @@ c_name             :   network
 options            :   allocate-inputs, allocate-outputs, use-lite-runtime, use-st-ai
 optimization       :   balanced
 target/series      :   ispu
+device             :   imu_22
 workspace dir      :   /tmp/stedgeai_workspace
 output dir         :   /st/st-mems-ispu/tutorials/st_edge_ai_pytorch/st_ai_output
 model_fmt          :   ss/sa per tensor
@@ -209,7 +211,7 @@ weights (ro)       :   3,152 B (3.08 KiB) (1 segment) / -8,256(-72.4%) vs float 
 activations (rw)   :   224 B (224 B) (1 segment) *
 ram (total)        :   224 B (224 B) = 224 + 0 + 0
 ------------------------------------------------------------------------------------------------------
-(*) 'input'/'output' buffers can be used from the activations buffer
+(*) 'input'/'output' buffers are allocated in the activations buffer
 ```
 
 ```
@@ -217,9 +219,9 @@ ram (total)        :   224 B (224 B) = 224 + 0 + 0
   ----------------------------------------------------------
                Code RAM (ro)      %*   Data RAM (rw)      %
   ----------------------------------------------------------
-  RT total             9,096   74.3%               8   3.4%
+  RT total             8,717   73.4%               8   3.4%
   ----------------------------------------------------------
-  TOTAL               12,248                     232
+  TOTAL               11,869                     232
   ----------------------------------------------------------
   *  rt/total
 ```
@@ -228,7 +230,7 @@ Comparing the reports before and after the quantization:
 
 - `macc`: 3008 → 2938
 - `weights`: 11408 B → 3152 B
-- `code ram (ro)`: 18752 B → 12248 B
+- `code ram (ro)`: 18333 B → 11869 B
 - `data ram (rw)`: 392 B → 232 B
 
 After quantization, the network has about the same number of *macc* operations, and *weights* now occupy ~72% less memory. A lesser but still significant reduction can be observed for *code ram (ro)*, which is ~35% less occupied; the mismatch with the *weights* reduction is due to code overhead (needed to handle inference computations in the quantized network). A significant reduction can also be observed for *data ram (rw)*, which is 41% less occupied; however, in this case, the value of this parameter could be considered negligible in both the float and quantized models.
@@ -237,87 +239,90 @@ Note: The larger the model the less impact the code overhead will have on the fi
 
 Given the results obtained from the comparison of the model before and after the quantization, the next steps in the tutorial will focus only on the quantized model.
 
-### Generate
-
-The actual conversion step is performed using the `generate` command, which enables the user to easily generate a C library optimized for the ISPU architecture from the trained model.
-
-By running the following command, the quantized model can be converted:
-
-```powershell
-stedgeai generate --target ispu --model output_ipynb/qdense_64x32.onnx --output generated --no-workspace --no-report --input-data-type float32
-```
-
-The result of this operation is the creation of C files (.c/.h), containing model-specific code and data, and a C runtime library (.h/.a), that make the model inference possible on the ISPU, inside the specified output folder `generated`.
-
 ### Validate
 
-To evaluate the model performance and the correctness of the conversion performed by ST Edge AI Core, the `validate` command can be used.
+Before generating the converted model for integration on the ISPU, it is possible to evaluate the model performance and the correctness of the conversion performed by ST Edge AI Core using the `validate` command.
 
-The command offers various functionalities but, in its basic form, by inputting the model with no extra arguments, the tool will generate random data to be used as input to both the original and converted model to check that predictions coincide; alternatively, the user can provide the input / output data directly to ensure more control over the frequencies of the predicted classes.
+The command offers various functionalities but, in its basic form, by inputting the model with no extra arguments, the tool will generate random data to be used as input to both the original and the converted model to check if the predictions coincide; alternatively, the user can provide the input / output data directly to ensure more control over the frequencies of the predicted classes.
 
-Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target (LSM6DSO16IS) and obtain a measurement of its execution time. In order to do that, first of all, the Nucleo board must be flashed with the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin") firmware. Then, the generated C model must be copied inside the [template_stedgeai_validate](../../examples/ism330is_lsm6dso16is/template_stedgeai_validate) project that must be compiled to create a sensor configuration (.ucf) file:
-
-1. First, copy the `template_stedgeai_validate` project available in the examples folder of this repository:
-
-    ```powershell
-    cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai_validate/ispu ispu_validation
-    ```
-
-2. Then copy the content of `generated` inside the template project:
-
-    ```powershell
-    cp -r generated/* ispu_validation
-    ```
-
-3. Lastly, compile the project using `make` to generate the sensor configuration (.ucf) file and copy it to the `output` folder:
-
-    ```powershell
-    make -C ispu_validation/make
-    cp ispu_validation/make/bin/ispu.ucf output/har_validate.ucf
-    ```
-
-    Note: Make sure you have the ISPU-Toolchain correctly set up on your system to be able to compile the code for the ISPU architecture.
-
-    In alternative to using `make`, the project can be compiled using the Eclipse project pre-configured in the `ispu_validation/eclipse` folder.
-
-Finally, having completed all the previous steps, it is possible to perform the validation on target by connecting the Nucleo board to a USB port of the PC, and running the `validate` command specifying the model (.onnx), the sensor configuration (.ucf), and the validation data (.npz) as arguments:
+Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target and obtain a measurement of its execution time. In order to do that, the Nucleo board must be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate"). Then, it is possible to perform the validation by connecting the Nucleo board to a USB port of the PC, and running the `validate` command specifying the model (.h5) and the validation data (.npz) as arguments:
 
 ```powershell
-stedgeai validate --target ispu --mode target --model output_ipynb/qdense_64x32.onnx --valinput output_ipynb/har_testset.npz --ucf output/har_validate.ucf --no-workspace --input-data-type float32
+stedgeai validate --target ispu --device imu_22 --mode target --model output_ipynb/qdense_64x32.onnx --valinput output_ipynb/har_testset.npz --no-workspace --input-data-type float32
 ```
+
+Note: The above command will automatically build a program for the ISPU and use it to perform the validation. For this to work, make sure you have the ISPU-Toolchain and `make` correctly set up on your system to be able to compile the code for the ISPU architecture from the command line. In alternative, the validation program can be manually built, also via Eclipse-based IDEs, and given as input to ST Edge AI Core. For more details refer to the [README](../../examples/ism330is_lsm6dso16is/template_stedgeai_validate/README.md) of the validation template.
 
 The `st_ai_output/network_validate_report.txt` report includes information about the execution time and model accuracy:
 
 ```
-ST.AI Profiling results v2.0 - "network"
----------------------------------------------------------------
-nb sample(s)   :   540
-duration       :   11.970 ms by sample (11.733/12.052/0.097)
-macc           :   2938
-cycles/MACC    :   20.37
----------------------------------------------------------------
+  ST.AI Profiling results v2.0 - "network"
+  ---------------------------------------------------------------
+  nb sample(s)   :   540
+  duration       :   10.823 ms by sample (10.580/10.905/0.099)
+  macc           :   2938
+  cycles/MACC    :   18.42
+  ---------------------------------------------------------------
 ```
 
-The most important piece of information here is given by the `duration` field, which reports that the model inference is taking ~12 ms for its execution; this is an important parameter to know for running the model in real time.
+The most important piece of information here is given by the `duration` field, which reports that the model inference is taking ~11 ms for its execution; this is an important parameter to know for running the model in real time.
+
+```
+   Inference time per node
+   --------------------------------------------------------------------------------------------------------
+   c_id    m_id   type                                         dur (ms)        %     cumul     name
+   --------------------------------------------------------------------------------------------------------
+   0       7      NL (0x107) - Conversion                         0.375    3.47%     3.47%     ai_node_0
+   1       9      Dense (0x104) - Dense                           3.313   30.61%    34.08%     ai_node_1
+   2       12     Dense (0x104) - Dense                           5.452   50.37%    84.45%     ai_node_2
+   3       15     Dense (0x104) - Dense                           0.752    6.95%    91.40%     ai_node_3
+   4       15     NL (0x107) - Conversion                         0.094    0.87%    92.27%     ai_node_4
+   5       18     Softmax (0x10c) - Nonlinearity (softmax)        0.800    7.39%    99.66%     ai_node_5
+   --------------------------------------------------------------------------------------------------------
+   n/a     n/a    Inter-nodal                                     0.037    0.34%   100.00%     n/a
+   --------------------------------------------------------------------------------------------------------
+   total                                                         10.823
+   --------------------------------------------------------------------------------------------------------
+```
+
+Information about how much each layer of the model contributed to the overall execution time is also reported. This can be very helpful to optimize the model architecture to run optimally on the ISPU.
 
 ```
 Evaluation report (summary)
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-Output              acc       rmse          mae           l2r           mean        std        nse        cos        tensor
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-TARGET c-model #1   96.30%    0.120089211   0.025269194   0.245565161   -0.000000   0.120117   0.923121   0.970756   'node_12', 540 x f32(1x4), m_id=[18]
-original model #1   96.30%    0.120089211   0.025269194   0.245565161   -0.000000   0.120117   0.923121   0.970756   'node_12', 540 x f32(1x4), m_id=[18]
-X-cross #1          100.00%   0.000000001   0.000000000   0.000000002   0.000000    0.000000   1.000000   1.000000   'node_12', 540 x f32(1x4), m_id=[18]
-------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Output              acc       rmse          mae           l2r           mean        std        snr          nse        cos        tensor
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TARGET c-model #1   96.30%    0.120089211   0.025269194   0.245565161   -0.000000   0.120117   12.389320    0.923121   0.970756   'node_12', 540 x f32(1x4), m_id=[18]
+original model #1   96.30%    0.120089211   0.025269194   0.245565161   -0.000000   0.120117   12.389320    0.923121   0.970756   'node_12', 540 x f32(1x4), m_id=[18]
+X-cross #1          100.00%   0.000000001   0.000000000   0.000000002   0.000000    0.000000   172.875080   1.000000   1.000000   'node_12', 540 x f32(1x4), m_id=[18]
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ```
 
-In the evaluation report, three rows of results are reported, their meaning is the following:
+In the evaluation report, three rows of results are reported. Their meaning is the following:
 
-- TARGET c-model: performance of the converted model using given outputs as ground-truth.
-- original model: performance of the original model using given outputs as ground-truth.
+- TARGET c-model: performance of the converted model using the provided outputs as ground-truth.
+- original model: performance of the original model using the provided outputs as ground-truth.
 - X-cross: performance of the converted model using the original model outputs as ground-truth.
 
 In this case, the converted model performance is practically the same as the original model (for more details on validation metrics refer to the "Evaluation metrics" article of the documentation available within the ST Edge AI Core installation folder).
+
+### Generate
+
+The actual conversion step is performed using the `generate` command, which enables the user to easily generate a C library optimized for the ISPU architecture from the trained model.
+
+Before doing that, copy the ISPU [template](../../examples/ism330is_lsm6dso16is/template_stedgeai) for ST Edge AI to use it as a starting point to integrate the converted model:
+
+```powershell
+cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai/ispu ispu_integration
+```
+
+By running the following command, the quantized model can be converted:
+
+```powershell
+stedgeai generate --target ispu --device imu_22 --model output_ipynb/qdense_64x32.onnx --output ispu_integration --no-workspace --no-report --input-data-type float32
+```
+
+The result of this operation is the creation, inside the project folder `ispu_integration`, of C files (.c/.h), containing model-specific code and data, and a C runtime library (.h/.a), that make the model inference possible on the ISPU.
 
 ## ST Edge AI integration in MEMS Studio
 
@@ -335,11 +340,11 @@ After opening MEMS Studio, go to the `Advanced Features` section and select the 
 
 - Validate: evaluate the model performance and the correctness of the conversion performed by ST Edge AI Core.
 
-    - On host: run the validation on the user's computer.
+    - On host: run the validation on the user's PC.
 
         ![MEMS Studio validate on host](images/mems_studio_stedgeai_validate_host.jpg)
 
-    - On target: run the validation directly on the ISPU (note: requires the Nucleo board to be flashed with the [nucleo_f401re_ispu_stedgeai_validate.bin](../../host_firmware/nucleo_ispu_stedgeai_validate/binary/nucleo_f401re_ispu_stedgeai_validate.bin") firmware).
+    - On target: run the validation directly on the ISPU (note: requires the Nucleo board to be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate")).
 
         ![MEMS Studio validate on target](images/mems_studio_stedgeai_validate_target.jpg)
 
@@ -349,16 +354,9 @@ After opening MEMS Studio, go to the `Advanced Features` section and select the 
 
 ## ISPU firmware integration
 
-After the validation phase, if the results are satisfactory, the next step is the integration inside the ISPU firmware and the implementation of the actual logic of the application.
+After the generation of the converted model, the next step is the integration inside the ISPU firmware and the implementation of the actual logic of the application.
 
-The first step is to copy the [template_stedgeai](../../examples/ism330is_lsm6dso16is/template_stedgeai) project and add the C code generated from the model:
-
-```powershell
-cp -r ../../examples/ism330is_lsm6dso16is/template_stedgeai/ispu ispu_integration
-cp -r generated/* ispu_integration
-```
-
-Then, for the actual integration, the `main.c` template must be modified to do the following steps:
+For this purpose, the `main.c` in the `ispu_integration` project folder must be modified to implement the following steps:
 
 1. Read accelerometer data and compute mean, variance, and mean-crossing rate every 52 samples.
 2. Run the model inference at the end of each window of 52 samples to obtain the prediction.
@@ -622,7 +620,7 @@ The above metadata defines:
 - The probability, in float format, of the 4 classes being detected (raw outputs of the network) as the next outputs.
 - The predicted class in uint8_t format, with the class label corresponding to each value, as last output.
 
-For details on the syntax to use for this file refer to [README](../../examples/ism330is_lsm6dso16is/template/README.md) of the generic template for the LSM6DSO16IS device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
+For details on the syntax to use for this file refer to [README](../../examples/ism330is_lsm6dso16is/template/README.md) of the generic template for the device and to the help of the `ispu_gen` tool (part of the ISPU-Toolchain).
 
 For instructions on how to integrate a generic model in the template, refer to the [README](../../examples/ism330is_lsm6dso16is/template_stedgeai/README.md) of the template itself.
 
@@ -644,7 +642,7 @@ For convenience, a reference ISPU project integrating the HAR model is already p
 
 MEMS Studio can then be used to upload and test the sensor configuration (.json) containing the ISPU program:
 
-1. Make sure the Nucleo board has been flashed using the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package (the same firmware used for data logging).
+1. Make sure the Nucleo board has been flashed using the `DataLogExtended.bin` firmware in the `Projects/NUCLEO-F401RE/Examples/IKS4A1/DataLogExtended/Binary` folder of the X-CUBE-MEMS1 package (or look for the equivalent folder for the boards being used), the same firmware used for data logging. The firmware can also be directly flashed from MEMS Studio, using the dedicated `Firmware Programming` section.
 
 2. Connect the board, go to the `Sensor Evaluation` section, and then select the `Quick Setup` page.
 
@@ -652,11 +650,11 @@ MEMS Studio can then be used to upload and test the sensor configuration (.json)
 
     ![MEMS Studio configuration loading](images/mems_studio_load_config.jpg)
 
-4. Once the upload is completed, go to the `Data Monitor` page and press the `▶` button in the top left corner to start reading the `ISPU Output` results from the ISPU program:
+4. Once the upload is completed, go to the `ISPU Monitor` page and press the `▶` button in the top left corner to start reading the `ISPU Output` results from the ISPU program:
 
     ![MEMS Studio data monitoring](images/mems_studio_outputs.jpg)
 
-Alternatively, the [ISPU test firmware](../../host_firmware/nucleo_ispu_test_header/nucleo-f401re) available in this repository can be used to automatically build a dedicated firmware for testing the model.
+Alternatively, the [ISPU test firmware](../../host_firmware/nucleo_ispu_test_header) available in this repository can be used to automatically build a dedicated firmware for testing the model.
 
 For detailed instructions on all the ways to build and flash the firmware, refer to its [README](../../host_firmware/nucleo_ispu_test_header/README.md). If the Arm GNU Toolchain is installed and added to the PATH, the firmware can be built as follows:
 ```powershell
