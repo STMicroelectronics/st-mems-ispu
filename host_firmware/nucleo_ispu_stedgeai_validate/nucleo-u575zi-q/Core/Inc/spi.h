@@ -1,13 +1,13 @@
 /* USER CODE BEGIN Header */
 /**
   ******************************************************************************
-  * @file    memorymap.h
+  * @file    spi.h
   * @brief   This file contains all the function prototypes for
-  *          the memorymap.c file
+  *          the spi.c file
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
+  * Copyright (c) 2026 STMicroelectronics.
   * All rights reserved.
   *
   * This software is licensed under terms that can be found in the LICENSE file
@@ -18,8 +18,8 @@
   */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __MEMORYMAP_H__
-#define __MEMORYMAP_H__
+#ifndef __SPI_H__
+#define __SPI_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,9 +32,13 @@ extern "C" {
 
 /* USER CODE END Includes */
 
+extern SPI_HandleTypeDef hspi1;
+
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
+
+void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
@@ -44,5 +48,5 @@ extern "C" {
 }
 #endif
 
-#endif /* __MEMORYMAP_H__ */
+#endif /* __SPI_H__ */
 
