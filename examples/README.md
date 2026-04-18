@@ -55,7 +55,7 @@ Note that on macOS an error like the following may be returned when first trying
 Library not loaded: /usr/local/opt/gettext/lib/libintl.8.dylib
 ```
 
-In this case, the "gettext" package must be installed to obtain the missing library. If using an Intel-based Mac (x86_64 architecture), install [Homebrew](https://brew.sh):
+In this case, the "gettext" package must be installed to obtain the missing library. Install [Homebrew](https://brew.sh):
 
 ```shell
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -65,19 +65,6 @@ and then use the following command to install the "gettext" package:
 
 ```shell
 brew install gettext
-```
-
-If using an Apple silicon-based Mac (ARM architecture), the x86_64 version of the "gettext" package must be installed. Install [Homebrew](https://brew.sh) for x86_64:
-
-```shell
-arch -x86_64 zsh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-and then use the following command to install the "gettext" package for x86_64:
-
-```shell
-arch -x86_64 /usr/local/bin/brew install gettext
 ```
 
 After a correct installation of the "gettext" package, the error will disappear and the toolchain will be usable to build ISPU projects.
