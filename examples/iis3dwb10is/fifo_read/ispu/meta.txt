@@ -1,0 +1,7 @@
+description "FIFO read"
+
+output "Acc x mean [LSB]" int32_t
+output "Acc y mean [LSB]" int32_t
+output "Acc z mean [LSB]" int32_t
+output "Samples [#]" uint16_t
+
