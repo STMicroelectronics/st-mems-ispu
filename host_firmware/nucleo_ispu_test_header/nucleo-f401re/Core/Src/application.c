@@ -186,6 +186,7 @@ void application(void)
 					HAL_Delay(conf[j].data);
 				}
 			}
+			free(mem_buf);
 		} else { // fallback to slow loading
 			for (uint32_t j = 0; j < conf_len; j++) {
 				if (conf[j].type == MEMS_CONF_OP_TYPE_WRITE)
