@@ -10,7 +10,7 @@ Prebuilt files containing the ready-to-use device configuration are available in
 
 The figure below illustrates the flow to build and deploy a program on the ISPU. The steps in light blue, which make up the build process, are automatically performed by make or by the Eclipse-based IDE, but are here explained for clarity of the process.
 
-![](./_media/build_deploy_ispu.png)
+![](./_media/build_deploy_ispu.jpg)
 
 1. The first step is to write the C code to implement the desired algorithms and data processing to run on the ISPU.
 2. The C code is then compiled and linked using `stred-gcc` to obtain the program in a binary format (ELF).
