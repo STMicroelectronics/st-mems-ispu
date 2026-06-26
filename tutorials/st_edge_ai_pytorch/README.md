@@ -245,7 +245,7 @@ Before generating the converted model for integration on the ISPU, it is possibl
 
 The command offers various functionalities but, in its basic form, by inputting the model with no extra arguments, the tool will generate random data to be used as input to both the original and the converted model to check if the predictions coincide; alternatively, the user can provide the input / output data directly to ensure more control over the frequencies of the predicted classes.
 
-Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target and obtain a measurement of its execution time. In order to do that, the Nucleo board must be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate"). Then, it is possible to perform the validation by connecting the Nucleo board to a USB port of the PC, and running the `validate` command specifying the model (.h5) and the validation data (.npz) as arguments:
+Another useful option is the ability to perform the validation on target to check the correctness of the converted model on the final target and obtain a measurement of its execution time. In order to do that, the Nucleo board must be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate). Then, it is possible to perform the validation by connecting the Nucleo board to a USB port of the PC, and running the `validate` command specifying the model (.h5) and the validation data (.npz) as arguments:
 
 ```powershell
 stedgeai validate --target ispu --device imu_22 --mode target --model output_ipynb/qdense_64x32.onnx --valinput output_ipynb/har_testset.npz --no-workspace --input-data-type float32
@@ -344,7 +344,7 @@ After opening MEMS Studio, go to the `Advanced Features` section and select the 
 
         ![MEMS Studio validate on host](images/mems_studio_stedgeai_validate_host.jpg)
 
-    - On target: run the validation directly on the ISPU (note: requires the Nucleo board to be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate")).
+    - On target: run the validation directly on the ISPU (note: requires the Nucleo board to be flashed with the [dedicated firmware](../../host_firmware/nucleo_ispu_stedgeai_validate)).
 
         ![MEMS Studio validate on target](images/mems_studio_stedgeai_validate_target.jpg)
 
