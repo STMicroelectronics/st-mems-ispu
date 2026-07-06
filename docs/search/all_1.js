@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['coeffs_0',['coeffs',['../structispu__biquad__casd__df1__inst__f32.html#a374e8b870953fc5d14772768a9db220e',1,'ispu_biquad_casd_df1_inst_f32::coeffs'],['../structispu__biquad__casd__df2T__inst__f32.html#a4ac51b9efa7993533d4cf2909742c99d',1,'ispu_biquad_casd_df2T_inst_f32::coeffs'],['../structispu__fir__instance__f32.html#a142de83026786ba9aff4722ee229f1c0',1,'ispu_fir_instance_f32::coeffs'],['../structispu__fir__instance__f32__opt.html#a2b4e9b8cc5f49742c1cd518d1cb36a28',1,'ispu_fir_instance_f32_opt::coeffs'],['../structispu__fir__decimate__instance__f32.html#af3959c35b1b74aef15ef85c8f72a51ae',1,'ispu_fir_decimate_instance_f32::coeffs'],['../structispu__fir__decimate__instance__f32__opt.html#a6dfc19b153c99983f61540bd5dc500f8',1,'ispu_fir_decimate_instance_f32_opt::coeffs']]],
+  ['complex_20math_1',['Complex math',['../group__complex__math.html',1,'']]]
+];

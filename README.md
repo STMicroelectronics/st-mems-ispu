@@ -20,6 +20,7 @@ For more information, please explore the page on ST's website dedicated to the [
 
 This repository is structured as follows:
 
+- A [docs](./docs/) folder, containing the documentation for the ISPU DSP library in HTML format.
 - An [examples](./examples/) folder, containing templates and example projects as well as libraries to start programming with the ISPU, together with prebuilt files ready to be used with the sensors. Additionally, it contains instructions on how to set up the development environment.
 - A [host_firmware](./host_firmware/) folder, containing various firmware for boards hosting sensors embedding the ISPU.
 - A [model_zoo](./model_zoo/) folder, containing a collection of artificial intelligence models optimized for the ISPU, that can be used as is or can be modified and retrained to fit the needs of the user.
