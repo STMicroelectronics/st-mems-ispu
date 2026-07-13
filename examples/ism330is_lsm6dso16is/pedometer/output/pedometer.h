@@ -141,7 +141,7 @@ static const char *const ispu_conf_description = "Pedometer";
 
 static const struct mems_conf_application ispu_conf_application = {
 	.name = "ispu_gen",
-	.version = "2.1"
+	.version = "2.2"
 };
 
 static const char *const ispu_conf_date = NULL;
