@@ -1,7 +1,7 @@
 CC = stred-gcc
 OBJ_COPY = stred-objcopy
 OBJ_DUMP = stred-objdump
-SIZE_REISC = stred-size
+SIZE = stred-size
 ISPU_GEN = ispu_gen
 
 MKDIR = mkdir -p
@@ -35,10 +35,16 @@ ifeq ($(OS),Windows_NT)
     endif
 endif
 
-CFLAGS = -mcpu=stredl -Os -specs=nano.specs -ffunction-sections -fdata-sections -Wl,--gc-sections -mfp32-format=ieee -Wall -Wextra -Wdouble-promotion -fno-strict-aliasing
 INCS = -I../ispu_utils -I../inc
-LDSCRIPT = ../ispu_utils/boot.ld
-LDFLAGS =
+
+CFLAGS = -mcpu=stredl -mfp32-format=ieee
+CFLAGS += -Os -ffunction-sections -fdata-sections -fno-strict-aliasing -Wall -Wextra -Wdouble-promotion
+CFLAGS += $(INCS)
+
+LDFLAGS = -T ../ispu_utils/boot.ld -Wl,--gc-sections -specs=nano.specs
+LDFLAGS +=
+
+LDLIBS =
 
 SRC = ../ispu_utils/crt0.S ../src/main.c ../src/iir2.c ../src/wake_up.c
 SRC += ../ispu_utils/ispu_float_conv.S
@@ -50,8 +56,8 @@ NAME = ispu
 OUTPUT = $(OUTDIR)/$(NAME)
 
 build: $(SRC) $(OUTDIR) Makefile
-	$(CC) $(CFLAGS) -o $(OUTPUT) $(SRC) $(LDFLAGS) -T $(LDSCRIPT) $(INCS)
-	$(SIZE_REISC) $(OUTPUT)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SRC) -o $(OUTPUT) $(LDLIBS)
+	$(SIZE) $(OUTPUT)
 	$(OBJ_COPY) -O srec $(OUTPUT) $(OUTPUT).srec
 	$(ISPU_GEN) $(IGFLAGS) -c $(OUTPUT).srec > $(OUTPUT).h
 	$(ISPU_GEN) $(IGFLAGS) $(OUTPUT).srec > $(OUTPUT).json
