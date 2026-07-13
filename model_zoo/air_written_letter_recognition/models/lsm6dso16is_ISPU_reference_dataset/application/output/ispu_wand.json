@@ -5,7 +5,7 @@
 	},
 	"application": {
 		"name": "ispu_gen",
-		"version": "2.1"
+		"version": "2.2"
 	},
 	"description": "ISPU wand (lsm6dso16is_ISPU_reference_dataset)",
 	"sensors": [
