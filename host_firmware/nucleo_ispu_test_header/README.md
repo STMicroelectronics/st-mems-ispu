@@ -2,7 +2,7 @@
 
 This firmware allows testing any ISPU program, provided that the metadata describing the ISPU outputs is provided. The metadata is used to automatically parse the ISPU outputs based on their type, length, and position in the output registers, and correctly print their values on the UART interface.
 
-Besides the ISPU outputs, the firmware can also be configured to provide execution time measurements for the ISPU code, with istantaneous, minimum, maximum, and average values. 
+Besides the ISPU outputs, the firmware can also be configured to provide execution time measurements for the ISPU code, with instantaneous, minimum, maximum, and average values. 
 
 ## Supported hardware and how to configure it
 
@@ -27,7 +27,7 @@ If using the X-NUCLEO-IKS5A1 with the sensor adapter board plugged in the DIL24 
 
 ## Build and flashing
 
-The firmware project for each supported Nucleo board is available in the corresponding folder. The projects can be built using either the Makefile (with the [Arm GNU Toolchain for bare-metal target](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) and the [ISPU toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html) installed) or the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) project (with the ISPU plugins installed). The projects can be generated for other development enviroments with [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) using the provided *.ioc* files. Note that, after the generation from the *.ioc* file, adjustments to the build process may be needed.
+The firmware project for each supported Nucleo board is available in the corresponding folder. The projects can be built using either the Makefile (with the [Arm GNU Toolchain for bare-metal target](https://developer.arm.com/Tools%20and%20Software/GNU%20Toolchain) and the [ISPU toolchain](https://www.st.com/en/development-tools/ispu-toolchain.html) installed) or the [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) project (with the ISPU plugins installed). The projects can be generated for other development environments with [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html) using the provided *.ioc* files. Note that, after the generation from the *.ioc* file, adjustments to the build process may be needed.
 
 The project code may also be used to port the firmware to a non-supported hardware setup. The firmware was generated using [STM32CubeMX](https://www.st.com/en/development-tools/stm32cubemx.html). All custom code is contained in *Core/Inc/application.h* and *Core/Src/application.c* (the *application* function is called from *Core/Src/main.c* in the main loop), thus allowing for easy porting, without modifying much of *Core/Src/application.c*. Modifications might be necessary for code related to hardware-dependent resources, such as timers, interrupt pins, and communication interfaces.
 
@@ -91,7 +91,7 @@ Acc x [g]	Acc y [g]	Acc z [g]	Wake-up
 0.004392	-0.023912	1.011136	0
 ```
 
-The execution time is measured as the time bewteen a falling edge and the subsequent rising edge of the signal on the INT2 pin of the sensor, and it is printed on the UART interface on the rising edge. For this to work, the sensor must be configured to route the ISPU sleep signal, which stays low while the ISPU is running, to the INT2 pin. This can be achieved by setting the following line in the *conf.txt* file of the ISPU project:
+The execution time is measured as the time between a falling edge and the subsequent rising edge of the signal on the INT2 pin of the sensor, and it is printed on the UART interface on the rising edge. For this to work, the sensor must be configured to route the ISPU sleep signal, which stays low while the ISPU is running, to the INT2 pin. This can be achieved by setting the following line in the *conf.txt* file of the ISPU project:
 
 ```
 ispu_sleep_int2 enable
