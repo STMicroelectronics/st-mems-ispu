@@ -1,7 +1,7 @@
 CC = stred-gcc
 OBJ_COPY = stred-objcopy
 OBJ_DUMP = stred-objdump
-SIZE_REISC = stred-size
+SIZE = stred-size
 ISPU_GEN = ispu_gen
 
 MKDIR = mkdir -p
@@ -35,10 +35,18 @@ ifeq ($(OS),Windows_NT)
     endif
 endif
 
-CFLAGS = -mcpu=stredl -Os -specs=nano.specs -ffunction-sections -fdata-sections -Wl,--gc-sections -mfp32-format=ieee -Wall -Wextra -Wdouble-promotion -fno-strict-aliasing -DEXPORT_RUNTIME_LITE_APIS -DHAVE_NETWORK_INFO=1
+DEFINE = -DEXPORT_RUNTIME_LITE_APIS -DHAVE_NETWORK_INFO=1
+
 INCS = -I../ispu_utils -I../inc -I../inc/ai
-LDSCRIPT = ../ispu_utils/boot.ld
-LDFLAGS = -L../lib/ai -lNetworkRuntime_ISPU_GCC
+
+CFLAGS = -mcpu=stredl -mfp32-format=ieee
+CFLAGS += -Os -ffunction-sections -fdata-sections -fno-strict-aliasing -Wall -Wextra -Wdouble-promotion
+CFLAGS += $(DEFINE) $(INCS)
+
+LDFLAGS = -T ../ispu_utils/boot.ld -Wl,--gc-sections -specs=nano.specs
+LDFLAGS += -L../lib/ai
+
+LDLIBS = -lNetworkRuntime_ISPU_GCC
 
 SRC = ../ispu_utils/crt0.S ../src/main.c ../src/network_data.c ../src/network.c ../src/network_utils.c
 SRC += ../ispu_utils/ispu_float_conv.S
@@ -50,8 +58,8 @@ NAME = ispu
 OUTPUT = $(OUTDIR)/$(NAME)
 
 build: $(SRC) $(OUTDIR) Makefile
-	$(CC) $(CFLAGS) -o $(OUTPUT) $(SRC) $(LDFLAGS) -T $(LDSCRIPT) $(INCS)
-	$(SIZE_REISC) $(OUTPUT)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(SRC) -o $(OUTPUT) $(LDLIBS)
+	$(SIZE) $(OUTPUT)
 	$(OBJ_COPY) -O srec $(OUTPUT) $(OUTPUT).srec
 	$(ISPU_GEN) $(IGFLAGS) -c $(OUTPUT).srec > $(OUTPUT).h
 	$(ISPU_GEN) $(IGFLAGS) $(OUTPUT).srec > $(OUTPUT).json
