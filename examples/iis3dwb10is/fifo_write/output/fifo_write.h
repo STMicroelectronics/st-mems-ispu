@@ -137,7 +137,7 @@ struct mems_conf_mlc_identifier_list {
 
 static const char *const ispu_conf_format_version = "2.0";
 
-static const char *const ispu_conf_description = NULL;
+static const char *const ispu_conf_description = "FIFO write";
 
 static const struct mems_conf_application ispu_conf_application = {
 	.name = "ispu_gen",

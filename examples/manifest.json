@@ -180,7 +180,7 @@
 					]
 				},
 				{
-					"name": "",
+					"name": "FIFO write",
 					"path": "./iis3dwb10is/fifo_write",
 					"readme": "./iis3dwb10is/fifo_write/README.md",
 					"json_configurations": [

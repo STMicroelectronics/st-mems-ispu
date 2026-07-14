@@ -7,6 +7,7 @@
 		"name": "ispu_gen",
 		"version": "2.2"
 	},
+	"description": "FIFO write",
 	"sensors": [
 		{
 			"name": [ "IIS3DWB10IS" ],
