@@ -66,6 +66,7 @@ build: $(SRC) $(OUTDIR) $(EXPORTDIR) Makefile
 	$(CC) $(CFLAGS) $(LDFLAGS) $(SRC) -o $(OUTPUT) $(LDLIBS)
 	$(SIZE) $(OUTPUT)
 	$(OBJ_COPY) -O srec $(OUTPUT) $(OUTPUT).srec
+	$(ISPU_GEN) $(IGFLAGS) -c $(OUTPUT).srec > $(OUTPUT).h
 	$(ISPU_GEN) $(IGFLAGS) -c $(OUTPUT).srec > $(EXPORTDIR)/ispu_wand.h
 	$(ISPU_GEN) $(IGFLAGS) $(OUTPUT).srec > $(EXPORTDIR)/ispu_wand.json
 
