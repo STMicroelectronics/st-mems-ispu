@@ -40,6 +40,9 @@ var ispu__dsp_8h =
     [ "ispu_var_f32", "group__statistics.html#gaa89f0e92e534d08037ed7de86b25d41a", null ],
     [ "ispu_rfft_init_f32", "group__transform.html#ga1d9e6cc71b328df2b25d13a244cd8d9a", null ],
     [ "ispu_rfft_f32", "group__transform.html#gab22d8e8fc6cbb883cf85b4e9f86e6645", null ],
+    [ "ispu_irfft_f32", "group__transform.html#ga2443ec028c354aab810c6937859b1893", null ],
+    [ "ispu_hilbert_init_f32", "group__transform.html#ga257c870ec49a0689780e2f693c06f2a1", null ],
+    [ "ispu_hilbert_f32", "group__transform.html#gaec8b151120525fa73da39c4518b8ad25", null ],
     [ "ispu_hamming_f32", "group__window.html#ga5145958433d74821f0532b20b72a7c3f", null ],
     [ "ispu_hanning_f32", "group__window.html#ga3f45169dc6fc8ee00b660a5686c0963c", null ]
 ];

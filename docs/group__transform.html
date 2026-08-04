@@ -99,6 +99,8 @@ $(function(){initNavTree('group__transform.html','',''); });
 Data Structures</h2></td></tr>
 <tr class="memitem:ispu_5Frfft_5Finstance_5Ff32" id="r_ispu_5Frfft_5Finstance_5Ff32"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structispu__rfft__instance__f32.html">ispu_rfft_instance_f32</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point RFFT (real fast Fourier transform) instance structure.  <a href="structispu__rfft__instance__f32.html#details">More...</a><br /></td></tr>
+<tr class="memitem:ispu_5Fhilbert_5Finstance_5Ff32" id="r_ispu_5Fhilbert_5Finstance_5Ff32"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structispu__hilbert__instance__f32.html">ispu_hilbert_instance_f32</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point real Hilbert transform instance structure.  <a href="structispu__hilbert__instance__f32.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -106,6 +108,12 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga1d9e6cc71b328df2b25d13a244cd8d9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point RFFT (real fast Fourier transform) initialization function.  <br /></td></tr>
 <tr class="memitem:gab22d8e8fc6cbb883cf85b4e9f86e6645" id="r_gab22d8e8fc6cbb883cf85b4e9f86e6645"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab22d8e8fc6cbb883cf85b4e9f86e6645">ispu_rfft_f32</a> (struct <a class="el" href="structispu__rfft__instance__f32.html">ispu_rfft_instance_f32</a> *inst, float *data)</td></tr>
 <tr class="memdesc:gab22d8e8fc6cbb883cf85b4e9f86e6645"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point RFFT (real fast Fourier transform) processing function.  <br /></td></tr>
+<tr class="memitem:ga2443ec028c354aab810c6937859b1893" id="r_ga2443ec028c354aab810c6937859b1893"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga2443ec028c354aab810c6937859b1893">ispu_irfft_f32</a> (struct <a class="el" href="structispu__rfft__instance__f32.html">ispu_rfft_instance_f32</a> *inst, float *data)</td></tr>
+<tr class="memdesc:ga2443ec028c354aab810c6937859b1893"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point IRFFT (inverse real fast Fourier transform) processing function.  <br /></td></tr>
+<tr class="memitem:ga257c870ec49a0689780e2f693c06f2a1" id="r_ga257c870ec49a0689780e2f693c06f2a1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga257c870ec49a0689780e2f693c06f2a1">ispu_hilbert_init_f32</a> (struct <a class="el" href="structispu__hilbert__instance__f32.html">ispu_hilbert_instance_f32</a> *inst, uint16_t hilbert_len)</td></tr>
+<tr class="memdesc:ga257c870ec49a0689780e2f693c06f2a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point real Hilbert transform initialization function.  <br /></td></tr>
+<tr class="memitem:gaec8b151120525fa73da39c4518b8ad25" id="r_gaec8b151120525fa73da39c4518b8ad25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gaec8b151120525fa73da39c4518b8ad25">ispu_hilbert_f32</a> (struct <a class="el" href="structispu__hilbert__instance__f32.html">ispu_hilbert_instance_f32</a> *inst, float *src, float *dst)</td></tr>
+<tr class="memdesc:gaec8b151120525fa73da39c4518b8ad25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floating-point real Hilbert transform processing function.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <p>This group provides tranforms. </p>
@@ -133,7 +141,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">inst</td><td>Pointer to the instance structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fft_len</td><td>Length of the FFT </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fft_len</td><td>Length of the FFT (32, 64, 128, 256, 512, 1024, or 2048) </td></tr>
   </table>
   </dd>
 </dl>
@@ -174,6 +182,121 @@ Functions</h2></td></tr>
 <li>fft_len = 2048 requires alignment to 8192 bytes </li>
 </ul>
 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga2443ec028c354aab810c6937859b1893" name="ga2443ec028c354aab810c6937859b1893"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga2443ec028c354aab810c6937859b1893">&#9670;&#160;</a></span>ispu_irfft_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ispu_irfft_f32 </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structispu__rfft__instance__f32.html">ispu_rfft_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>inst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Floating-point IRFFT (inverse real fast Fourier transform) processing function. </p>
+<p>The output is a real signal corresponding to the inverse of the input half spectrum. The input must be in the same format as the output of the ispu_rfft_f32 function. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inst</td><td>Pointer to the instance structure </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">data</td><td>Pointer to the input/output data. It must be aligned as follows:<ul>
+<li>fft_len = 32 requires alignment to 128 bytes</li>
+<li>fft_len = 64 requires alignment to 256 bytes</li>
+<li>fft_len = 128 requires alignment to 512 bytes</li>
+<li>fft_len = 256 requires alignment to 1024 bytes</li>
+<li>fft_len = 512 requires alignment to 2048 bytes</li>
+<li>fft_len = 1024 requires alignment to 4096 bytes</li>
+<li>fft_len = 2048 requires alignment to 8192 bytes </li>
+</ul>
+</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ga257c870ec49a0689780e2f693c06f2a1" name="ga257c870ec49a0689780e2f693c06f2a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga257c870ec49a0689780e2f693c06f2a1">&#9670;&#160;</a></span>ispu_hilbert_init_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ispu_hilbert_init_f32 </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structispu__hilbert__instance__f32.html">ispu_hilbert_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>inst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t</td>          <td class="paramname"><span class="paramname"><em>hilbert_len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Floating-point real Hilbert transform initialization function. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inst</td><td>Pointer to the instance structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hilbert_len</td><td>Length of the Hilbert transform (32, 64, 128, 256, 512, 1024, or 2048) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success or -1 on failure </dd></dl>
+
+</div>
+</div>
+<a id="gaec8b151120525fa73da39c4518b8ad25" name="gaec8b151120525fa73da39c4518b8ad25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaec8b151120525fa73da39c4518b8ad25">&#9670;&#160;</a></span>ispu_hilbert_f32()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ispu_hilbert_f32 </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structispu__hilbert__instance__f32.html">ispu_hilbert_instance_f32</a> *</td>          <td class="paramname"><span class="paramname"><em>inst</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>src</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>dst</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Floating-point real Hilbert transform processing function. </p>
+<p>The output is the Hilbert transform of the real input signal, resulting in hilbert_len complex numbers representing the analytic signal. Each complex number is composed by two floating-point values, the first one representing the real part and the second one representing the imaginary part. The real part represents the in-phase component while the imaginary part represents the quadrature component of the analytic signal. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">inst</td><td>Pointer to the instance structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Pointer to the input vector. It must be aligned as follows:<ul>
+<li>hilbert_len = 32 requires alignment to 128 bytes</li>
+<li>hilbert_len = 64 requires alignment to 256 bytes</li>
+<li>hilbert_len = 128 requires alignment to 512 bytes</li>
+<li>hilbert_len = 256 requires alignment to 1024 bytes</li>
+<li>hilbert_len = 512 requires alignment to 2048 bytes</li>
+<li>hilbert_len = 1024 requires alignment to 4096 bytes</li>
+<li>hilbert_len = 2048 requires alignment to 8192 bytes </li>
+</ul>
+</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the output vector. Must be different from src pointer and must have double the size of src to accomodate for complex numbers. </td></tr>
   </table>
   </dd>
 </dl>

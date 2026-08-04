@@ -472,7 +472,7 @@ struct ispu_rfft_instance_f32 {
 /**
  * @brief Floating-point RFFT (real fast Fourier transform) initialization function.
  * @param[in] inst Pointer to the instance structure
- * @param[in] fft_len Length of the FFT
+ * @param[in] fft_len Length of the FFT (32, 64, 128, 256, 512, 1024, or 2048)
  * @return 0 on success or -1 on failure
  */
 int ispu_rfft_init_f32(struct ispu_rfft_instance_f32 *inst, uint16_t fft_len);
@@ -494,6 +494,58 @@ int ispu_rfft_init_f32(struct ispu_rfft_instance_f32 *inst, uint16_t fft_len);
  *                      - fft_len = 2048 requires alignment to 8192 bytes
  */
 void ispu_rfft_f32(struct ispu_rfft_instance_f32 *inst, float *data);
+
+/**
+ * @brief Floating-point IRFFT (inverse real fast Fourier transform) processing function.
+ * @details The output is a real signal corresponding to the inverse of the input half spectrum.
+ *          The input must be in the same format as the output of the ispu_rfft_f32 function.
+ * @param[in] inst Pointer to the instance structure
+ * @param[in,out] data Pointer to the input/output data.
+ *                     It must be aligned as follows:
+ *                      - fft_len = 32 requires alignment to 128 bytes
+ *                      - fft_len = 64 requires alignment to 256 bytes
+ *                      - fft_len = 128 requires alignment to 512 bytes
+ *                      - fft_len = 256 requires alignment to 1024 bytes
+ *                      - fft_len = 512 requires alignment to 2048 bytes
+ *                      - fft_len = 1024 requires alignment to 4096 bytes
+ *                      - fft_len = 2048 requires alignment to 8192 bytes
+ */
+void ispu_irfft_f32(struct ispu_rfft_instance_f32 *inst, float *data);
+
+/**
+ * @brief Floating-point real Hilbert transform instance structure.
+ */
+struct ispu_hilbert_instance_f32 {
+	struct ispu_rfft_instance_f32 rfft_inst; /**< Internal RFFT instance */
+	uint16_t hilbert_len; /**< Length of the Hilbert transform. */
+};
+
+/**
+ * @brief Floating-point real Hilbert transform initialization function.
+ * @param[in] inst Pointer to the instance structure
+ * @param[in] hilbert_len Length of the Hilbert transform (32, 64, 128, 256, 512, 1024, or 2048)
+ * @return 0 on success or -1 on failure
+ */
+int ispu_hilbert_init_f32(struct ispu_hilbert_instance_f32 *inst, uint16_t hilbert_len);
+
+/**
+ * @brief Floating-point real Hilbert transform processing function.
+ * @details The output is the Hilbert transform of the real input signal, resulting in hilbert_len complex numbers representing the analytic signal.
+ *          Each complex number is composed by two floating-point values, the first one representing the real part and the second one representing the imaginary part.
+ *          The real part represents the in-phase component while the imaginary part represents the quadrature component of the analytic signal.
+ * @param[in] inst Pointer to the instance structure
+ * @param[in] src Pointer to the input vector.
+ *                     It must be aligned as follows:
+ *                      - hilbert_len = 32 requires alignment to 128 bytes
+ *                      - hilbert_len = 64 requires alignment to 256 bytes
+ *                      - hilbert_len = 128 requires alignment to 512 bytes
+ *                      - hilbert_len = 256 requires alignment to 1024 bytes
+ *                      - hilbert_len = 512 requires alignment to 2048 bytes
+ *                      - hilbert_len = 1024 requires alignment to 4096 bytes
+ *                      - hilbert_len = 2048 requires alignment to 8192 bytes
+ * @param[out] dst Pointer to the output vector. Must be different from src pointer and must have double the size of src to accomodate for complex numbers.
+ */
+void ispu_hilbert_f32(struct ispu_hilbert_instance_f32 *inst, float *src, float *dst);
 
 /** @} */
 

@@ -6,5 +6,6 @@ var annotated_dup =
     [ "ispu_fir_decimate_instance_f32_opt", "structispu__fir__decimate__instance__f32__opt.html", "structispu__fir__decimate__instance__f32__opt" ],
     [ "ispu_fir_instance_f32", "structispu__fir__instance__f32.html", "structispu__fir__instance__f32" ],
     [ "ispu_fir_instance_f32_opt", "structispu__fir__instance__f32__opt.html", "structispu__fir__instance__f32__opt" ],
+    [ "ispu_hilbert_instance_f32", "structispu__hilbert__instance__f32.html", "structispu__hilbert__instance__f32" ],
     [ "ispu_rfft_instance_f32", "structispu__rfft__instance__f32.html", "structispu__rfft__instance__f32" ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['twiddle_5ftable_0',['twiddle_table',['../structispu__rfft__instance__f32.html#a7c32ed3e2c5d95f928a1bf9aa2dda1bb',1,'ispu_rfft_instance_f32']]]
+  ['rfft_5finst_0',['rfft_inst',['../structispu__hilbert__instance__f32.html#aad3f96474c47100fdf19bca70e1f14d9',1,'ispu_hilbert_instance_f32']]]
 ];
