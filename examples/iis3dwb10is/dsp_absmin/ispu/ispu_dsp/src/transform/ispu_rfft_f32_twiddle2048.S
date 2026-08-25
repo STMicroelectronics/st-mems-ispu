@@ -13,7 +13,11 @@
   */
 
 .global twiddle_table2048
-.data
+#if FFT_TWIDDLE_RODATA == 0
+.section .data
+#else
+.section .rodata
+#endif
 .type twiddle_table2048, @object
 .size twiddle_table2048, 2048
 .align 12

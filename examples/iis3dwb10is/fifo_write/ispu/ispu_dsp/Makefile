@@ -37,11 +37,13 @@ FAST_FLOAT = 0 # enable all optional optimizations for float operations
 FAST_SQRTF = 1 # enable hw accelerated sqrtf (does not validate input)
 FAST_DIVF = 0 # enable optimized float division (do not use if 100% accurate results are needed)
 FAST_FLOAT_CMP = 0 # enable optimized comparison between float numbers (does not handle NaN)
+FFT_TWIDDLE_RODATA = 0 # enable placing FFT twiddle table in rodata section instead of data section
 
 DEFINE =  -DFAST_FLOAT=$(FAST_FLOAT)
 DEFINE += -DFAST_SQRTF=$(FAST_SQRTF)
 DEFINE += -DFAST_DIVF=$(FAST_DIVF)
 DEFINE += -DFAST_FLOAT_CMP=$(FAST_FLOAT_CMP)
+DEFINE += -DFFT_TWIDDLE_RODATA=$(FFT_TWIDDLE_RODATA)
 
 INCS = -Iinc -I../ispu_utils
 

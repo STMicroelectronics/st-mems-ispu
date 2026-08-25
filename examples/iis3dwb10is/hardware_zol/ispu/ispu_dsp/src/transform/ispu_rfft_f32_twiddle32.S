@@ -13,7 +13,11 @@
   */
 
 .global twiddle_table32
-.data
+#if FFT_TWIDDLE_RODATA == 0
+.section .data
+#else
+.section .rodata
+#endif
 .type twiddle_table32, @object
 .size twiddle_table32, 32
 .align 8
