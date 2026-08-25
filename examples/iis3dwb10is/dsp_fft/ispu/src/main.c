@@ -30,9 +30,9 @@ static volatile uint16_t int_status;
 
 static volatile uint16_t cnt;
 static volatile uint8_t full, fill, proc;
-static volatile float __attribute__ ((aligned(8192))) acc_x[2][BLOCK_SIZE];
-static volatile float __attribute__ ((aligned(8192))) acc_y[2][BLOCK_SIZE];
-static volatile float __attribute__ ((aligned(8192))) acc_z[2][BLOCK_SIZE];
+static volatile float __attribute__ ((aligned(BLOCK_SIZE * 4))) acc_x[2][BLOCK_SIZE];
+static volatile float __attribute__ ((aligned(BLOCK_SIZE * 4))) acc_y[2][BLOCK_SIZE];
+static volatile float __attribute__ ((aligned(BLOCK_SIZE * 4))) acc_z[2][BLOCK_SIZE];
 
 static struct ispu_rfft_instance_f32 rfft_instance;
 
