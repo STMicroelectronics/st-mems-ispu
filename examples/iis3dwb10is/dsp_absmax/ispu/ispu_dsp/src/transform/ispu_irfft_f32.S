@@ -302,7 +302,7 @@ ispu_irfft_f32:
 	stw [ISPU_LOOP_END], %r12
 	stw [ISPU_LOOP_CNT], %r2
 
-.ispu_irfft_f32.loop_stage_start:                    ; remaining intermediate stages: w is the the twiddle factor
+.ispu_irfft_f32.loop_stage_start:                    ; remaining intermediate stages: w is the twiddle factor
                                                      ; d1, d2 first butterfly input pair. p1, p2 first butterfly output pair
 	ldw %r2, [%r10]                                  ; r2 = Re(d1)
 	ldw %r3, [%r10]                                  ; r3 = Im(d1)

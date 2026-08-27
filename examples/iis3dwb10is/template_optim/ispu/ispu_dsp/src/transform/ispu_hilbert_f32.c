@@ -19,6 +19,7 @@
 int ispu_hilbert_init_f32(struct ispu_hilbert_instance_f32 *inst, uint16_t hilbert_len)
 {
 	int res = ispu_rfft_init_f32(&inst->rfft_inst, hilbert_len);
+
 	if (res == 0)
 		inst->hilbert_len = hilbert_len;
 
