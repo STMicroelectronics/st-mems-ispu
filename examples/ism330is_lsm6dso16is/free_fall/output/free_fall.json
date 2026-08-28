@@ -5,7 +5,7 @@
 	},
 	"application": {
 		"name": "ispu_gen",
-		"version": "2.2"
+		"version": "2.3"
 	},
 	"description": "Free fall detection",
 	"sensors": [

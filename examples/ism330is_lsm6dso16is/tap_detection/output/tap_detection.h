@@ -1,5 +1,6 @@
 /**
   ******************************************************************************
+  * @file
   * @attention
   *
   * Copyright (c) 2026 STMicroelectronics.
@@ -141,7 +142,7 @@ static const char *const ispu_conf_description = "Tap detection";
 
 static const struct mems_conf_application ispu_conf_application = {
 	.name = "ispu_gen",
-	.version = "2.2"
+	.version = "2.3"
 };
 
 static const char *const ispu_conf_date = NULL;
