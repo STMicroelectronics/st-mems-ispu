@@ -59,7 +59,19 @@ struct device devices[] = {
 		.spi = 1,
 		.who_am_i = 0x22,
 		.ram_data = 0x0B
+	},
+#ifdef ACC50 // DO NOT USE: the fw cannot keep up with the sensor data rates
+	{ // IIS3DWB10IS
+		.name = "acc50",
+		.n_dev_names = 1,
+		.dev_names = { "IIS3DWB10IS" },
+		.n_i2c_addr = 1,
+		.i2c_addr = { 0x34 },
+		.spi = 1,
+		.who_am_i = 0x50,
+		.ram_data = 0x0A
 	}
+#endif
 };
 
 #define I2C 0
