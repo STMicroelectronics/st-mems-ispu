@@ -154,7 +154,7 @@ The *ispu* folder contains:
 Both the Makefile and the Eclipse project define some symbols that can be set to 0 or 1 to disable or enable some optional floating point optimizations:
 
 * `FAST_FLOAT`: enable all optional optimizations for float operations. Disabled by default.
-* `FAST_SQRTF`: enable hardware accelerated sqrtf (does not validate input). Enabled by default.
+* `FAST_SQRTF`: enable hardware accelerated sqrtf. Enabled by default.
 * `FAST_DIVF`: enable optimized float division (do not use if 100% accurate results are needed). Disabled by default.
 * `FAST_FLOAT_CMP`: enable optimized comparison between float numbers (does not handle NaN). Disabled by default.
 
