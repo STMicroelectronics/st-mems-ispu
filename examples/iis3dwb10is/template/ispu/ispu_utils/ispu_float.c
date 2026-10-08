@@ -55,9 +55,12 @@ static float isqrtf32_iter(float number, int iterations)
 
 	// check if input is subnormal floating (exp=0)
 	if ((conv_input.u_val & 0x7f800000) == 0) {
-		number = number * (float)0x65078678; // correction factor = 2^22
+		union float_converter_tmp correction;
+		correction.u_val = 0x64800000; // correction factor = 2^74
+		number = number * correction.f_val;
 		output = isqrtf32_iter_norm(number, iterations);
-		output = output * (float)0x523a43b7; // correction factor = 2^11
+		correction.u_val = 0x52000000; // correction factor = 2^37, sqrt of the above
+		output = output * correction.f_val;
 	} else {
 		// normal floating input
 		output = isqrtf32_iter_norm(number, iterations);
